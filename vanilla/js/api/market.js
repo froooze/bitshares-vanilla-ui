@@ -486,11 +486,19 @@ var Market = (function () {
 
   /* Background ES backfill (see MarketCandles.deepen): resolves {key, fills}
    * when fresh ES buckets landed for this pair+bucket, null when there is
-   * nothing to merge (testnet / already deep / ES down). Never rejects. */
-  async function deepen(baseId, quoteId, bucketSec) {
+   * nothing to merge (testnet / already deep / ES down). Never rejects.
+   *
+   * Forwards ALL of MarketCandles.deepen's params — countSec (the live candle
+   * count input, which sizes the ES span) and onPage (the progressive-paint
+   * callback) INCLUDED. A 3-arg wrapper (2026-10-10 defect) dropped both:
+   * countSec fell back to 2000, so the ES window never widened past 2000
+   * candles ("no way to load more data" on thin markets) and the _deepCache
+   * was keyed at 2000, so any other count never merged ("chain-only").
+   * Contract pinned by tooling/market-deepen-forward-test.js. */
+  async function deepen(baseId, quoteId, bucketSec, countSec, onPage) {
     if (typeof MarketCandles !== "undefined" && MarketCandles &&
         typeof MarketCandles.deepen === "function") {
-      return MarketCandles.deepen(baseId, quoteId, bucketSec);
+      return MarketCandles.deepen(baseId, quoteId, bucketSec, countSec, onPage);
     }
     return null;
   }
