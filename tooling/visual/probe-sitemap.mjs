@@ -56,7 +56,7 @@ const nav = await page.evaluate(() => {
   };
 });
 check("h1 Site map", /site map/i.test(nav.h1), JSON.stringify(nav.h1));
-check("8 subsection buttons", nav.buttons.length === 8, JSON.stringify(nav.buttons));
+check("9 subsection buttons", nav.buttons.length === 9, JSON.stringify(nav.buttons));
 check("markers carry ids", nav.headIds.every((id, i) => id === "sitemap-sec-" + i), JSON.stringify(nav.headIds));
 check("granular links present", nav.links >= 60, "links=" + nav.links);
 
@@ -92,7 +92,7 @@ for (const theme of ["ref-ui-theme", "dex-ux-theme", "vanilla-ui-theme"]) {
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     };
   });
-  check(theme + ": renders clean", /site map/i.test(t.h1) && t.btns === 8 && t.overflow <= 1, JSON.stringify(t));
+  check(theme + ": renders clean", /site map/i.test(t.h1) && t.btns === 9 && t.overflow <= 1, JSON.stringify(t));
   await page.screenshot({ path: "/tmp/opencode/sitemap-" + theme + "-desk.png" });
 }
 await page.setViewportSize({ width: 360, height: 780 });
@@ -106,7 +106,7 @@ const phone = await page.evaluate(() => {
   }).length;
   return { btns: btns.length, touchOk: small };
 });
-check("360px: buttons keep touch floor", phone.btns === 8 && phone.touchOk === 8, JSON.stringify(phone));
+check("360px: buttons keep touch floor", phone.btns === 9 && phone.touchOk === 9, JSON.stringify(phone));
 await page.screenshot({ path: "/tmp/opencode/sitemap-phone.png" });
 
 console.log("console errors:", errs.length ? errs : "none");

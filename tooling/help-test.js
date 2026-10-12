@@ -50,8 +50,8 @@ ok(keys.indexOf("sitemap") !== -1, "sitemap topic exists");
   deq(split("[oops"), [{ t: "text", s: "[oops" }], "unbalanced bracket stays literal");
 })();
 
-/* Sitemap section nav: fake-doc render of #/help/sitemap — 8 buttons for
- * the 8 h2 markers, ids assigned, click scrolls + focuses, non-sitemap
+/* Sitemap section nav: fake-doc render of #/help/sitemap — 9 buttons for
+ * the 9 h2 markers, ids assigned, click scrolls + focuses, non-sitemap
  * topics get no nav. */
 (function () {
   global.DOM = global.DOM || require("../vanilla/js/utils/dom.js");
@@ -117,9 +117,9 @@ ok(keys.indexOf("sitemap") !== -1, "sitemap topic exists");
   var navs = sitemap.querySelectorAll("nav");
   eq(navs.length, 1, "sitemap renders one section nav");
   var btns = sitemap.querySelectorAll("button");
-  eq(btns.length, 8, "nav holds 8 subsection buttons");
+  eq(btns.length, 9, "nav holds 9 subsection buttons");
   var heads = sitemap.querySelectorAll("h2");
-  eq(heads.length, 8, "article holds 8 section markers");
+  eq(heads.length, 9, "article holds 9 section markers");
   var labels = btns.map(function (b) { return b.textContent; });
   var htexts = heads.map(function (h) { return (h.textContent || "").trim(); });
   assert.deepStrictEqual(labels, htexts, "button labels match headings in order (locale-proof)");
