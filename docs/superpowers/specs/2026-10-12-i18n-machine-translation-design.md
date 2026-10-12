@@ -139,6 +139,19 @@ nothing hover-dependent (principle #7). The button also links back to
 the limitations article, so the asterisk is a route to the caveat, not
 just a disclosure. Keys in `_meta.verified` render native-only, no `*`.
 
+Where the English line comes from: `I18n.enFor(key)` reads the `en`
+master, and falls back to the English default `t()` was handed for that
+key when the master has no entry. The fallback is not belt-and-braces —
+`loadCached()` resolves `{ok:true}` even when the en fetch *fails* (it
+swallows the error and `app.js` boots on either resolution), so a running
+app can render a whole locale with no `en` master at all. §1's promise
+that English is always one tap away has to hold in that boot too: the
+same strings `t()` renders from are recorded and served as the reference.
+The master always wins over a recorded default, so a stale default can
+never displace the shipped dict. When neither source knows a key,
+`enFor` returns `undefined` and the line renders plain — a missing
+reference beats a wrong one.
+
 ### 4.2 Where it mounts
 
 - `ConfirmDialog.show` renders title, named rows, and fee lines through

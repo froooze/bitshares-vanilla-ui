@@ -396,11 +396,11 @@ rule cannot drift per locale the way a hand-written list would."
 **Interfaces:**
 - Consumes: `RiskKeys` (not strictly — listed for ordering clarity; Task 1 is independent).
 - Produces: three new `I18n` methods used by Tasks 3-6 —
-  - `I18n.enFor(key)` → `string | undefined` (English source for `key`, always available)
+  - `I18n.enFor(key)` → `string | undefined` (English source for `key`: the en master when loaded, otherwise the English default `t()` was handed for that key — `loadCached()` resolves `{ok:true}` even when the en fetch fails, so the master can be absent on a running app)
   - `I18n.provenance(code)` → `"machine" | "human" | "none"` (`"none"` = not loaded, or `en`)
   - `I18n.isMachineLocale(code)` → `boolean` (true only when `provenance === "machine"`)
 
-`allowlisted` becomes version-aware: v2 dicts are read from `_meta.coverage`, v1 from `_meta.translated`.
+`allowlisted` becomes version-aware: v2 dicts are read from `_meta.coverage`, v1 from `_meta.translated`. A v2 dict whose `coverage` is missing or is not an array claims nothing, so every key falls back to English.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -470,14 +470,28 @@ In `vanilla/js/i18n.js`, replace `allowlisted` and add the three methods:
     return list.indexOf(key) !== -1;
   }
 
-  /* enFor: the English source text for a key, from the en master seeded at
-   * init. This is what makes dual-line possible without the view having to
-   * thread a second string through every call site.
+  /* enFor: the English source text for a key. Two sources, in order:
+   * the en master that loadCached() loads at boot, then the English
+   * default t() was handed for that key. The fallback exists because
+   * loadCached() resolves {ok:true} even when the en fetch FAILS — it
+   * swallows the error and app.js boots on either resolution — so the
+   * whole active locale can render with registry.en empty. t() answers
+   * in that boot from the call-site default, and the honesty surfaces
+   * need the same string: a machine-labelled locale whose lines have no
+   * English reference is the exact dishonesty this exists to prevent.
+   * The master always wins, so a stale recorded default can never
+   * displace the dict every other surface reads.
    * @param {string} key dotted locale key
-   * @returns {string|undefined} undefined when unknown — callers render plain
-   *   text rather than an empty English line. Never throws. */
+   * @returns {string|undefined} undefined when neither source knows the
+   *   key — callers render plain text rather than an empty English line.
+   *   The raw template, `%(name)s` intact, exactly as the master stores
+   *   it. Never throws. */
   function enFor(key) {
-    return lookup(registry.en, key);
+    var hit = lookup(registry.en, key);
+    if (hit !== undefined) return hit;
+    if (typeof key !== "string" || !key) return undefined;
+    if (Object.prototype.hasOwnProperty.call(enDefaults, key)) return enDefaults[key];
+    return undefined;
   }
 
   /* provenance: review state of a dict, from _meta.provenance (v2).
@@ -492,10 +506,29 @@ In `vanilla/js/i18n.js`, replace `allowlisted` and add the three methods:
   }
 
   /* isMachineLocale: true only when the active dict is machine-filled and
-   * unverified — the single condition the badge and dual-line check. */
+   * unverified — the single condition the badge and dual-line check.
+   * @param {string} code locale code
+   * @returns {boolean} false for en, unloaded, unknown and v1 locales;
+   *   never throws. */
   function isMachineLocale(code) {
     return provenance(code) === "machine";
   }
+```
+
+`t()` gains one line (no signature change, no return change): every non-empty
+`enDefault` is recorded in a private `enDefaults` map for `enFor()` to fall
+back on.
+
+```js
+  var enDefaults = {}; /* English defaults handed to t(), keyed by locale key */
+```
+
+```js
+  function t(key, enDefault, vars) {
+    if (typeof key !== "string" || !key) return "";
+    if (typeof enDefault === "string" && enDefault) enDefaults[key] = enDefault;
+    var hit;
+    /* …unchanged chain below… */
 ```
 
 Export all three on the module's public object (add to the existing `return { ... }`).

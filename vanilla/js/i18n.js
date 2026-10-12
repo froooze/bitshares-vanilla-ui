@@ -28,6 +28,16 @@ var I18n = (function () {
   var registry = {}; /* code -> nested dict (sections); en loaded at boot by loadCached */
   var current = "en";
 
+  /* English defaults handed to t(), keyed by locale key — the second,
+   * always-present English source. loadCached() swallows a failed en
+   * fetch and still resolves {ok:true}, and app.js boots on either
+   * resolution, so registry.en can be empty while the active locale
+   * renders fine: t() then answers from these defaults. Without them
+   * the honesty surfaces lose their English reference exactly when the
+   * en master failed to load. Bounded by the key space (one entry per
+   * key, last write wins), never by call volume. */
+  var enDefaults = {};
+
   /* Strict dotted-key lookup (=== per segment, never prefix/truthy). */
   function lookup(dict, key) {
     if (!dict || typeof key !== "string") return undefined;
@@ -54,16 +64,28 @@ var I18n = (function () {
     return list.indexOf(key) !== -1;
   }
 
-  /* enFor: the English source text for a key, from the en master that
-   * loadCached() loads at boot (before the first render, so it is there
-   * for every honesty surface; undefined only pre-boot or for an unknown
-   * key). This is what makes dual-line possible without the view having to
-   * thread a second string through every call site.
+  /* enFor: the English source text for a key. Two sources, in order:
+   * the en master that loadCached() loads at boot, then the English
+   * default t() was handed for that key. The fallback exists because
+   * loadCached() resolves {ok:true} even when the en fetch FAILS — it
+   * swallows the error and app.js boots on either resolution — so the
+   * whole active locale can render with registry.en empty. t() answers
+   * in that boot from the call-site default, and the honesty surfaces
+   * need the same string: a machine-labelled locale whose lines have no
+   * English reference is the exact dishonesty this exists to prevent.
+   * The master always wins, so a stale recorded default can never
+   * displace the dict every other surface reads.
    * @param {string} key dotted locale key
-   * @returns {string|undefined} undefined when unknown — callers render plain
-   *   text rather than an empty English line. Never throws. */
+   * @returns {string|undefined} undefined when neither source knows the
+   *   key — callers render plain text rather than an empty English line.
+   *   The raw template, `%(name)s` intact, exactly as the master stores
+   *   it. Never throws. */
   function enFor(key) {
-    return lookup(registry.en, key);
+    var hit = lookup(registry.en, key);
+    if (hit !== undefined) return hit;
+    if (typeof key !== "string" || !key) return undefined;
+    if (Object.prototype.hasOwnProperty.call(enDefaults, key)) return enDefaults[key];
+    return undefined;
   }
 
   /* provenance: review state of a dict, from _meta.provenance (v2).
@@ -78,7 +100,10 @@ var I18n = (function () {
   }
 
   /* isMachineLocale: true only when the active dict is machine-filled and
-   * unverified — the single condition the badge and dual-line check. */
+   * unverified — the single condition the badge and dual-line check.
+   * @param {string} code locale code
+   * @returns {boolean} false for en, unloaded, unknown and v1 locales;
+   *   never throws. */
   function isMachineLocale(code) {
     return provenance(code) === "machine";
   }
@@ -96,9 +121,18 @@ var I18n = (function () {
 
   /* t(key, enDefault, vars?) -> string. Chain: current locale (allowlisted)
    * -> en registry -> enDefault (call-site copy, the file:// guarantee) ->
-   * key id itself. Last resort is NEVER blank and NEVER throws. */
+   * key id itself. Last resort is NEVER blank and NEVER throws.
+   * Every non-empty enDefault is recorded for enFor() (see enDefaults), so
+   * the English this call falls back to can still be shown as the
+   * reference line when the en master never loaded. */
   function t(key, enDefault, vars) {
     if (typeof key !== "string" || !key) return "";
+    /* Record only a real string: a missing or empty default must leave
+     * enFor undefined rather than hand the honesty surfaces a blank
+     * English line. The write is a plain data property on a private
+     * object, and reads go through hasOwnProperty, so neither an
+     * inherited member nor a "__proto__" key can pose as an entry. */
+    if (typeof enDefault === "string" && enDefault) enDefaults[key] = enDefault;
     var hit;
     if (current !== "en" && allowlisted(current, key)) {
       hit = lookup(registry[current], key);
