@@ -2,11 +2,13 @@
  * Owns: /help/** (index at /help, one article view per topic key) and
  *   /community (the community link directory, split out 2026-10-04 —
  *   footer REPORT target). Topic list
- *   is curated for this wallet (67 topics: wallet basics plus every feature
+ *   is curated for this wallet (69 topics: wallet basics plus every feature
  *   this app ships — pools, HTLC, credit, samet, barter, spotlight, debit,
  *   trollbox, alerts, prediction/PMO, builder, labs, charts, dashboard,
- *   registration, URIs, and more — plus 4 cross-link topics (assets-issue,
- *   assets-feed, community, menu) that point at their in-app screens.
+ *   registration, URIs, translation honesty, and more — plus 4 cross-link
+ *   topics (assets-issue, assets-feed, community, menu) that point at their
+ *   in-app screens. One topic (translation-limitations) paints a generated
+ *   confidence table beside its prose — see CONFIDENCE.
  * Consumes: I18n.t for chrome, titles, guides, and full article bodies
  *   (help.topic_<key>_title/_text/_body). Bodies are lite-markdown blocks
  *   ("# " heading, "- " bullets, blank-line paragraphs) rendered via
@@ -108,9 +110,33 @@ var HelpUI = (function () {
     ["about-making", "Making of this wallet", "The build story behind this wallet — 413 exchanges across 14 sessions.", "#/about"],
     ["community", "Community", "Chats, forums, explorers, and code around BitShares.", "#/community"],
     ["menu", "Site menu", "Every page in this wallet, grouped the way the navigation menu groups them.", "#/menu"],
-    ["sitemap", "Site map", "Every page in this wallet on one page: each menu page plus the flows and detail views that have no menu card.", null]
+    ["sitemap", "Site map", "Every page in this wallet on one page: each menu page plus the flows and detail views that have no menu card.", null],
+    ["translation-limitations", "Translation limitations", "Machine-filled translations are labeled; the English reference is always one tap away. Help us fix a line.", null]
   ];
 
+  /* CONFIDENCE: per-language review confidence for the translation-limitations
+   * article — THE one data place for it. Rows are [locale code, "high" |
+   * "good" | "moderate"] and the article renders them into both the wide-screen
+   * table and the phone card list, so those two surfaces cannot drift and the
+   * article's prose never has to restate a rating beside a language name (the
+   * test enforces that: no language endonym appears in the body).
+   * English is deliberately absent: it is the reference the others are
+   * translated from, not a machine-filled locale with a confidence to report.
+   * Ratings describe what has been CHECKED, never a promise about the future;
+   * "moderate" is the least claim and is what an unknown rating degrades to. */
+  var CONFIDENCE = [
+    ["es", "high"], ["fr", "high"], ["de", "high"], ["it", "high"], ["pt", "high"],
+    ["ru", "good"], ["zh", "good"], ["ja", "good"], ["ko", "good"],
+    ["hi", "moderate"], ["tr", "moderate"]
+  ];
+  /* Level -> [locale key, English default]. Kept beside the ratings so a new
+   * level is one entry here plus one row in CONFIDENCE, never a branch in the
+   * painter. */
+  var CONFIDENCE_LABEL = {
+    high: ["help.confidence_high", "High"],
+    good: ["help.confidence_good", "Good"],
+    moderate: ["help.confidence_moderate", "Moderate — please verify"]
+  };
   /* Article bodies: key -> sections. Section = [heading, [paragraphs], [bullets]?].
    * English literals (see header). All strings render via textContent only. */
   var BODY_DEFAULTS = {
@@ -184,6 +210,7 @@ var HelpUI = (function () {
       "- [Favourites](#/favourites)",
       "- [Price Alerts](#/alerts)",
       "- [Help](#/help)",
+      "- [Translation limitations](#/help/translation-limitations)",
       "- [About](#/about)",
       "- [Community](#/community)",
       "- [Settings](#/settings)",
@@ -833,6 +860,29 @@ var HelpUI = (function () {
     "menu": [
       "# Site menu",
       "The Menu page lists every screen in this wallet by section, so any desk is one tap away."
+    ],
+    /* translation-limitations: the article the header chip and every
+     * *-marked signing line point at. Lite-markdown blocks, like every other
+     * article; the per-language confidence table is NOT written here — it is
+     * generated from CONFIDENCE (see paintConfidence), because a per-language
+     * fact typed into prose would be a second copy for every translator to
+     * keep in step. */
+    "translation-limitations": [
+      "A translation marked machine-filled was written by a machine. Nobody has read it to check that it says what the English says — which is why the language you are reading now carries the marker chip in this wallet's header.",
+      "# What the * on a line means",
+      "A * on a signing line means two things at once: the wording was filled by a machine, and the original English is one tap away. Tap the * and the English appears under the line exactly as this wallet's English master stores it — the same text every other language was translated from, not a paraphrase of it.",
+      "Amounts, object ids, asset symbols and prices never carry a *. They are chain data rather than sentences, so there is no English wording behind them to compare against. A * therefore always marks a sentence a person should read before signing.",
+      "# What the confidence levels mean",
+      "Every language this wallet ships carries one rating, listed in the table below. High means the wording tracks the English closely and reads naturally. Good means it is usable, though a phrase may still read awkwardly. Moderate means read it as a draft and check the English before you rely on it.",
+      "A rating describes what has been checked so far, for the language as a whole rather than line by line. English itself is the reference: it is written by hand, and every other language is translated from it.",
+      "# How to correct a string",
+      "Corrections start with a report. Say which language the line was in, give the key that line discloses, paste the English it was supposed to say, and suggest the wording you would use instead.",
+      "- One report per line keeps a fix easy to apply.",
+      "- Report the signing screens first: a wrong sentence on a confirm dialog is the costly kind.",
+      "- Use the link at the end of this article. It opens an issue already labelled for translations on this project's tracker, so nothing has to be retyped.",
+      "# Corrections are the only path to human reviewed",
+      "Nothing else moves a string off machine-filled: not how often a language is used, not a second machine agreeing with the first, not a translation memory. A string becomes human reviewed when a person reads it in its own language and accepts it, and a line is human reviewed only for the language that was actually checked.",
+      "Until then the marker stays where it is. A translation nobody has read beats no translation at all, but it is not the same thing as one a person stood behind."
     ]
   };
 
@@ -1069,7 +1119,7 @@ var HelpUI = (function () {
     ["menu.section_govern", "Govern", ["voting", "witnesses", "workers", "committee", "proposals", "prediction", "pmo"]],
     ["menu.section_explore", "Discover", ["assets-mpa", "assets-uia", "assets-private", "assets-issue", "assets-feed", "topops", "fees", "charts", "history-index", "community"]],
     ["menu.section_labs", "Labs", ["txbuilder", "api-lab", "es-lab", "browser"]],
-    ["menu.section_personal", "Personal", ["settings", "extension-install", "trollbox", "favourites", "alerts", "tour", "news", "uris", "glossary", "menu", "sitemap", "about-making"]]
+    ["menu.section_personal", "Personal", ["settings", "extension-install", "trollbox", "favourites", "alerts", "tour", "news", "uris", "translation-limitations", "glossary", "menu", "sitemap", "about-making"]]
   ];
 
   function paintIndexList(doc, wrap) {
@@ -1163,6 +1213,89 @@ var HelpUI = (function () {
     } catch (e13) { /* nav stands down */ }
   }
 
+  /* langName: a language's own name for itself, from the shared I18n endonym
+   * table (the one place those names live — a table of languages must not
+   * translate the names of the languages). Falls back to the bare code when
+   * i18n.js is absent, never blank. */
+  function langName(code) {
+    try {
+      if (typeof I18n !== "undefined" && I18n && typeof I18n.names === "function") {
+        var n = I18n.names()[code];
+        if (n) return n;
+      }
+    } catch (e) { /* code below */ }
+    return String(code || "");
+  }
+
+  /* confidenceLabel: the translated rating. An unknown rating answers with the
+   * LEAST claim ("moderate"), because overstating a translation's quality is
+   * the one dishonesty this article exists to prevent.
+   * @param {string} rating "high" | "good" | "moderate".
+   * @returns {string} never blank. */
+  function confidenceLabel(rating) {
+    var e = CONFIDENCE_LABEL[rating] || CONFIDENCE_LABEL.moderate;
+    return t(e[0], e[1]);
+  }
+
+  /* paintConfidence: the per-language confidence table for
+   * #/help/translation-limitations, rendered from CONFIDENCE. Two surfaces,
+   * ONE row set: the shared .node-table for desk widths, and .node-cards for
+   * phones, because the shared contract hides .node-table below 560px
+   * (app.css:221) — a table-only version of this article would show a 360px
+   * reader an empty page. Table goes through the shared TableRenderer; the
+   * cards are plain DOM.el. Failure: a missing renderer costs the table, never
+   * the cards, so no language is ever dropped from the article. */
+  function paintConfidence(doc, wrap) {
+    wrap.appendChild(DOM.el(doc, "h2",
+      t("help.translation_confidence_heading", "How confident each language is")));
+    var rows = CONFIDENCE.map(function (r) {
+      return { lang: langName(r[0]), level: confidenceLabel(r[1]) };
+    });
+    var table = null;
+    try {
+      if (typeof TableRenderer !== "undefined" && TableRenderer && typeof TableRenderer.render === "function") {
+        table = TableRenderer.render({
+          columns: [
+            { key: "lang", title: t("help.confidence_language", "Language") },
+            { key: "level", title: t("help.confidence_level", "Confidence") }
+          ],
+          rows: rows,
+          keyExtractor: function (row) { return row.lang; }
+        });
+      }
+    } catch (e) { table = null; }
+    if (table) wrap.appendChild(table);
+    var cards = DOM.el(doc, "div", null, "node-cards");
+    rows.forEach(function (row) {
+      var card = DOM.el(doc, "div", null, "node-card");
+      card.appendChild(DOM.el(doc, "div", row.lang, "node-head"));
+      card.appendChild(DOM.el(doc, "div", row.level));
+      cards.appendChild(card);
+    });
+    wrap.appendChild(cards);
+  }
+
+  /* Where a wrong or awkward string gets reported. Lives here and nowhere
+   * else: the article's prose describes the report without repeating the URL,
+   * so the destination has exactly one definition to keep honest. */
+  var ISSUES = "https://github.com/litepresence/bitshares-vanilla-ui/issues/new?labels=translation";
+
+  /* paintReport: the correction route — a real external link to the issue
+   * tracker with the translation label already applied, same treatment as every
+   * other off-app link in this file (new tab + noopener, textContent only).
+   * Content-level [label](url) spans cannot do this: splitLinks() deliberately
+   * renders external URLs as literal text so translated content can never
+   * smuggle an off-app link, which leaves code-owned links as the only honest
+   * way to make the destination tappable. */
+  function paintReport(doc, wrap) {
+    var p = DOM.el(doc, "p", null, "muted"), a = doc.createElement("a");
+    try { a.setAttribute("href", ISSUES); } catch (e) { return; }
+    a.textContent = t("help.report_translation_link", "Report a translation problem on GitHub");
+    try { a.target = "_blank"; a.rel = "noopener noreferrer"; } catch (e2) { /* same-tab fallback */ }
+    p.appendChild(a);
+    wrap.appendChild(p);
+  }
+
   /* Topic: title + guide summary + full article body + in-app pointer + back.
    * help-article hook (app.css): prose paragraphs/ul cap at ~75ch so article
    * lines stay readable at desk widths. Display-only class, no strings. */
@@ -1171,6 +1304,14 @@ var HelpUI = (function () {
     wrap.appendChild(DOM.pageHead(doc, t("help.topic_" + topic[0] + "_title", topic[1]), "question-circle"));
     wrap.appendChild(DOM.el(doc, "p", t("help.topic_" + topic[0] + "_text", topic[2])));
     paintBody(doc, wrap, topic[0]);
+    if (topic[0] === "translation-limitations") {
+      /* Below the prose on purpose: the article's own section explains the
+       * levels and then hands over to the generated table, and the correction
+       * link lands under "How to correct a string" where the reader is asked
+       * to act. */
+      paintConfidence(doc, wrap);
+      paintReport(doc, wrap);
+    }
     if (topic[0] === "sitemap") paintSitemapNav(doc, wrap);
     if (topic[3]) {
       var p = DOM.el(doc, "p", null, "muted"), a = doc.createElement("a");
@@ -1194,7 +1335,7 @@ var HelpUI = (function () {
   }
 
   return { renderHelp: renderHelp, renderCommunity: renderCommunity, TOPICS: TOPICS,
-    _test: { topicBody: topicBody, GROUPS: GROUPS, splitLinks: splitLinks } };
+    _test: { topicBody: topicBody, GROUPS: GROUPS, splitLinks: splitLinks, CONFIDENCE: CONFIDENCE } };
 })();
 
 if (typeof module !== "undefined") { module.exports = HelpUI; }

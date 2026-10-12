@@ -282,4 +282,71 @@ assert.strictEqual(noDoc.className, "i18n-risk-plain", "the no-document floor is
 assert.strictEqual(noDoc.textContent, "", "and it is empty — nothing is rendered, rather than \"null\"");
 assert.ok(headless.RiskText.isActive() === false, "isActive is false without I18n");
 
+/* 10. Both of this widget's own strings are KEYED (Task 6 closed the two
+ *     English literals). Checked two ways, because either alone is gameable:
+ *     the source must name the keys, and a render must actually USE them — a
+ *     module that keeps a hardcoded string beside a t() call passes a
+ *     grep-only check and still shows English to every non-English reader. */
+(function () {
+  var src = load("vanilla/js/ui/risk-text.js");
+  var KEYS = [
+    ["i18n.risk_show_english", "Show the English reference for this line"],
+    ["i18n.risk_about_translations", "About these translations"]
+  ];
+  KEYS.forEach(function (pair) {
+    var call = new RegExp("t\\(\\s*\"" + pair[0] + "\"\\s*,\\s*\"" + pair[1] + "\"\\s*\\)");
+    assert.ok(call.test(src), "the string is resolved through t(" + pair[0] + ")");
+    var occurrences = src.split(pair[1]).length - 1;
+    assert.strictEqual(occurrences, 1,
+      "the English text survives only as that t() default, not as a second literal: " + pair[1]);
+  });
+
+  /* A locale-aware sandbox: same module, an I18n whose t() answers a
+   * translation. Fresh document + listener array so the "one delegated
+   * listener" assertion above keeps counting the original sandbox's. */
+  function doc2() {
+    return { createElement: el, addEventListener: function () {},
+      removeEventListener: function () {} };
+  }
+  var keyed = { locale: function () { return "es"; },
+    isMachineLocale: function (c) { return c === "es"; },
+    enFor: function (k) { return k === "unlockconfirm.confirm" ? "Unlock to sign" : undefined; },
+    t: function (k, dflt) {
+      return k === "i18n.risk_show_english" ? "Mostrar la referencia en inglés de esta línea"
+        : k === "i18n.risk_about_translations" ? "Acerca de estas traducciones"
+        : dflt;
+    } };
+  var box = { document: doc2(), I18n: keyed };
+  box.window = box;
+  vm.createContext(box);
+  vm.runInContext(load("vanilla/js/utils/touchable.js"), box);
+  vm.runInContext(load("vanilla/js/utils/dom.js"), box);
+  vm.runInContext(load("vanilla/js/utils/event.js"), box);
+  vm.runInContext(load("vanilla/js/ui/risk-text.js"), box);
+  var line = box.RiskText.render(box.document, "Desbloquear para firmar", "unlockconfirm.confirm");
+  assert.strictEqual(line.className, "i18n-risk", "the keyed sandbox dual-lines");
+  assert.strictEqual(find(line, "i18n-risk-star").getAttribute("aria-label"),
+    "Mostrar la referencia en inglés de esta línea",
+    "the asterisk's accessible name comes from the dictionary, not a literal");
+  assert.strictEqual(find(line, "i18n-risk-more").textContent, "Acerca de estas traducciones",
+    "the article link's label comes from the dictionary, not a literal");
+  /* …and a locale with no value for the key still renders English, because the
+   * t() default is kept at the call site (a bare t(key) would show the key). */
+  var bareI18n = { locale: function () { return "de"; },
+    isMachineLocale: function (c) { return c === "de"; },
+    enFor: function () { return "Unlock to sign"; },
+    t: function (k, dflt) { return dflt; } };
+  var box2 = { document: doc2(), I18n: bareI18n };
+  box2.window = box2;
+  vm.createContext(box2);
+  vm.runInContext(load("vanilla/js/utils/dom.js"), box2);
+  vm.runInContext(load("vanilla/js/ui/risk-text.js"), box2);
+  var line2 = box2.RiskText.render(box2.document, "Entsperren zum Signieren", "unlockconfirm.confirm");
+  assert.strictEqual(find(line2, "i18n-risk-star").getAttribute("aria-label"),
+    "Show the English reference for this line",
+    "an untranslated locale falls back to English, never to the key name");
+  assert.strictEqual(find(line2, "i18n-risk-more").textContent, "About these translations",
+    "and the article link label likewise");
+})();
+
 console.log("OK: risk-text");

@@ -4,26 +4,25 @@
  *   aria-controls, 44px touch floor — never a hover-only affordance, AGENTS.md
  *   §3.6), the English reference panel it toggles, and the link to the
  *   translation-limitations article from the exact line the user doubted.
- * Consumes: I18n.locale/isMachineLocale/enFor, DOM.el (element creation — never
- *   reimplemented here), the global touchable() (44px floor, same guard shape
- *   as ui/confirm.js so Node harnesses without it still render), EventDelegate
- *   (ONE delegated click listener, the shared helper — not a private one).
+ * Consumes: I18n.locale/isMachineLocale/enFor/t, DOM.el (element creation —
+ *   never reimplemented here), the global touchable() (44px floor, same guard
+ *   shape as ui/confirm.js so Node harnesses without it still render),
+ *   EventDelegate (ONE delegated click listener, the shared helper — not a
+ *   private one).
  * Side effects: creates detached elements; adds at most one delegated
  *   document-level "click" listener, on the first dual-line render only.
  *   No storage, no network, no signing.
  * Created by: building-vanilla-slices skill,
- *   docs/superpowers/plans/2026-10-12-i18n-machine-translation.md Task 3.
+ *   docs/superpowers/plans/2026-10-12-i18n-machine-translation.md Task 3;
+ *   the two literals below keyed in Task 6.
  * Failures: never throws. An unknown key, a missing English source (I18n.enFor
  *   returns undefined when the en master never loaded and no t() default was
  *   recorded), a non-machine locale, a verified locale, or a missing doc all
  *   degrade to the plain text wrapper — a missing reference beats a wrong one.
  *
- * Two UI strings below are still English literals (the asterisk's accessible
- * name and the article link's label). They cannot be keyed in this task: the
- * locale dictionaries and their _meta allowlists are not in this task's write
- * set, and an unkeyed t() call site fails the drift gate
- * (tooling/check_i18n.py). Task 6 adds the `i18n.risk_*` keys to all 12
- * dicts; these two literals are the exact strings reserved for them. */
+ * Both of this widget's own strings are keyed (i18n.risk_*), with the English
+ * default kept verbatim at the call site so a failed i18n.js load still names
+ * the button and the link in English. */
 var RiskText = (function () {
   "use strict";
 
@@ -32,12 +31,24 @@ var RiskText = (function () {
   var STAR_CLASS = "i18n-risk-star";
   var WRAP_CLASS = "i18n-risk";
   var OPEN_CLASS = "is-open";
-  /* Reserved keys for the two literals above (Task 6 owns the dictionaries). */
-  var SHOW_EN_LABEL = "Show the English reference for this line";
-  var ABOUT_LABEL = "About these translations";
 
   var bound = false;
   var uid = 0;
+
+  /* t: keyed string through the SHARED locale resolver, called defensively.
+   * RiskText mounts inside ConfirmDialog and UnlockConfirm, so an i18n.js that
+   * failed to load, or a t() that throws, must leave the English default rather
+   * than take the signing dialog down with a ReferenceError. Same guard shape
+   * as ui/confirm.js and ui/i18n-badge.js.
+   * @param {string} key dotted locale key.
+   * @param {string} dflt English text, byte-identical to en.json.
+   * @returns {string} never blank, never throws. */
+  function t(key, dflt) {
+    try {
+      if (typeof I18n !== "undefined" && I18n && typeof I18n.t === "function") return I18n.t(key, dflt);
+    } catch (e) { /* default below */ }
+    return dflt;
+  }
 
   /* activeMachine: is the ACTIVE locale machine-filled and unverified?
    * I18n.isMachineLocale(code) takes the code (calling it bare answers
@@ -258,7 +269,13 @@ var RiskText = (function () {
     star.type = "button";
     star.setAttribute("aria-expanded", "false");
     star.setAttribute("aria-controls", enId);
-    star.setAttribute("aria-label", SHOW_EN_LABEL);
+    /* Both strings below resolve at RENDER time, never at module load:
+     * resolving at load would freeze whatever the registry held then, and a
+     * locale switch must re-read the dictionary for a widget that lives inside
+     * the signing dialogs. The English defaults sit inline with their keys —
+     * byte-identical to en.json, which tooling/check_i18n.py gate 6 enforces
+     * call site by call site. */
+    star.setAttribute("aria-label", t("i18n.risk_show_english", "Show the English reference for this line"));
     if (typeof touchable === "function") touchable(star);
     wrap.appendChild(star);
 
@@ -272,7 +289,7 @@ var RiskText = (function () {
      * reference stays byte-for-byte the en master string with nothing appended
      * to it. CSS (.i18n-risk.is-open .i18n-risk-more) keeps it out of sight
      * until the line is open — which is why toggle() owns that class. */
-    var more = mk(owner, "a", ABOUT_LABEL, "i18n-risk-more");
+    var more = mk(owner, "a", t("i18n.risk_about_translations", "About these translations"), "i18n-risk-more");
     more.href = ARTICLE;
     wrap.appendChild(more);
 

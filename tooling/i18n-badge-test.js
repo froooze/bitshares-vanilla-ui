@@ -465,7 +465,11 @@ assert.ok(published || declaredByPlan,
   "the details link promises a help article that is PUBLISHED (" + hrefSlug +
   " in TOPICS/BODY_DEFAULTS) or DECLARED by the plan — a rename in only one of the two fails here");
 if (published) {
-  assert.ok(HelpUI._test.topicBody("sitemap").join("\n").indexOf("](#/help/" + hrefSlug + ")") !== -1,
+  /* topicBody() returns the body JOINED as one string (the page splits it on
+   * blank lines), so this reads the sitemap text directly. Task 5 wrote
+   * `.join("\n")` here while the article did not exist yet — the assertion was
+   * unreachable and its TypeError hid until Task 6 published the topic. */
+  assert.ok(String(HelpUI._test.topicBody("sitemap")).indexOf("](#/help/" + hrefSlug + ")") !== -1,
     "a published article is reachable from the sitemap");
 }
 topics.forEach(function (t) {

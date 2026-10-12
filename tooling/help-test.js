@@ -9,7 +9,7 @@ var passed = 0;
 function eq(a, e, n) { assert.strictEqual(a, e, n + " (got " + JSON.stringify(a) + ")"); passed++; }
 function ok(c, n) { assert.ok(c, n); passed++; }
 var T = HelpUI.TOPICS;
-eq(T.length, 68, "68 topics");
+eq(T.length, 69, "69 topics");
 var keys = T.map(function (r) { return r[0]; });
 eq(new Set(keys).size, keys.length, "topic keys unique");
 keys.forEach(function (k) {
@@ -29,6 +29,56 @@ keys.forEach(function (k) {
   ok(keys.indexOf(k) !== -1, "new topic " + k);
 });
 ok(keys.indexOf("sitemap") !== -1, "sitemap topic exists");
+
+/* translation-limitations: the article both honesty surfaces link to. Rule 10
+ * (AGENTS.md §7) wants two things from a new page — listed in the sitemap body
+ * AND navigable — so both are checked here; the article's own contents and its
+ * confidence table are covered by tooling/help-translation-limitations-test.js,
+ * which renders it. */
+(function () {
+  var SLUG = "translation-limitations";
+  var fs2 = require("fs");
+  var path2 = require("path");
+  var ROOT = path2.join(__dirname, "..");
+  ok(keys.indexOf(SLUG) !== -1, SLUG + " is a help topic");
+  var entry = T.filter(function (r) { return r[0] === SLUG; })[0];
+  eq(entry.length, 4, "topic row is [slug, title, blurb, href]");
+  var groupedHere = HelpUI._test.GROUPS.filter(function (g) {
+    return g[2].indexOf(SLUG) !== -1;
+  });
+  eq(groupedHere.length, 1, "the article sits in exactly one help-index group");
+  /* Listed in the sitemap body, exactly once, as a route link (not prose). */
+  var sitemap = HelpUI._test.topicBody("sitemap");
+  var link = "- [Translation limitations](#/help/translation-limitations)";
+  eq(sitemap.split(link).length - 1, 1, "sitemap lists the article exactly once");
+  ok(sitemap.split("\n").indexOf(link) !== -1, "the sitemap entry is its own line (one page per line)");
+  /* Reachable in-app: the header chip and every *-marked signing line point
+   * at this slug, so the page is never a hash you can only type. */
+  ["vanilla/js/ui/i18n-badge.js", "vanilla/js/ui/risk-text.js"].forEach(function (rel) {
+    ok(fs2.readFileSync(path2.join(ROOT, rel), "utf8").indexOf("#/help/" + SLUG) !== -1,
+      rel + " links to the article");
+  });
+  /* Every new key in every shipped dictionary — the drift gate proves the
+   * values agree with English, this proves the keys are there at all. */
+  var NEW = ["help.topic_" + SLUG + "_title", "help.topic_" + SLUG + "_text",
+    "help.topic_" + SLUG + "_body", "help.translation_confidence_heading",
+    "help.confidence_language", "help.confidence_level", "help.confidence_high",
+    "help.confidence_good", "help.confidence_moderate", "help.report_translation_link",
+    "i18n.risk_show_english", "i18n.risk_about_translations"];
+  function dig(dict, key) {
+    return key.split(".").reduce(function (node, seg) {
+      return (node && typeof node === "object") ? node[seg] : undefined;
+    }, dict);
+  }
+  fs2.readdirSync(path2.join(ROOT, "vanilla/locales")).filter(function (f) {
+    return /\.json$/.test(f);
+  }).forEach(function (f) {
+    var dict = JSON.parse(fs2.readFileSync(path2.join(ROOT, "vanilla/locales", f), "utf8"));
+    NEW.forEach(function (k) {
+      ok(typeof dig(dict, k) === "string" && dig(dict, k).length > 0, f + " carries " + k);
+    });
+  });
+})();
 
 /* splitLinks: inline [label](#/hash) tokenizer (sitemap sitemap links). */
 (function () {
