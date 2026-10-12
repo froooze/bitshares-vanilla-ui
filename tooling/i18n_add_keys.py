@@ -221,7 +221,66 @@ def apply_batch(data, ns, anchor, new_keys):
     return True
 
 
+def clobber_check():
+    """Refuse to run if this script would overwrite real translations.
+
+    This batch inserter writes ENGLISH values into every dict. That was
+    harmless while every locale was an honest English stub, but the
+    locales are now machine-filled (task i18n-machine-translation), and a
+    rerun here silently reverts ~290 translated lines per dict back to
+    English. So: before touching anything, check whether any locale holds
+    values this script does not know about, and abort if so.
+
+    Deleting this script is the other correct answer; the guard exists so
+    a stray rerun fails loudly instead of destroying work.
+    """
+    known = {}
+    for _ns, _anchor, new_keys in BATCHES:
+        for k, v in new_keys.items():
+            known[k] = v
+
+    def flat(d, p=""):
+        out = {}
+        for k, v in d.items():
+            if k == "_meta":
+                continue
+            if isinstance(v, dict):
+                out.update(flat(v, p + k + "."))
+            else:
+                out[p + k] = v
+        return out
+
+    en_path = "vanilla/locales/en.json"
+    with io.open(en_path, encoding="utf-8") as f:
+        en = flat(json.load(f))
+
+    at_risk = []
+    for code in LOCALES:
+        if code == "en":
+            continue
+        with io.open("vanilla/locales/%s.json" % code, encoding="utf-8") as f:
+            loc = flat(json.load(f))
+        for k, v in loc.items():
+            if k in known and v == en.get(k) and known[k] != en.get(k):
+                continue  # this batch owns it; a rewrite is expected
+            if v != en.get(k) and k in en:
+                at_risk.append("%s:%s" % (code, k))
+
+    if at_risk:
+        print("ABORT: %d translated value(s) would be reverted to English."
+              % len(at_risk))
+        print("  e.g. %s" % ", ".join(at_risk[:5]))
+        print("  This inserter writes English into every dict; the locales are")
+        print("  now machine-filled, so a rerun destroys real work. Use the")
+        print("  insert-only sibling instead, or delete this script.")
+        return 1
+    return 0
+
+
 def main():
+    rc = clobber_check()
+    if rc:
+        return rc
     for code in LOCALES:
         path = "vanilla/locales/%s.json" % code
         with io.open(path, encoding="utf-8") as f:
