@@ -107,8 +107,8 @@ var MenuUI = (function () {
         { href: "#/create-worker", icon: "cogs", titleKey: "menu.p_worker", titleDefault: "Create Worker", blurbKey: "menu.d_worker", blurbDefault: "Propose chain-funded work." },
         { href: "#/prediction", icon: "prediction", titleKey: "menu.p_prediction", titleDefault: "Prediction Markets", blurbKey: "menu.d_prediction", blurbDefault: "YES/NO shares on real outcomes." }
       ] },
-    { slug: "explore", icon: "server",
-      titleKey: "menu.section_explore", titleDefault: "Explore",
+    { slug: "discover", icon: "server",
+      titleKey: "menu.section_explore", titleDefault: "Discover",
       blurbKey: "menu.blurb_explore", blurbDefault: "Chain truth: blocks, assets, fees, activity.",
       links: [
         { href: "#/explorer", icon: "server", titleKey: "menu.p_explorer", titleDefault: "Explore", blurbKey: "menu.d_explorer", blurbDefault: "Blocks, transactions, and objects." },
@@ -301,7 +301,7 @@ var MenuUI = (function () {
         t("menu.unknown_section", "No menu section with that name. Pick one below."), "muted"));
       var back = doc.createElement("a");
       back.className = "menu-card";
-      back.setAttribute("href", "#/menu");
+      back.setAttribute("href", "#/help/sitemap");
       back.textContent = t("menu.all_pages", "All pages");
       wrap.appendChild(back);
       return;

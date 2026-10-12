@@ -1410,6 +1410,10 @@ tr.xplore-flash { animation: xplore-flash 1.25s ease-out 1; }
   .help-index { column-count: 2; column-gap: 48px; }
   .help-index li { break-inside: avoid; }
 }
+/* Sitemap section nav: wrapping row of jump buttons above the first
+ * section marker. Tokens only; buttons ride the shared .subtle-btn base
+ * for the 44px floor (plus the touchable() call at build time). */
+.help-sitemap-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
 
 /* Candy 2: busy-box shimmer, glow, physics, watermarks (2026-09-30).
  * Extends the "Hover candy" block above under the same contract: transform /

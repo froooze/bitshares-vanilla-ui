@@ -143,17 +143,22 @@ console.log("app-shell-test: " + passed + " passed, 0 failed");
   }
   global.MenuUI = { SECTIONS: [
     section("wallet", 2), section("trade", 2), section("earn", 2),
-    section("govern", 2), section("explore", 2), section("labs", 2),
+    section("govern", 2), section("discover", 2), section("labs", 2),
     section("personal", 2)
   ] };
   var panel = App._test.buildDirectory(true);
-  // pulldown contents: 7 section links + All pages, sections-only, vertical
+  // pulldown contents: 7 section links + All pages (sitemap article), vertical
   var links = panel.querySelectorAll("a");
   assert.strictEqual(links.length, 8, "pulldown holds 7 sections + all-pages (got " + links.length + ")");
+  var sectionLinks = 0, sitemapLinks = 0;
   links.forEach(function (a) {
     var href = a.attributes.href || "";
-    assert.ok(href.indexOf("#/menu") === 0, "sections-only: " + href + " lives under #/menu");
+    if (href === "#/help/sitemap") { sitemapLinks++; return; }
+    assert.ok(href.indexOf("#/menu/") === 0, "section link lives under #/menu/: " + href);
+    sectionLinks++;
   });
+  assert.strictEqual(sectionLinks, 7, "7 section links under #/menu/");
+  assert.strictEqual(sitemapLinks, 1, "All pages links the sitemap article");
   assert.ok(!panel.querySelector("a[href='#/']"), "no dashboard duplication");
   assert.ok(!panel.querySelector("a[href='#/market/BTS_USD']"), "no Exchange duplication");
   assert.ok(!panel.querySelector("a[href='#/credit-offer']"), "no Credit duplication");
@@ -161,7 +166,7 @@ console.log("app-shell-test: " + passed + " passed, 0 failed");
   assert.ok(!panel.querySelector("a[href='#/explorer']"), "no Explore duplication");
   assert.ok(!panel.querySelector("a[href='#/pools']"), "pools in neither menu (Trade sitemap only)");
   assert.ok(panel.querySelector("a[href='#/menu/wallet'] img.nav-icon"), "section link keeps its icon");
-  assert.ok(panel.querySelector("a[href='#/menu']"), "All pages overview link present");
+  assert.ok(panel.querySelector("a[href='#/help/sitemap']"), "All pages sitemap link present");
   assert.ok(!panel.querySelector("div[role='separator']"), "separator gone with the bar links");
   var css = fs.readFileSync(path.join(__dirname, "..", "vanilla", "css", "app.css"), "utf8");
   assert.ok(/#nav-directory\s*\{[^}]*position:\s*fixed/.test(css), "directory is a fixed overlay, not in-flow");

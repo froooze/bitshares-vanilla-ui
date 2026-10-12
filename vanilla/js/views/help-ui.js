@@ -107,12 +107,87 @@ var HelpUI = (function () {
     ["glossary", "Glossary", "Names used across this wallet: objects (1.x.y), operations, witnesses, committee.", null],
     ["about-making", "Making of this wallet", "The build story behind this wallet — 413 exchanges across 14 sessions.", "#/about"],
     ["community", "Community", "Chats, forums, explorers, and code around BitShares.", "#/community"],
-    ["menu", "Site menu", "Every page in this wallet, grouped the way the navigation menu groups them.", "#/menu"]
+    ["menu", "Site menu", "Every page in this wallet, grouped the way the navigation menu groups them.", "#/menu"],
+    ["sitemap", "Site map", "Every page in this wallet on one page: each menu page plus the flows and detail views that have no menu card.", null]
   ];
 
   /* Article bodies: key -> sections. Section = [heading, [paragraphs], [bullets]?].
    * English literals (see header). All strings render via textContent only. */
   var BODY_DEFAULTS = {
+    "sitemap": [
+      "Every page in this wallet, grouped the way the burger menu groups them. Anything with a link opens directly; detail views listed under Pages without a menu card open from their parent pages.",
+      "# Wallet",
+      "- [Dashboard](#/)",
+      "- [My account](#/account/me)",
+      "- [Accounts](#/accounts)",
+      "- [Transfer](#/transfer)",
+      "- [Invoice](#/invoice)",
+      "- [Vesting](#/vesting)",
+      "- [Wallet](#/wallet)",
+      "- [Change wallet password](#/wallet/password)",
+      "- [Create Wallet (Brainkey)](#/create-wallet-brainkey)",
+      "- [Import existing account](#/existing-account)",
+      "- [Register a new account](#/create-account)",
+      "- [Login](#/login)",
+      "- [Registration](#/registration)",
+      "- [Referrals](#/referrals)",
+      "# Trade",
+      "- [Exchange](#/markets)",
+      "- [Instant Trade](#/instant-trade)",
+      "- [Liquidity Pools](#/pools)",
+      "- [Cross Rates](#/cross-rates)",
+      "- [Borrow](#/borrow)",
+      "- [Barter](#/barter)",
+      "- [Deposit / Withdraw](#/deposit-withdraw)",
+      "- [Same-T Funds](#/samet)",
+      "- [Spotlight](#/spotlight)",
+      "# Earn & Protect",
+      "- [Credit Offer](#/credit-offer)",
+      "- [Direct Debit](#/direct-debit)",
+      "- [HTLC](#/htlc)",
+      "- [Tickets](#/tickets)",
+      "- [Airdrop](#/airdrop)",
+      "- [Custom Authorities](#/authorities)",
+      "- [Account Lists](#/lists)",
+      "# Govern",
+      "- [Voting](#/voting)",
+      "- [Proposals](#/proposals)",
+      "- [Create Worker](#/create-worker)",
+      "- [Prediction Markets](#/prediction)",
+      "# Discover",
+      "- [Explore](#/explorer)",
+      "- [Assets](#/assets)",
+      "- [Create asset](#/assets/create)",
+      "- [Issue Asset](#/assets/issue)",
+      "- [Publish feed](#/assets/feed)",
+      "- [Network fees](#/explorer/fees)",
+      "- [Operations](#/ops)",
+      "- [Top Operations](#/top-ops)",
+      "- [News](#/news)",
+      "# Labs",
+      "- [API Lab](#/api-lab)",
+      "- [ES Lab](#/es-lab)",
+      "- [Transaction Builder](#/txbuilder)",
+      "- [Account Network](#/account-network)",
+      "# Personal",
+      "- [Trollbox](#/trollbox)",
+      "- [Favourites](#/favourites)",
+      "- [Price Alerts](#/alerts)",
+      "- [Help](#/help)",
+      "- [About](#/about)",
+      "- [Community](#/community)",
+      "- [Settings](#/settings)",
+      "# Pages without a menu card",
+      "Registration variants, account and market desks, and detail views open from the pages above or from links elsewhere in the wallet.",
+      "- [Local registration](#/registration/local)",
+      "- [Cloud registration](#/registration/cloud)",
+      "- [Example account page](#/account/committee-account)",
+      "- [Example market desk](#/market/BTS_USD)",
+      "- [Example asset page](#/asset/BTS)",
+      "- [Example pool desk](#/pools/1.19.66)",
+      "- [Menu overview](#/menu)",
+      "Detail views for a specific credit offer, deal, proposal, block, transaction, HTLC, prediction market, transfer recipient, invoice, gateway, settings tab, explorer tab, or help article open from their parent pages and take an id or name in the address."
+    ],
     "disclaimer": [
       "# What this wallet is",
       "This wallet is an interface to the BitShares blockchain. Information you see here — balances, orders, markets — is created by blockchain users, not by this app.",
@@ -784,12 +859,49 @@ var HelpUI = (function () {
   /* Renders one lite-markdown article: "# " lines become h2, "- " lines
    * group into one ul, consecutive text lines join into one paragraph (so
    * translated blocks stay correct even if a translator wraps lines
-   * differently). Every string lands via textContent — structure without
-   * HTML injection. */
+   * differently). Inline [label](#/hash) spans become real anchors;
+   * anything else renders as literal text. Every string lands via
+   * textContent/setAttribute — structure without HTML injection. */
+  /* splitLinks: pure tokenizer for inline links. Params: text string.
+   * Returns [{t:"text",s} | {t:"link",label,href}]. A span becomes a link
+   * ONLY as [non-empty label](#/internal-hash): external URLs, empty
+   * labels, and malformed spans stay literal text, so translated content
+   * can never smuggle an off-app link or markup. Unit-tested. */
+  function splitLinks(text) {
+    var out = [], re = /\[([^\]]+)\]\((#[^)]+)\)/g, last = 0, m, s = "";
+    try { s = (text === undefined || text === null) ? "" : String(text); } catch (e) { s = ""; }
+    while ((m = re.exec(s)) !== null) {
+      if (m.index > last) out.push({ t: "text", s: s.slice(last, m.index) });
+      if (m[1] && m[2].indexOf("#/") === 0) out.push({ t: "link", label: m[1], href: m[2] });
+      else out.push({ t: "text", s: m[0] });
+      last = m.index + m[0].length;
+    }
+    if (last < s.length) out.push({ t: "text", s: s.slice(last) });
+    if (!out.length) out.push({ t: "text", s: s });
+    return out;
+  }
+  /* appendRun: a token list into a parent (text nodes + guarded anchors). */
+  function appendRun(doc, parent, text) {
+    var toks = splitLinks(text), i;
+    for (i = 0; i < toks.length; i++) {
+      if (toks[i].t === "link") {
+        var a = doc.createElement("a");
+        try { a.setAttribute("href", toks[i].href); } catch (e) { continue; }
+        a.textContent = toks[i].label;
+        parent.appendChild(a);
+      } else {
+        parent.appendChild(doc.createTextNode(toks[i].s));
+      }
+    }
+  }
   function paintBlock(doc, wrap, items) {
     var list = null, para = [], i;
     function flushPara() {
-      if (para.length) wrap.appendChild(DOM.el(doc, "p", para.join(" ")));
+      if (para.length) {
+        var p = doc.createElement("p");
+        appendRun(doc, p, para.join(" "));
+        wrap.appendChild(p);
+      }
       para = [];
     }
     function closeList() {
@@ -797,7 +909,7 @@ var HelpUI = (function () {
         var ul = doc.createElement("ul");
         for (i = 0; i < list.length; i++) {
           var li = doc.createElement("li");
-          li.textContent = list[i];
+          appendRun(doc, li, list[i]);
           ul.appendChild(li);
         }
         wrap.appendChild(ul);
@@ -948,9 +1060,9 @@ var HelpUI = (function () {
     ["menu.section_trade", "Trade", ["bitshares", "blockchain", "dex-intro", "dex-trading", "dex-shorting", "instant", "pools", "gateways", "gateways-xbts", "gateways-ioxbank", "borrow-extra", "samet", "barter", "spotlight"]],
     ["menu.section_earn", "Earn & Protect", ["credit", "direct-debit", "htlc", "tickets", "airdrop"]],
     ["menu.section_govern", "Govern", ["voting", "witnesses", "workers", "committee", "proposals", "prediction", "pmo"]],
-    ["menu.section_explore", "Explore", ["assets-mpa", "assets-uia", "assets-private", "assets-issue", "assets-feed", "topops", "fees", "charts", "history-index", "community"]],
+    ["menu.section_explore", "Discover", ["assets-mpa", "assets-uia", "assets-private", "assets-issue", "assets-feed", "topops", "fees", "charts", "history-index", "community"]],
     ["menu.section_labs", "Labs", ["txbuilder", "api-lab", "es-lab", "browser"]],
-    ["menu.section_personal", "Personal", ["settings", "extension-install", "trollbox", "favourites", "alerts", "tour", "news", "uris", "glossary", "menu", "about-making"]]
+    ["menu.section_personal", "Personal", ["settings", "extension-install", "trollbox", "favourites", "alerts", "tour", "news", "uris", "glossary", "menu", "sitemap", "about-making"]]
   ];
 
   function paintIndexList(doc, wrap) {
@@ -990,6 +1102,60 @@ var HelpUI = (function () {
     }
   }
 
+  /* Sitemap section nav: one button per h2 below, scrolling without ever
+   * touching location.hash (the router owns the hash — an in-page anchor
+   * would route to 404). Labels read from the rendered headings, so every
+   * locale matches with zero translation burden and zero drift. Buttons
+   * only, never links; shared touchable floor; focus follows scroll for
+   * screen readers. Sitemap topic only — called from paintTopic. */
+  function paintSitemapNav(doc, wrap) {
+    var heads = null;
+    try { heads = wrap.querySelectorAll("h2"); } catch (e) { heads = null; }
+    if (!heads || !heads.length) return;
+    var nav = null;
+    try {
+      nav = doc.createElement("nav");
+      nav.setAttribute("aria-label", t("help.sitemap_sections", "Sections"));
+      nav.className = "help-sitemap-nav";
+    } catch (e2) { return; }
+    var placed = 0, i;
+    for (i = 0; i < heads.length; i++) {
+      (function (h, n) {
+        var label = "";
+        try { label = (h.textContent || "").trim(); } catch (e3) { label = ""; }
+        if (!label) return;
+        try { h.setAttribute("id", "sitemap-sec-" + n); } catch (e4) { return; }
+        try { h.setAttribute("tabindex", "-1"); } catch (e5) { /* focus stands down */ }
+        var b = doc.createElement("button");
+        try {
+          b.setAttribute("type", "button");
+          b.className = "subtle-btn";
+          b.textContent = label;
+        } catch (e6) { return; }
+        try { if (typeof touchable === "function") touchable(b); } catch (e7) { /* CSS floor stands */ }
+        b.addEventListener("click", function () {
+          var target = null;
+          try {
+            var all = wrap.querySelectorAll("h2");
+            target = (all && all[n]) || null;
+          } catch (e8) { target = null; }
+          if (!target) return;
+          try { if (typeof target.scrollIntoView === "function") target.scrollIntoView(); } catch (e9) { /* scroll stands */ }
+          try { if (typeof target.focus === "function") target.focus({ preventScroll: true }); } catch (e10) { /* focus stands */ }
+        });
+        try { nav.appendChild(b); placed++; } catch (e11) { /* button stands down */ }
+      })(heads[i], i);
+    }
+    if (!placed) return;
+    /* Buttons on top: ahead of the first section marker. */
+    try {
+      var first = null;
+      try { first = wrap.querySelector("h2"); } catch (e12) { first = null; }
+      if (first && first.parentNode === wrap) wrap.insertBefore(nav, first);
+      else wrap.appendChild(nav);
+    } catch (e13) { /* nav stands down */ }
+  }
+
   /* Topic: title + guide summary + full article body + in-app pointer + back.
    * help-article hook (app.css): prose paragraphs/ul cap at ~75ch so article
    * lines stay readable at desk widths. Display-only class, no strings. */
@@ -998,6 +1164,7 @@ var HelpUI = (function () {
     wrap.appendChild(DOM.pageHead(doc, t("help.topic_" + topic[0] + "_title", topic[1]), "question-circle"));
     wrap.appendChild(DOM.el(doc, "p", t("help.topic_" + topic[0] + "_text", topic[2])));
     paintBody(doc, wrap, topic[0]);
+    if (topic[0] === "sitemap") paintSitemapNav(doc, wrap);
     if (topic[3]) {
       var p = DOM.el(doc, "p", null, "muted"), a = doc.createElement("a");
       a.href = topic[3]; a.textContent = t("help.open_in_the_wallet", "Open in the wallet");
@@ -1020,7 +1187,7 @@ var HelpUI = (function () {
   }
 
   return { renderHelp: renderHelp, renderCommunity: renderCommunity, TOPICS: TOPICS,
-    _test: { topicBody: topicBody, GROUPS: GROUPS } };
+    _test: { topicBody: topicBody, GROUPS: GROUPS, splitLinks: splitLinks } };
 })();
 
 if (typeof module !== "undefined") { module.exports = HelpUI; }

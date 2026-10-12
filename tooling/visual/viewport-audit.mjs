@@ -148,7 +148,7 @@ export const ROUTES = [
   { src: "/menu/:section", hash: "#/menu/trade", group: "expanded" },
   { src: "/menu/:section", hash: "#/menu/earn", group: "expanded" },
   { src: "/menu/:section", hash: "#/menu/govern", group: "expanded" },
-  { src: "/menu/:section", hash: "#/menu/explore", group: "expanded" },
+  { src: "/menu/:section", hash: "#/menu/discover", group: "expanded" },
   { src: "/menu/:section", hash: "#/menu/labs", group: "expanded" },
   { src: "/menu/:section", hash: "#/menu/personal", group: "expanded" },
   { src: "*", hash: "#/this-route-does-not-exist", group: "static" },

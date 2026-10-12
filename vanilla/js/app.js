@@ -59,7 +59,7 @@ var App = (function () {
     { slug: "trade", title: "Trade" },
     { slug: "earn", title: "Earn & Protect" },
     { slug: "govern", title: "Govern" },
-    { slug: "explore", title: "Explore" },
+    { slug: "discover", title: "Discover" },
     { slug: "labs", title: "Labs" },
     { slug: "personal", title: "Personal" }
   ];
@@ -237,7 +237,7 @@ var App = (function () {
         headingLink("#/menu/" + section.slug, null, section.title);
       });
     }
-    headingLink("#/menu", null, t("menu.all_pages", "All pages"));
+    headingLink("#/help/sitemap", null, t("menu.all_pages", "All pages"));
     return panel;
   }
 

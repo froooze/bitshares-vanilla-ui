@@ -10,7 +10,7 @@ var passed = 0;
 function eq(a, e, n) { assert.strictEqual(a, e, n + " (got " + JSON.stringify(a) + ")"); passed++; }
 function ok(c, n) { assert.ok(c, n); passed++; }
 eq(MenuUI.SECTIONS.length, 7, "seven sections");
-eq(MenuUI._test.sectionSlugs().join(","), "wallet,trade,earn,govern,explore,labs,personal", "slug order");
+eq(MenuUI._test.sectionSlugs().join(","), "wallet,trade,earn,govern,discover,labs,personal", "slug order");
 var all = [];
 MenuUI.SECTIONS.forEach(function (s) { s.links.forEach(function (l) { all.push(l.href); }); });
 eq(all.length, 54, "54 listed pages");
