@@ -101,6 +101,8 @@ var DANGER_POSITIVES = [
   "withdrawal", "Pool withdrawal",
   "withdrawals", "Your withdrawals",
   "withdrawing", "withdrawing to an exchange",
+  "withdrawable", "The balance is withdrawable",
+  "withdrawn", "Funds already withdrawn",
   "Delegate", "Delegate votes",
   "delegates", "delegates",
   "delegated", "delegated",

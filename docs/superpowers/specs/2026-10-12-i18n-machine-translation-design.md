@@ -54,14 +54,14 @@ asks them to read a badge.
   page-level warning instead.
 
   ```js
-  var HIGH_RISK_SECTIONS = {
+  var HIGH_RISK_SECTIONS = Object.freeze({
     unlockconfirm: 1, auth: 1, createaccount: 1, createworker: 1,
     vesting: 1, proposal: 1, proposals_ticket: 1, confirm: 1,
     ticket: 1, tickets: 1, htlc: 1, transfer: 1, credit: 1,
     samet: 1, wallet: 1, security: 1, backup: 1, debit: 1,
     password: 1, approval: 1
-  };
-  var DANGER_RE = /\b(sign(s|ed|ing|ature|atures)?|send(s|ing|er|ers)?|sent|irreversib(le|ly|ility)|permanent(ly)?|unrecover(able|ably|ed)?|passwords?|private keys?|brainkeys?|backups?|scam(s|mer|mers|ming)?|never share|withdraw(s|al|als|ing)?|delegat(e|ed|es|ing|ion|ions)|vest(ed|ing)?|memos?)\b/i;
+  });
+  var DANGER_RE = /\b(sign(s|ed|ing|ature|atures)?|send(s|ing|er|ers)?|sent|irreversib(le|ly|ility)|permanent(ly)?|unrecover(able|ably|ed)?|passwords?|private keys?|brainkeys?|backups?|scam(s|mer|mers|ming)?|never share|withdraw(s|al|als|able|ables|ing|n|ne)??|delegat(e|ed|es|ing|ion|ions)|vest(ed|ing)?|memos?)\b/i;
   var MAX_RISK_LEN = 120;
   ```
 
@@ -201,12 +201,11 @@ deleting it breaks nothing.
 
 Measured from `es.json` as of `89d90cc`. These are **fill buckets** — how
 the 688 untranslated stubs divide by the care they need. The rule itself
-flags **1046** keys high-risk across all 3921, because danger keys off
+flags **1118** keys high-risk across all 3921, because danger keys off
 English wording and not off whether a locale happens to be translated
-already (977 of the 1046 already had Spanish). The asterisk is collapsed by
-default, so 1046 flagged keys cost one small marker each, not a wall of
+already (1015 of the 1118 already had Spanish). The asterisk is collapsed by
+default, so 1117 flagged keys cost one small marker each, not a wall of
 text; the section set is data in one module if this ever reads as too busy.
-
 
 
 | bucket | count | treatment |
@@ -218,7 +217,7 @@ text; the section set is data in one module if this ever reads as too busy.
 Longest high-risk string is 114 characters, so every dual-line renders as
 two short lines, never a wall of text. (Recounted after the Task 1 review
 widened `DANGER_RE` to catch inflections and added the `password` and
-`approval` sections; the rule now flags **1117** keys overall.)
+`approval` sections; the rule now flags **1118** keys overall.)
 
 Per-string rules for the fill, in order of precedence:
 1. Placeholders (`%(name)s`), object IDs (`1.2.x`), URLs, operation

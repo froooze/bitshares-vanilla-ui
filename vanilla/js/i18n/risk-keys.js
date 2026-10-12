@@ -41,7 +41,7 @@ var RiskKeys = (function () {
    *    inflections (the next character is a word character, so \b fails):
    *    `irreversib` missed "irreversible", `sign` missed "signed" — exactly
    *    the money words this rule exists to catch. */
-  var DANGER_RE = /\b(sign(s|ed|ing|ature|atures)?|send(s|ing|er|ers)?|sent|irreversib(le|ly|ility)|permanent(ly)?|unrecover(able|ably|ed)?|passwords?|private keys?|brainkeys?|backups?|scam(s|mer|mers|ming)?|never share|withdraw(s|al|als|ing)?|delegat(e|ed|es|ing|ion|ions)|vest(ed|ing)?|memos?)\b/i;
+  var DANGER_RE = /\b(sign(s|ed|ing|ature|atures)?|send(s|ing|er|ers)?|sent|irreversib(le|ly|ility)|permanent(ly)?|unrecover(able|ably|ed)?|passwords?|private keys?|brainkeys?|backups?|scam(s|mer|mers|ming)?|never share|withdraw(s|al|als|able|ables|ing|n|ne)??|delegat(e|ed|es|ing|ion|ions)|vest(ed|ing)?|memos?)\b/i;
 
   /* Above this, dual-line renders as two walls of text; those strings are
    * covered by the page-level limitations warning instead. */
