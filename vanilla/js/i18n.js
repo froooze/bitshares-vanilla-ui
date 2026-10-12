@@ -1,7 +1,9 @@
 /* I18n: locale string resolution (registry + t() + locale->en->key fallback +
  * %(name)s interpolation + Intl wrappers + dict cache + Store-envelope pref).
  * Owns: locale registry (code -> nested dict), current-locale tag, dict
- *   fetch/cache/pref helpers, t()/setLocale()/loadCached() entry points.
+ *   fetch/cache/pref helpers, t()/setLocale()/loadCached() entry points, and
+ *   the read-only honesty accessors the surfaces read (enFor /
+ *   provenance / isMachineLocale).
  * Consumes locales/*.json + localStorage. Side effects: in-memory registry +
  *   localStorage pref/cache writes only; no view DOM (callers toast on
  * {ok:false}). Created by: building-vanilla-slices skill, slice-17-i18n plan.
@@ -23,7 +25,7 @@ var I18n = (function () {
     ja: "日本語", ko: "한국어", ru: "Русский", tr: "Türkçe", zh: "简体中文",
     hi: "हिन्दी", pt: "Português" };
 
-  var registry = {}; /* code -> nested dict (sections); en seeded at init */
+  var registry = {}; /* code -> nested dict (sections); en loaded at boot by loadCached */
   var current = "en";
 
   /* Strict dotted-key lookup (=== per segment, never prefix/truthy). */
@@ -39,12 +41,46 @@ var I18n = (function () {
     return (typeof node === "string") ? node : undefined;
   }
 
-  /* Allowlist gate: non-en values count only for _meta.translated keys. */
+  /* Allowlist gate, version-aware. v2 dicts declare `coverage` ("this dict
+   * has a value for every key"); v1 dicts declare `translated` ("these keys
+   * are translated"). Reading the wrong one silently disables the fallback,
+   * so the version decides which field is authoritative. */
   function allowlisted(code, key) {
     if (code === "en") return true;
     var dict = registry[code];
-    if (!dict || !dict._meta || !Array.isArray(dict._meta.translated)) return false;
-    return dict._meta.translated.indexOf(key) !== -1;
+    if (!dict || !dict._meta) return false;
+    var list = (dict._meta.version === 2) ? dict._meta.coverage : dict._meta.translated;
+    if (!Array.isArray(list)) return false;
+    return list.indexOf(key) !== -1;
+  }
+
+  /* enFor: the English source text for a key, from the en master that
+   * loadCached() loads at boot (before the first render, so it is there
+   * for every honesty surface; undefined only pre-boot or for an unknown
+   * key). This is what makes dual-line possible without the view having to
+   * thread a second string through every call site.
+   * @param {string} key dotted locale key
+   * @returns {string|undefined} undefined when unknown — callers render plain
+   *   text rather than an empty English line. Never throws. */
+  function enFor(key) {
+    return lookup(registry.en, key);
+  }
+
+  /* provenance: review state of a dict, from _meta.provenance (v2).
+   * @param {string} code locale code
+   * @returns {"machine"|"human"|"none"} "none" for en, unloaded and unknown
+   *   locales, so a missing dict can never render a false warning. */
+  function provenance(code) {
+    if (code === "en") return "none";
+    var dict = registry[code];
+    if (!dict || !dict._meta || dict._meta.version !== 2) return "none";
+    return dict._meta.provenance === "machine" ? "machine" : "human";
+  }
+
+  /* isMachineLocale: true only when the active dict is machine-filled and
+   * unverified — the single condition the badge and dual-line check. */
+  function isMachineLocale(code) {
+    return provenance(code) === "machine";
   }
 
   /* %(name)s interpolation (ported verbatim from #1's counterpart syntax so
@@ -223,6 +259,7 @@ var I18n = (function () {
 
   return { t: t, setLocale: setLocale, locale: locale, names: names,
     date: date, num: num, loadCached: loadCached, CODES: CODES.slice(),
+    enFor: enFor, provenance: provenance, isMachineLocale: isMachineLocale,
     _seed: _seed, _setCurrent: _setCurrent };
 })();
 
