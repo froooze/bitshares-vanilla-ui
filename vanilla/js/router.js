@@ -82,15 +82,16 @@ var Router = (function () {
     return "logo-404-dark.png";
   }
 
-  /* render404: unknown-route page with a dashboard link. Params: root
-   *   (element). Returns nothing. Fails: never — a missing root is a no-op. */
+  /* render404: unknown-route page with dashboard + sitemap escapes. Params:
+   *   root (element). Returns nothing. Fails: never — a missing root is a no-op. */
   function render404(root) {
     if (!root) return;
     root.innerHTML =
       '<div class="wrap"><img src="assets/' + fourOhFourImg() + '" alt="">' +
       '<h1>' + escapeHtml(t("shell.page_not_found", "Page Not Found")) + "</h1>" +
       '<p class="muted">' + escapeHtml(t("shell.unknown_route", "Unknown route. ")) +
-      '<a href="#/">' + escapeHtml(t("shell.go_dashboard", "Go to Dashboard")) + "</a></p></div>";
+      '<a href="#/">' + escapeHtml(t("shell.go_dashboard", "Go to Dashboard")) + "</a> · " +
+      '<a href="#/help/sitemap">' + escapeHtml(t("help.topic_sitemap_title", "Site map")) + "</a></p></div>";
   }
 
   /* renderSettings: settings route with placeholder fallback. Params: root
