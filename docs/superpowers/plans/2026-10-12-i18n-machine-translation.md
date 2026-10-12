@@ -1447,7 +1447,7 @@ console.log("coverage",es._meta.coverage.length,"high_risk",es._meta.high_risk.l
 '
 ```
 
-Expected output: `coverage 3921 high_risk 1117`.
+Expected output: `coverage 3921 high_risk 1118`.
 
 - [ ] **Step 3: Verify**
 

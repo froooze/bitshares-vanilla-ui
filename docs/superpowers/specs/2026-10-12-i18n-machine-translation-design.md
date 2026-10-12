@@ -204,7 +204,7 @@ the 688 untranslated stubs divide by the care they need. The rule itself
 flags **1118** keys high-risk across all 3921, because danger keys off
 English wording and not off whether a locale happens to be translated
 already (1015 of the 1118 already had Spanish). The asterisk is collapsed by
-default, so 1117 flagged keys cost one small marker each, not a wall of
+default, so 1118 flagged keys cost one small marker each, not a wall of
 text; the section set is data in one module if this ever reads as too busy.
 
 
