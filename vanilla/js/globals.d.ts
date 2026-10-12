@@ -199,6 +199,12 @@ declare var nobleSignAsync: any;
 declare var nobleGetSharedSecret: any;
 declare var ScryptKdf: any;
 declare var I18n: any;
+declare var RiskKeys: {
+  HIGH_RISK_SECTIONS: { [section: string]: number };
+  MAX_RISK_LEN: number;
+  isHighRisk(key: string, enValue?: string): boolean;
+  listFor(dict: { [key: string]: string }, enDict: { [key: string]: string }): string[];
+};
 declare var chrome: any;
 declare var browser: any;
 declare var Buffer: any;
