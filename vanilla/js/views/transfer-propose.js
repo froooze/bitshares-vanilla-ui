@@ -193,16 +193,19 @@ var TransferPropose = (function () {
       t("transfer.locked_encrypted_hint", "Encrypted memos need the wallet keys — unlock first, or switch the memo to plain.");
     else memoText = t("transfer.memo_none", "(none)");
     var rev = built.pair[1].review_period_seconds;
+    /* Terms carry their locale key in the 4th slot (ui/confirm.js routes every
+     * dt through RiskText, so one code path gives this dialog its English
+     * reference). The title interpolates "op %(op)s", so it stays unkeyed. */
     var rows = [
-      [t("transfer.proposer_label", "Proposer"), built.proposer.name + " (" + built.proposer.id + ")"],
-      [t("transfer.expiration_label", "Expiration"), built.pair[1].expiration_time],
-      [t("transfer.review_period_label", "Review period"), (rev === null || rev === undefined) ? t("transfer.review_period_none", "none") : Proposal.durToHuman(rev)],
-      [t("confirm.from", "From"), leg.fromAcc.name + " (" + leg.fromAcc.id + ")"],
-      [t("confirm.to", "To"), leg.to.name + " (" + leg.to.id + ")"],
+      [t("transfer.proposer_label", "Proposer"), built.proposer.name + " (" + built.proposer.id + ")", null, "transfer.proposer_label"],
+      [t("transfer.expiration_label", "Expiration"), built.pair[1].expiration_time, null, "transfer.expiration_label"],
+      [t("transfer.review_period_label", "Review period"), (rev === null || rev === undefined) ? t("transfer.review_period_none", "none") : Proposal.durToHuman(rev), null, "transfer.review_period_label"],
+      [t("confirm.from", "From"), leg.fromAcc.name + " (" + leg.fromAcc.id + ")", null, "confirm.from"],
+      [t("confirm.to", "To"), leg.to.name + " (" + leg.to.id + ")", null, "confirm.to"],
       [t("confirm.amount", "Amount"),
-        Format.formatAmount(leg.amountInt, leg.asset.precision) + " " + leg.asset.symbol, leg.amountInt],
-      [t("confirm.memo", "Memo"), memoText],
-      [t("confirm.network", "Network"), networkNameLocal()]];
+        Format.formatAmount(leg.amountInt, leg.asset.precision) + " " + leg.asset.symbol, leg.amountInt, "confirm.amount"],
+      [t("confirm.memo", "Memo"), memoText, null, "confirm.memo"],
+      [t("confirm.network", "Network"), networkNameLocal(), null, "confirm.network"]];
     var dlg = ConfirmDialog.show({ title: t("transfer.confirm_proposal_title", "Confirm proposal (op %(op)s)", { op: 22 }),
       rows: rows, feeHuman: fh.text, feeTerm: t("common.fee_live", "Fee (live)"),
       backLabel: t("confirm.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
@@ -434,7 +437,7 @@ var TransferPropose = (function () {
         try { locked = typeof Wallet.isUnlocked === "function" ? !Wallet.isUnlocked() : !Wallet.keys; }
         catch (e) { locked = true; }
         UnlockConfirm.open({
-          title: t("transfer.uc_title", "Unlock to continue"),
+          title: t("transfer.uc_title", "Unlock to continue"), titleKey: "transfer.uc_title",
           rows: [
             [t("transfer.proposer_label", "Proposer"), P.proposer.name + " (" + P.proposer.id + ")"],
             [t("confirm.to", "To"), P.leg.to.name + " (" + P.leg.to.id + ")"],

@@ -11,6 +11,9 @@
  *   touchable() global (guarded), Wallet.unlock (sole keystore), I18n.t via
  *   the local t() (guarded verbatim-English fallback, slice-17 pattern).
  *   No signing, no broadcasting, no chain calls — the caller owns publish.
+ *   Forwards the caller's titleKey and any rows[i][3] term keys verbatim to
+ *   ConfirmDialog, which routes them through RiskText (ui/risk-text.js); this
+ *   module never decides which line is high-risk.
  * Side effects: one overlay in doc.body per open; one hashchange listener
  *   per open (removed on close); moves focus to the password input (locked)
  *   and returns focus via Overlay on close.
@@ -88,9 +91,14 @@ var UnlockConfirm = (function () {
     return null;
   }
 
-  /* Open the confirm + unlock modal.
-   * @param {object} cfg {title: string, rows: [[term, text, rawTitle?]...],
- *   feeHuman?: string|null, feeTerm?: string, feeRawTitle?: string|null,
+/* Open the confirm + unlock modal.
+   * @param {object} cfg {title: string, titleKey?: string (dotted locale key
+   *   for the title — OPTIONAL, forwarded to ConfirmDialog so a
+   *   machine-filled locale can disclose the English master beside the
+   *   string the user is about to sign; absent renders as before),
+   *   rows: [[term, text, rawTitle?, termKey?]...] (a 4th element is the
+   *   term's locale key — same opt-in rule, forwarded verbatim),
+   *   feeHuman?: string|null, feeTerm?: string, feeRawTitle?: string|null,
  *   rawJson?: string|null, rawObj?: any, rawLabel?: string (forwarded to
  *   ConfirmDialog's details.raw drill-down — the op the modal reviews,
  *   when the caller has it built; omitted when the op only exists
@@ -131,6 +139,7 @@ var UnlockConfirm = (function () {
      * Esc listener converges on the same settled flag as Overlay's. */
     var box = ConfirmDialog.show({
       title: (cfg.title === undefined || cfg.title === null) ? "" : cfg.title,
+      titleKey: cfg.titleKey,
       rows: cfg.rows || [],
       feeHuman: (cfg.feeHuman === undefined) ? null : cfg.feeHuman,
       feeTerm: cfg.feeTerm,

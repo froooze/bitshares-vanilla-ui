@@ -423,33 +423,41 @@ var AssetUI = (function () {
             cerBaseId: CORE, description: desc.input.value || "", nft: nftObj, bitasset: bit,
             is_prediction_market: (tab === "pma") });
           var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
-          var rows = [[t("explorer.issuer_row", "Issuer"),  me.name + " (" + me.id + ")"], [t("explorer.th_symbol", "Symbol"),  symbol], [t("explorer.precision_row", "Precision"),  String(precision)],
-            [t("explorer.max_supply", "Max supply"),  msup.input.value],
-            [t("explorer.market_fee", "Market fee"),  AssetOps.hundredthsToPct(pair[1].common_options.market_fee_percent) + "%", String(pair[1].common_options.market_fee_percent)],
-            [t("help.topic_accounts-permissions_title", "Permissions"),  bitNames(PERMS, perms)], [t("asset.flags_title", "Flags"),  bitNames(FLAGS, flags)],
-            [t("asset.cer_row", "Core exchange rate (CER)"),  (cb.input.value || "1") + " CORE / " + (cq.input.value || "1") + " " + symbol]];
-          if (bit) rows.push([t("asset.bitasset_row", "Bitasset"),  "feeds≥" + mf.input.value + ", backing " + bit.short_backing_asset]);
-          if (nftObj) rows.push([t("asset.nft_row", "NFT"),  (nftObj.title || "") + " / nft"]);
-          rows.push([t("asset.pma_row", "Prediction market"),  (tab === "pma") ? "yes" : "no"]);
+          /* Terms carry their locale key in the 4th slot; ui/confirm.js routes every
+           * dt through RiskText, so this is the ONE place an asset-create row
+           * gets its English reference. Values (symbols, ids, percents) are
+           * §3.5 locale-independent and stay unkeyed. */
+          var rows = [[t("explorer.issuer_row", "Issuer"),  me.name + " (" + me.id + ")", null, "explorer.issuer_row"],
+            [t("explorer.th_symbol", "Symbol"),  symbol, null, "explorer.th_symbol"],
+            [t("explorer.precision_row", "Precision"),  String(precision), null, "explorer.precision_row"],
+            [t("explorer.max_supply", "Max supply"),  msup.input.value, null, "explorer.max_supply"],
+            [t("explorer.market_fee", "Market fee"),  AssetOps.hundredthsToPct(pair[1].common_options.market_fee_percent) + "%", String(pair[1].common_options.market_fee_percent), "explorer.market_fee"],
+            [t("help.topic_accounts-permissions_title", "Permissions"),  bitNames(PERMS, perms), null, "help.topic_accounts-permissions_title"],
+            [t("asset.flags_title", "Flags"),  bitNames(FLAGS, flags), null, "asset.flags_title"],
+            [t("asset.cer_row", "Core exchange rate (CER)"),  (cb.input.value || "1") + " CORE / " + (cq.input.value || "1") + " " + symbol, null, "asset.cer_row"]];
+          if (bit) rows.push([t("asset.bitasset_row", "Bitasset"),  "feeds≥" + mf.input.value + ", backing " + bit.short_backing_asset, null, "asset.bitasset_row"]);
+          if (nftObj) rows.push([t("asset.nft_row", "NFT"),  (nftObj.title || "") + " / nft", null, "asset.nft_row"]);
+          rows.push([t("asset.pma_row", "Prediction market"),  (tab === "pma") ? "yes" : "no", null, "asset.pma_row"]);
           /* Fee-tier cell next to the live get_required_fees fee: tier name
            * + which schedule param applied (from the draw-time feeSchedule
            * fill when it resolved). The fee itself stays the live chain
            * answer — this row only names the tier behind it. */
           (function tierRow() {
             var tierKey = feeTierForSymbol(symbol);
-            if (!tierKey) { rows.push([t("asset.fee_tier", "Fee tier"), "—"]); return; }
+            if (!tierKey) { rows.push([t("asset.fee_tier", "Fee tier"), "—", null, "asset.fee_tier"]); return; }
             var cell = tierWords(tierKey) + " (" + tierKey + ")";
             if (schedTier && schedTier[tierKey]) cell += " · " + schedTier[tierKey];
             rows.push([t("asset.fee_tier", "Fee tier"), cell,
-              t("asset.fee_no_pmo_discount", "No PMO discount: the create fee follows the full symbol length.")]);
+              t("asset.fee_no_pmo_discount", "No PMO discount: the create fee follows the full symbol length."),
+              "asset.fee_tier"]);
           })();
           if (g !== gen) return; wipe(root);
           var w2 = wrap(d, root), fpp = await feePrec(f.asset_id);
           var feeHuman;
           try { feeHuman = Format.formatAmount(String(f.amount), fpp) + " (core)"; }
           catch (feeErr) { feeHuman = String(f.amount) + " (core)"; }
-          rows.push([t("borrow.network", "Network"), netName()]);
-          var dlg = ConfirmDialog.show({ title: t("asset.confirm_create", "Confirm asset create"),
+          rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
+          var dlg = ConfirmDialog.show({ title: t("asset.confirm_create", "Confirm asset create"), titleKey: "asset.confirm_create",
             rows: rows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderCreate(root); },

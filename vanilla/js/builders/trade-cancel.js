@@ -252,13 +252,18 @@ var TradeCancel = (function () {
       return;
     }
     var view = cancelView(order, assets);
-    /* Row terms stay the caller's keyed strings; ids/pairs/details are
-     * chain/display data with no raw-integer slot (no r[2] — the order
-     * id is already the chain id, not a human amount). */
+    /* Row terms stay the caller's keyed strings, and now carry their locale
+     * key in the 4th slot so a machine-filled locale can disclose the
+     * English reference beside them (the ONE code path every signing row
+     * goes through — ui/confirm.js mounts them via RiskText). ids/pairs/
+     * details are chain/display data with no raw-integer slot (no r[2]) and
+     * are NEVER keyed: object ids and amounts are locale-independent (§3.5).
+     * The title is "Cancel order <id>?" — composed with the order id, so it
+     * stays unkeyed for the same reason. */
     var rows = [
-      [t("trade.co_orderid", "Order ID"), id],
-      [t("trade.co_market", "Market"), view.pair],
-      [t("trade.co_details", "Details"), view.details]
+      [t("trade.co_orderid", "Order ID"), id, null, "trade.co_orderid"],
+      [t("trade.co_market", "Market"), view.pair, null, "trade.co_market"],
+      [t("trade.co_details", "Details"), view.details, null, "trade.co_details"]
     ];
     var dlg = null;
     function doGo() {
@@ -422,10 +427,12 @@ var TradeCancel = (function () {
     btn.addEventListener("click", function () {
       clearBox(box);
       /* Row terms stay the caller's keyed strings; market/count are
-       * display data with no raw-integer slot (no r[2], no fee). */
+       * display data with no raw-integer slot (no r[2], no fee) and are
+       * never keyed. The title composes the order count, so it stays
+       * unkeyed too — only static labels get a key (§3.5). */
       var rows = [
-        [t("trade.co_market", "Market"), assets.quote.symbol + "/" + assets.base.symbol],
-        [t("trade.co_details", "Details"), ids.length + " orders"]
+        [t("trade.co_market", "Market"), assets.quote.symbol + "/" + assets.base.symbol, null, "trade.co_market"],
+        [t("trade.co_details", "Details"), ids.length + " orders", null, "trade.co_details"]
       ];
       var dlg = null;
       function doGo() {

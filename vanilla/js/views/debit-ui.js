@@ -339,7 +339,7 @@ var DebitUI = (function () {
                * RE-PREVIEWED (R was built for the viewing-as account while
                * locked — the note says so). */
               UnlockConfirm.open({
-                title: t("debit.uc_title", "Unlock to sign"),
+                title: t("debit.uc_title", "Unlock to sign"), titleKey: "debit.uc_title",
                 rows: [
                   [t("debit.uc_order", "Order"), "#" + (i + 1) + " of " + R.orders.length],
                   [t("account.sell_th", "Sell"), Format.formatAmount(o.sellRaw, R.sell.precision) + " " + R.sell.symbol, o.sellRaw],

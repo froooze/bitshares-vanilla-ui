@@ -1101,7 +1101,7 @@ var InstantTradeUI = (function () {
           return;
         }
         UnlockConfirm.open({
-          title: t("instant.uc_title", "Unlock to sign"),
+          title: t("instant.uc_title", "Unlock to sign"), titleKey: "instant.uc_title",
           rows: [
             [t("instant.side_2", "Side"), t("trade.col_sell", "Sell") + " " + ctx.sellSym + " → " + t("trade.col_receive", "Receive") + " " + ctx.receiveSym],
             [t("instant.sell_amount_to_sell", "Sell (Amount to Sell)"), sellHuman + " " + ctx.sellSym, R.sellRaw],

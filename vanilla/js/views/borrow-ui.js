@@ -104,7 +104,7 @@ var BorrowUI = (function () {
       return;
     }
     UnlockConfirm.open({
-      title: t("borrow.uc_title", "Unlock to sign"),
+      title: t("borrow.uc_title", "Unlock to sign"), titleKey: "borrow.uc_title",
       rows: modal.rows || [],
       feeHuman: (modal.feeHuman === undefined) ? null : modal.feeHuman,
       feeTerm: modal.feeTerm,
@@ -501,13 +501,20 @@ var BorrowUI = (function () {
               }
             }
           } catch (e) { crRow = "—"; }
+          /* Row terms carry their locale key in the 4th slot (the ONE path to the
+           * English reference on a signing dialog — ui/confirm.js mounts every
+           * dt through RiskText). Terms only: the values are amounts, ratios,
+           * an object id and a network name, all §3.5 locale-independent. */
           var adjRows = [
-            [t("borrow.account", "Account"), me.name + " (" + me.id + ")"], [t("borrow.order", "Order"), R.pos.call_id],
-            [t("borrow.hdr_cr", "Collateral ratio"), crRow],
-            [t("borrow.delta_collateral", "Delta collateral"), (op.delta_collateral.amount.charAt(0) === "-" ? "" : "+") + Format.formatAmount(op.delta_collateral.amount, R.cPrec), "raw " + op.delta_collateral.amount],
-            [t("borrow.delta_debt", "Delta debt"), (op.delta_debt.amount.charAt(0) === "-" ? "" : "+") + Format.formatAmount(op.delta_debt.amount, R.dPrec) + (op.delta_debt.amount.charAt(0) === "-" ? " — NEW DEBT, warned" : ""), "raw " + op.delta_debt.amount],
-            [t("borrow.target_ratio", "Target ratio"), tcrRow], [t("borrow.network", "Network"), "testnet"]];
+            [t("borrow.account", "Account"), me.name + " (" + me.id + ")", null, "borrow.account"],
+            [t("borrow.order", "Order"), R.pos.call_id, null, "borrow.order"],
+            [t("borrow.hdr_cr", "Collateral ratio"), crRow, null, "borrow.hdr_cr"],
+            [t("borrow.delta_collateral", "Delta collateral"), (op.delta_collateral.amount.charAt(0) === "-" ? "" : "+") + Format.formatAmount(op.delta_collateral.amount, R.cPrec), "raw " + op.delta_collateral.amount, "borrow.delta_collateral"],
+            [t("borrow.delta_debt", "Delta debt"), (op.delta_debt.amount.charAt(0) === "-" ? "" : "+") + Format.formatAmount(op.delta_debt.amount, R.dPrec) + (op.delta_debt.amount.charAt(0) === "-" ? " — NEW DEBT, warned" : ""), "raw " + op.delta_debt.amount, "borrow.delta_debt"],
+            [t("borrow.target_ratio", "Target ratio"), tcrRow, null, "borrow.target_ratio"],
+            [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var adjDlg = ConfirmDialog.show({ title: t("borrow.confirm_margin_adjust", "Confirm margin adjust"),
+            titleKey: "borrow.confirm_margin_adjust",
             rows: adjRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },
@@ -719,14 +726,15 @@ var BorrowUI = (function () {
           var tcrRow = (R.tcr === null) ? "unchanged" : Credit.tcrUnitsToHuman(R.tcr) + "%";
           DOM.clear(out);
           var openRows = [
-            [t("borrow.account", "Account"), R.acct.name + " (" + R.acct.id + ")"],
-            [t("borrow.collateral", "Collateral"), Format.formatAmount(R.collRaw, R.coll.precision) + " " + R.coll.symbol, "raw " + R.collRaw],
-            [t("borrow.hdr_debt", "Debt"), Format.formatAmount(R.debtRaw, R.debt.precision) + " " + R.debt.symbol, "raw " + R.debtRaw],
-            [t("borrow.backing_ratio", "Backing ratio"), R.ratio.x],
-            [t("borrow.maintenance_ratio", "Maintenance ratio"), R.mcrRow + (R.ratio.kind === "nominal" ? " (target only — preview is nominal)" : "")],
-            [t("borrow.target_ratio", "Target ratio"), tcrRow],
-            [t("borrow.network", "Network"), "testnet"]];
+            [t("borrow.account", "Account"), R.acct.name + " (" + R.acct.id + ")", null, "borrow.account"],
+            [t("borrow.collateral", "Collateral"), Format.formatAmount(R.collRaw, R.coll.precision) + " " + R.coll.symbol, "raw " + R.collRaw, "borrow.collateral"],
+            [t("borrow.hdr_debt", "Debt"), Format.formatAmount(R.debtRaw, R.debt.precision) + " " + R.debt.symbol, "raw " + R.debtRaw, "borrow.hdr_debt"],
+            [t("borrow.backing_ratio", "Backing ratio"), R.ratio.x, null, "borrow.backing_ratio"],
+            [t("borrow.maintenance_ratio", "Maintenance ratio"), R.mcrRow + (R.ratio.kind === "nominal" ? " (target only — preview is nominal)" : ""), null, "borrow.maintenance_ratio"],
+            [t("borrow.target_ratio", "Target ratio"), tcrRow, null, "borrow.target_ratio"],
+            [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var openDlg = ConfirmDialog.show({ title: t("borrow.confirm_new_borrow", "Confirm new borrow"),
+            titleKey: "borrow.confirm_new_borrow",
             rows: openRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },
@@ -1072,12 +1080,13 @@ var BorrowUI = (function () {
           var feeHuman = fa ? Format.formatAmount(String(S.fee.amount), fa.precision) + " " + fa.symbol : String(S.fee.amount);
           DOM.clear(out);
           var bidRows = [
-            [t("borrow.bidder", "Bidder"), S.bidderId],
-            [t("borrow.collateral", "Collateral"), Format.formatAmount(S.collRaw, R.backingPrec) + " (" + R.backingId + ")", "raw " + S.collRaw],
-            [t("borrow.debt_covered", "Debt covered"), Format.formatAmount(S.debtRaw, R.debtPrec) + " " + R.asset.symbol, "raw " + S.debtRaw],
-            [t("borrow.fund", "Fund"), Format.formatAmount(R.fundRaw, R.backingPrec), "raw " + R.fundRaw],
-            [t("borrow.network", "Network"), "testnet"]];
+            [t("borrow.bidder", "Bidder"), S.bidderId, null, "borrow.bidder"],
+            [t("borrow.collateral", "Collateral"), Format.formatAmount(S.collRaw, R.backingPrec) + " (" + R.backingId + ")", "raw " + S.collRaw, "borrow.collateral"],
+            [t("borrow.debt_covered", "Debt covered"), Format.formatAmount(S.debtRaw, R.debtPrec) + " " + R.asset.symbol, "raw " + S.debtRaw, "borrow.debt_covered"],
+            [t("borrow.fund", "Fund"), Format.formatAmount(R.fundRaw, R.backingPrec), "raw " + R.fundRaw, "borrow.fund"],
+            [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var bidDlg = ConfirmDialog.show({ title: t("borrow.confirm_settlement_bid", "Confirm settlement bid"),
+            titleKey: "borrow.confirm_settlement_bid",
             rows: bidRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },

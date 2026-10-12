@@ -1072,16 +1072,19 @@ var MarketOrders = (function () {
         return { feeHuman: t("settings.dash", "—"), feeRaw: null };
       }).then(function (Q) {
         try { box.removeChild(pending); } catch (rm) { /* navigated away */ }
+        /* Terms carry their locale key in the 4th slot (ui/confirm.js routes
+         * every dt through RiskText). The title concatenates the order id,
+         * so it stays unkeyed — an object id is locale-independent (§3.5). */
         var rows = [
-          [t("trade.co_orderid", "Order ID"), id],
-          [t("trade.co_market", "Market"), seeds.pair]
+          [t("trade.co_orderid", "Order ID"), id, null, "trade.co_orderid"],
+          [t("trade.co_market", "Market"), seeds.pair, null, "trade.co_market"]
         ];
         if (ch.priceShown !== null) {
           rows.push([t("market.update_price_change", "Price (old → new)"), ch.priceShown,
-            "raw " + seeds.cb + "/" + seeds.cq]);
+            "raw " + seeds.cb + "/" + seeds.cq, "market.update_price_change"]);
         }
-        if (ch.deltaShown !== null) rows.push([t("market.update_amount_change", "Amount change"), ch.deltaShown, ch.deltaRawTitle]);
-        if (ch.expiryShown !== null) rows.push([t("market.update_expiry_change", "Expiration (old → new)"), ch.expiryShown]);
+        if (ch.deltaShown !== null) rows.push([t("market.update_amount_change", "Amount change"), ch.deltaShown, ch.deltaRawTitle, "market.update_amount_change"]);
+        if (ch.expiryShown !== null) rows.push([t("market.update_expiry_change", "Expiration (old → new)"), ch.expiryShown, null, "market.update_expiry_change"]);
         var dlg = null;
         function doGo() {
           var btns = dlg.getElementsByTagName("button");

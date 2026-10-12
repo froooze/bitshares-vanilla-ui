@@ -190,7 +190,7 @@ var TransferPreview = (function () {
         try { locked = typeof Wallet.isUnlocked === "function" ? !Wallet.isUnlocked() : !Wallet.keys; }
         catch (e) { locked = true; }
         UnlockConfirm.open({
-          title: t("transfer.uc_title", "Unlock to continue"),
+          title: t("transfer.uc_title", "Unlock to continue"), titleKey: "transfer.uc_title",
           rows: [
             [t("confirm.to", "To"), P.to.name + " (" + P.to.id + ")"],
             [t("confirm.amount", "Amount"),

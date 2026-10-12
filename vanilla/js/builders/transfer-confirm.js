@@ -310,14 +310,20 @@ var TransferConfirm = (function () {
     /* Fee term stays the caller's keyed string (was the Fee row term);
      * Chain row term reuses txbuilder.chain_prefix (the old literal
      * "Chain ID" is gone, same value shown) and keeps the visible prefix
-     * the sign-time re-pin checks against. */
+     * the sign-time re-pin checks against.
+     * Row terms carry their locale key in the 4th slot, which is what lets
+     * a machine-filled locale disclose the English reference beside them
+     * (ui/confirm.js routes every dt through RiskText). The r[2] raw title
+     * stays where it was; only the STATIC terms are keyed — the values are
+     * names, ids and formatted amounts, which §3.5 keeps out of the locale
+     * layer entirely. */
     var rows = [
-      [t("confirm.from", "From"), from.name + " (" + from.id + ")"],
-      [t("confirm.to", "To"), ctx.to.name + " (" + ctx.to.id + ")"],
-      [t("confirm.amount", "Amount"), amountHuman, ctx.amountInt],
-      [t("confirm.memo", "Memo"), memoText],
-      [t("confirm.network", "Network"), ctx.network],
-      [t("txbuilder.chain_prefix", "Chain: "), ctx.chainPrefix || "unknown"]
+      [t("confirm.from", "From"), from.name + " (" + from.id + ")", null, "confirm.from"],
+      [t("confirm.to", "To"), ctx.to.name + " (" + ctx.to.id + ")", null, "confirm.to"],
+      [t("confirm.amount", "Amount"), amountHuman, ctx.amountInt, "confirm.amount"],
+      [t("confirm.memo", "Memo"), memoText, null, "confirm.memo"],
+      [t("confirm.network", "Network"), ctx.network, null, "confirm.network"],
+      [t("txbuilder.chain_prefix", "Chain: "), ctx.chainPrefix || "unknown", null, "txbuilder.chain_prefix"]
     ];
     var feeAckBox = null;
     var dlg = null;
@@ -391,7 +397,7 @@ var TransferConfirm = (function () {
           backBtn.disabled = false;
         });
     }
-    dlg = ConfirmDialog.show({ title: t("confirm.title", "Confirm transfer"),
+    dlg = ConfirmDialog.show({ title: t("confirm.title", "Confirm transfer"), titleKey: "confirm.title",
       rows: rows, feeHuman: feeHuman, feeTerm: t("confirm.fee", "Fee"),
       feeRawTitle: String(ctx.fee.amount),
       backLabel: t("confirm.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),

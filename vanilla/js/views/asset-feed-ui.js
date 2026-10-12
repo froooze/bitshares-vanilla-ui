@@ -442,14 +442,21 @@ var AssetFeedUI = (function () {
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
         var stl = sb.input.value + " " + info.symbol + " / " + sq.input.value + " backing";
         var cer = cb.input.value + " " + info.symbol + " / " + cq.input.value + " backing";
-        var feedRows = [[t("asset.publisher_row", "Publisher"), who.name + " (" + who.id + ")"], [t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-          [t("explorer.th_settlement", "Settlement"), stl], [t("asset.mcr_row", "MCR"), mcr.input.value + "%", String(pair[1].feed.maintenance_collateral_ratio)],
-          [t("explorer.th_mssr", "MSSR"), mssr.input.value + "%", String(pair[1].feed.maximum_short_squeeze_ratio)], [t("asset.cer_row", "Core exchange rate (CER)"), cer]];
-        feedRows.push([t("borrow.network", "Network"), netName()]);
+        /* Terms carry their locale key in the 4th slot; ui/confirm.js mounts every
+         * dt through RiskText, so this is the ONE place a feed row gets its
+         * English reference. Values are symbols, ids and percents — §3.5
+         * keeps them out of the locale layer, so they are never keyed. */
+        var feedRows = [[t("asset.publisher_row", "Publisher"), who.name + " (" + who.id + ")", null, "asset.publisher_row"],
+          [t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("explorer.th_settlement", "Settlement"), stl, null, "explorer.th_settlement"],
+          [t("asset.mcr_row", "MCR"), mcr.input.value + "%", String(pair[1].feed.maintenance_collateral_ratio), "asset.mcr_row"],
+          [t("explorer.th_mssr", "MSSR"), mssr.input.value + "%", String(pair[1].feed.maximum_short_squeeze_ratio), "explorer.th_mssr"],
+          [t("asset.cer_row", "Core exchange rate (CER)"), cer, null, "asset.cer_row"]];
+        feedRows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var feedFee;
         try { feedFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr) { feedFee = String(f.amount) + " (core)"; }
-        var feedDlg = ConfirmDialog.show({ title: t("asset.confirm_feed", "Confirm feed"),
+        var feedDlg = ConfirmDialog.show({ title: t("asset.confirm_feed", "Confirm feed"), titleKey: "asset.confirm_feed",
           rows: feedRows, feeHuman: feedFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderFeed(root); },
@@ -504,12 +511,13 @@ var AssetFeedUI = (function () {
         var pair = AssetOps.buildUpdateProducers({ issuerId: info.issuer_id, assetId: info.id, producerIds: ids });
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
-        var prodRows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"], [t("asset.producers_row", "Producers"), ids.length ? ids.join(", ") : "(empty)"]];
-        prodRows.push([t("borrow.network", "Network"), netName()]);
+        var prodRows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("asset.producers_row", "Producers"), ids.length ? ids.join(", ") : "(empty)", null, "asset.producers_row"]];
+        prodRows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var prodFee;
         try { prodFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr2) { prodFee = String(f.amount) + " (core)"; }
-        var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"),
+        var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"), titleKey: "asset.confirm_producers",
           rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderFeed(root); },

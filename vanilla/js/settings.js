@@ -305,11 +305,16 @@ var SettingsPage = (function () {
           apply();
           return;
         }
+        /* Row terms carry their locale key in the 4th slot so a
+         * machine-filled locale can disclose the English reference beside
+         * them; the VALUES are a URL, a keyed action sentence and a
+         * network name, none of which are keyed here (§3.5). */
         var rows = [
-          [t("settings.th_node", "Node"), u],
+          [t("settings.th_node", "Node"), u, null, "settings.th_node"],
           [t("settings.confirm_remove_action", "Action"),
             isC ? t("settings.confirm_remove_unlist", "Remove from my list")
-              : t("settings.confirm_remove_hide", "Hide this node (stays hidden until re-added)")]
+              : t("settings.confirm_remove_hide", "Hide this node (stays hidden until re-added)"),
+            null, "settings.confirm_remove_action"]
         ];
         if (cur.activeNode === u) {
           var dest = fb;
@@ -317,7 +322,8 @@ var SettingsPage = (function () {
             dest = fb || String(t("settings.dash", "—"));
           } catch (e) { dest = fb || "—"; }
           rows.push([t("settings.confirm_remove_result", "Result"),
-            t("settings.confirm_remove_switch", "Active node moves to %(node)s", { node: dest })]);
+            t("settings.confirm_remove_switch", "Active node moves to %(node)s", { node: dest }),
+            null, "settings.confirm_remove_result"]);
         }
         var dlg = null, box = null;
         function closeBox() {
@@ -326,6 +332,7 @@ var SettingsPage = (function () {
         try {
           dlg = ConfirmDialog.show({
             title: t("settings.confirm_remove_title", "Remove node?"),
+            titleKey: "settings.confirm_remove_title",
             rows: rows,
             backLabel: t("settings.confirm_back", "Back"),
             sendLabel: t("settings.remove", "Remove"),

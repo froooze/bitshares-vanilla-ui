@@ -238,12 +238,15 @@ var CreditUI = (function () {
    * No shared types.js yet (group 1 owns it); local casts only.
    * @param {Document} doc owner document
    * @param {HTMLElement} out output box (cleared + rebuilt)
-   * @param {any} cfg {title, rows, pair, makeUnsigned, prove, okText}
+   * @param {any} cfg {title, titleKey?, rows, pair, makeUnsigned, prove, okText}
+   *   (titleKey is the title's dotted locale key; forwarded verbatim to
+   *   ConfirmDialog, which routes it through RiskText. Optional: absent
+   *   renders the title exactly as it always did.)
    * @param {number} myGen route generation (liveness token)
    * @returns {void} */
   function sendConfirm(doc, out, cfg, myGen) {
     DOM.clear(out);
-    var dlg = ConfirmDialog.show({ title: cfg.title, rows: cfg.rows || [],
+    var dlg = ConfirmDialog.show({ title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows || [],
       backLabel: t("credit.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       onBack: function () { DOM.clear(out); },
       onSend: function () { attemptSend(0); } });
@@ -279,7 +282,7 @@ var CreditUI = (function () {
             return;
           }
           UnlockConfirm.open({
-            title: t("credit.uc_title", "Unlock to sign"),
+            title: t("credit.uc_title", "Unlock to sign"), titleKey: "credit.uc_title",
             rows: cfg.rows || [],
             feeHuman: null,
             rawObj: cfg.pair,
@@ -327,7 +330,7 @@ var CreditUI = (function () {
       if (myGen !== gen) return done();
       feeText((/** @type {any} */ (built).fee)).then(function (f) {
         if (myGen !== gen) return done();
-        sendConfirm(doc, out, { title: cfg.title, rows: cfg.rows(built, f),
+        sendConfirm(doc, out, { title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows(built, f),
           pair: (/** @type {any} */ (built).pair),
           makeUnsigned: function () { return Tx.buildTx([(/** @type {any} */ (built).pair)]); },
           prove: (/** @type {any} */ (built).prove), okText: cfg.ok(built) }, myGen);
@@ -585,16 +588,22 @@ var CreditUI = (function () {
         var op = R.pair[1];
         var arWord = (op.extensions && op.extensions.auto_repay !== undefined)
           ? Credit.autoRepayWord(op.extensions.auto_repay) : "omitted (chain default)";
-        return [[t("credit.borrower", "Borrower"), who(R.bor)], [t("credit.offer", "Offer"), o.id],
-          [t("credit.borrow", "Borrow"), Format.formatAmount(op.borrow_amount.amount, R.a.precision) + " " + R.a.symbol, "raw " + op.borrow_amount.amount],
-          [t("credit.collateral", "Collateral"), Format.formatAmount(op.collateral.amount, R.ca.precision) + " " + R.ca.symbol, "raw " + op.collateral.amount],
-          [t("credit.max_fee_rate", "Max fee rate"), Credit.rateUnitsToHuman(op.max_fee_rate) + "%", "raw " + op.max_fee_rate],
-          [t("credit.min_duration", "Min duration"), Credit.durToHuman(op.min_duration_seconds)],
-          [t("credit.auto_repay", "Auto-repay"), arWord],
-          [t("credit.quoted_credit_fee", "Quoted credit fee"), Format.formatAmount(R.quote, R.a.precision) + " " + R.a.symbol, "ceil(amount*rate/1M)"],
-          [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw], [t("credit.network", "Network"), "testnet"]];
+        /* Terms carry their locale key in the 4th slot. These rows reach the signing
+       * dialog through reviewPaid -> sendConfirm -> ConfirmDialog, which mounts
+       * every dt via RiskText, so this is the ONE place a credit row gets its
+       * English reference. Values are amounts/ids and stay unkeyed (§3.5). */
+        return [[t("credit.borrower", "Borrower"), who(R.bor), null, "credit.borrower"],
+          [t("credit.offer", "Offer"), o.id, null, "credit.offer"],
+          [t("credit.borrow", "Borrow"), Format.formatAmount(op.borrow_amount.amount, R.a.precision) + " " + R.a.symbol, "raw " + op.borrow_amount.amount, "credit.borrow"],
+          [t("credit.collateral", "Collateral"), Format.formatAmount(op.collateral.amount, R.ca.precision) + " " + R.ca.symbol, "raw " + op.collateral.amount, "credit.collateral"],
+          [t("credit.max_fee_rate", "Max fee rate"), Credit.rateUnitsToHuman(op.max_fee_rate) + "%", "raw " + op.max_fee_rate, "credit.max_fee_rate"],
+          [t("credit.min_duration", "Min duration"), Credit.durToHuman(op.min_duration_seconds), null, "credit.min_duration"],
+          [t("credit.auto_repay", "Auto-repay"), arWord, null, "credit.auto_repay"],
+          [t("credit.quoted_credit_fee", "Quoted credit fee"), Format.formatAmount(R.quote, R.a.precision) + " " + R.a.symbol, "ceil(amount*rate/1M)", "credit.quoted_credit_fee"],
+          [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw, "credit.fee"],
+          [t("credit.network", "Network"), "testnet", null, "credit.network"]];
       },
-      title: t("credit.confirm_accept", "Confirm accept"), ok: function () { return t("credit.deal_opened_accept_broadcast", "Deal opened (accept broadcast)."); }, fail: t("credit.could_not_prepare_the_accept", "Could not prepare the accept.") });
+      title: t("credit.confirm_accept", "Confirm accept"), titleKey: "credit.confirm_accept", ok: function () { return t("credit.deal_opened_accept_broadcast", "Deal opened (accept broadcast)."); }, fail: t("credit.could_not_prepare_the_accept", "Could not prepare the accept.") });
     var closeBtn = touchable(DOM.el(doc, "button", t("trade.cancel_button", "Cancel"))); closeBtn.type = "button";
     closeBtn.addEventListener("click", function () { if (handle) handle.close(); });
     body.appendChild(closeBtn);
@@ -804,17 +813,21 @@ var CreditUI = (function () {
             } catch (e) { return null; } return null; } };
       },
       rows: function (R, fee) {
-        var op = R.pair[1], out = [[t("credit.owner", "Owner"), who(R.me)], [t("credit.asset", "Asset"), R.a.symbol + " (" + R.a.id + ")"],
-          [t("credit.balance", "Balance"), Format.formatAmount(op.balance, R.a.precision) + " " + R.a.symbol, "raw " + op.balance],
-          [t("credit.fee_rate", "Fee rate"), Credit.rateUnitsToHuman(op.fee_rate) + "% (denom 1,000,000)", "raw " + op.fee_rate],
-          [t("credit.max_duration", "Max duration"), Credit.durToHuman(op.max_duration_seconds)],
-          [t("credit.min_deal", "Min deal"), Format.formatAmount(op.min_deal_amount, R.a.precision) + " " + R.a.symbol, "raw " + op.min_deal_amount],
-          [t("credit.enabled", "Enabled"), op.enabled ? t("credit.yes", "yes") : t("credit.no", "no")], [t("credit.auto_disable", "Auto-disable"), op.auto_disable_time],
-          [t("credit.collateral_legs", "Collateral legs"), String(op.acceptable_collateral.length)], [t("credit.borrowers", "Borrowers"), String(op.acceptable_borrowers.length)],
-          [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw], [t("credit.network", "Network"), "testnet"]];
+var op = R.pair[1], out = [[t("credit.owner", "Owner"), who(R.me), null, "credit.owner"],
+          [t("credit.asset", "Asset"), R.a.symbol + " (" + R.a.id + ")", null, "credit.asset"],
+          [t("credit.balance", "Balance"), Format.formatAmount(op.balance, R.a.precision) + " " + R.a.symbol, "raw " + op.balance, "credit.balance"],
+          [t("credit.fee_rate", "Fee rate"), Credit.rateUnitsToHuman(op.fee_rate) + "% (denom 1,000,000)", "raw " + op.fee_rate, "credit.fee_rate"],
+          [t("credit.max_duration", "Max duration"), Credit.durToHuman(op.max_duration_seconds), null, "credit.max_duration"],
+          [t("credit.min_deal", "Min deal"), Format.formatAmount(op.min_deal_amount, R.a.precision) + " " + R.a.symbol, "raw " + op.min_deal_amount, "credit.min_deal"],
+          [t("credit.enabled", "Enabled"), op.enabled ? t("credit.yes", "yes") : t("credit.no", "no"), null, "credit.enabled"],
+          [t("credit.auto_disable", "Auto-disable"), op.auto_disable ? t("credit.yes", "yes") : t("credit.no", "no"), null, "credit.auto_disable"],
+          [t("credit.collateral_legs", "Collateral legs"), String(op.acceptable_collateral.length), null, "credit.collateral_legs"],
+          [t("credit.borrowers", "Borrowers"), String(op.accepted_borrowers.length), null, "credit.borrowers"],
+          [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw, "credit.fee"],
+          [t("credit.network", "Network"), "testnet", null, "credit.network"]];
         return out;
       },
-      title: t("credit.confirm_offer_create", "Confirm offer create"), ok: function () { return t("credit.offer_created", "Offer created."); }, fail: t("credit.could_not_prepare_the_create", "Could not prepare the create.") });
+      title: t("credit.confirm_offer_create", "Confirm offer create"), titleKey: "credit.confirm_offer_create", ok: function () { return t("credit.offer_created", "Offer created."); }, fail: t("credit.could_not_prepare_the_create", "Could not prepare the create.") });
   }
 
   return { renderOffers: renderOffers,

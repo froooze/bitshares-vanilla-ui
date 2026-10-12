@@ -343,23 +343,29 @@ var AssetManageUI = (function () {
           var pair = AssetOps.buildUpdate({ issuerId: info.issuer_id, assetId: info.id, newIssuerOrNull: newIssuerId, newOptions: next });
           var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
           if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
-          var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-            [t("explorer.market_fee", "Market fee"), AssetOps.hundredthsToPct(info.market_fee_hundredths) + "% → " + fp.input.value + "%", String(next.market_fee_percent)]];
-          if ((info.description || "") !== (ds.input.value || "")) rows.push([t("asset.description_row", "Description"), "changed (verified by re-read)"]);
-          if ((info.permissions || 0) !== next.issuer_permissions) rows.push([t("help.topic_accounts-permissions_title", "Permissions"), bitNames(PERMS, info.permissions || 0) + " → " + bitNames(PERMS, next.issuer_permissions), (info.permissions || 0) + "→" + next.issuer_permissions]);
-          if ((info.flags || 0) !== next.flags) rows.push([t("asset.flags_title", "Flags"), bitNames(FLAGS, info.flags || 0) + " → " + bitNames(FLAGS, next.flags), (info.flags || 0) + "→" + next.flags]);
+          /* Terms carry their locale key in the 4th slot — ui/confirm.js mounts every
+           * dt through RiskText, so this is the ONE place an asset-update row
+           * gets its English reference. Values (symbols, ids, percents, raw
+           * integers in r[2]) stay unkeyed: §3.5 keeps money out of the
+           * locale layer, and a key there would claim a translation that
+           * does not exist. */
+          var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+            [t("explorer.market_fee", "Market fee"), AssetOps.hundredthsToPct(info.market_fee_hundredths) + "% → " + fp.input.value + "%", String(next.market_fee_percent), "explorer.market_fee"]];
+          if ((info.description || "") !== (ds.input.value || "")) rows.push([t("asset.description_row", "Description"), "changed (verified by re-read)", null, "asset.description_row"]);
+          if ((info.permissions || 0) !== next.issuer_permissions) rows.push([t("help.topic_accounts-permissions_title", "Permissions"), bitNames(PERMS, info.permissions || 0) + " → " + bitNames(PERMS, next.issuer_permissions), (info.permissions || 0) + "→" + next.issuer_permissions, "help.topic_accounts-permissions_title"]);
+          if ((info.flags || 0) !== next.flags) rows.push([t("asset.flags_title", "Flags"), bitNames(FLAGS, info.flags || 0) + " → " + bitNames(FLAGS, next.flags), (info.flags || 0) + "→" + next.flags, "asset.flags_title"]);
           if (String(info.max_supply_raw) !== String(next.max_supply)) {
             var maxNewHuman = ms.input.value.trim();
             try { maxNewHuman = Format.formatAmount(String(next.max_supply), info.precision) + " " + info.symbol; }
             catch (e) { maxNewHuman = ms.input.value.trim(); }
-            rows.push([t("explorer.max_supply", "Max supply"), maxHuman + " " + info.symbol + " → " + maxNewHuman, String(next.max_supply)]);
+            rows.push([t("explorer.max_supply", "Max supply"), maxHuman + " " + info.symbol + " → " + maxNewHuman, String(next.max_supply), "explorer.max_supply"]);
           }
-          if (newIssuerId) rows.push([t("explorer.issuer_row", "Issuer"), (info.issuer_name || info.issuer_id) + " → " + newIssuerName + " (" + newIssuerId + ")"]);
-          rows.push([t("borrow.network", "Network"), netName()]);
+          if (newIssuerId) rows.push([t("explorer.issuer_row", "Issuer"), (info.issuer_name || info.issuer_id) + " → " + newIssuerName + " (" + newIssuerId + ")", null, "explorer.issuer_row"]);
+          rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
           var updFee;
           try { updFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
           catch (feeErr) { updFee = String(f.amount) + " (core)"; }
-          var updDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"),
+          var updDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"), titleKey: "asset.confirm_update",
             rows: rows, feeHuman: updFee, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderUpdate(root, info.symbol); },
@@ -406,12 +412,14 @@ var AssetManageUI = (function () {
                 short_backing_asset: cur.short_backing_asset } });
             var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
             if (g !== gen) return; wipe(root); var w3 = wrap(d, root), pp = await feePrec(f.asset_id);
-            var bitRows = [[t("asset_ops.title", "Asset"), info.symbol], [t("asset.offset_row", "Offset"), of.input.value + "%"], [t("asset.max_vol_row", "Max vol"), vf.input.value + "%"]];
-            bitRows.push([t("borrow.network", "Network"), netName()]);
+            var bitRows = [[t("asset_ops.title", "Asset"), info.symbol, null, "asset_ops.title"],
+              [t("asset.offset_row", "Offset"), of.input.value + "%", null, "asset.offset_row"],
+              [t("asset.max_vol_row", "Max vol"), vf.input.value + "%", null, "asset.max_vol_row"]];
+            bitRows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
             var bitFee;
             try { bitFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
             catch (feeErr2) { bitFee = String(f.amount) + " (core)"; }
-            var bitDlg = ConfirmDialog.show({ title: t("asset.confirm_bitasset", "Confirm bitasset update"),
+            var bitDlg = ConfirmDialog.show({ title: t("asset.confirm_bitasset", "Confirm bitasset update"), titleKey: "asset.confirm_bitasset",
               rows: bitRows, feeHuman: bitFee, feeTerm: t("borrow.fee", "Fee"),
               backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
               onBack: function () { renderUpdate(root, info.symbol); },
@@ -447,12 +455,12 @@ var AssetManageUI = (function () {
           var pair = AssetOps.buildUpdateProducers({ issuerId: info.issuer_id, assetId: info.id, producerIds: ids });
           var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
           if (g !== gen) return; wipe(root); var w4 = wrap(d, root), pp = await feePrec(f.asset_id);
-          var prodRows = [[t("asset_ops.title", "Asset"), info.symbol], [t("asset.producers_row", "Producers"), ids.length ? ids.join(", ") : "(empty)"]];
-          prodRows.push([t("borrow.network", "Network"), netName()]);
+          var prodRows = [[t("asset_ops.title", "Asset"), info.symbol, null, "asset_ops.title"], [t("asset.producers_row", "Producers"), ids.length ? ids.join(", ") : "(empty)", null, "asset.producers_row"]];
+          prodRows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
           var prodFee;
           try { prodFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
           catch (feeErr3) { prodFee = String(f.amount) + " (core)"; }
-          var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"),
+          var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"), titleKey: "asset.confirm_producers",
             rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"),
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderUpdate(root, info.symbol); },
@@ -514,14 +522,15 @@ var AssetManageUI = (function () {
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         var before = info.supply_raw;
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
-        var rows = [[t("asset_ops.title", "Asset"),  info.symbol + " (" + info.id + ")"],
-          [t("confirm.amount", "Amount"),  Format.formatAmount(raw, info.precision) + " " + info.symbol, raw]];
-        rows.push(isReserve ? [t("asset.payer_row", "Payer"), me.name + " (" + me.id + ")"] : [t("confirm.to", "To"), to.name + " (" + to.id + ")"]);
+        var rows = [[t("asset_ops.title", "Asset"),  info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("confirm.amount", "Amount"),  Format.formatAmount(raw, info.precision) + " " + info.symbol, raw, "confirm.amount"]];
+        rows.push(isReserve ? [t("asset.payer_row", "Payer"), me.name + " (" + me.id + ")", null, "asset.payer_row"]
+          : [t("confirm.to", "To"), to.name + " (" + to.id + ")", null, "confirm.to"]);
         if (!isReserve) {
-          rows.push([t("confirm.memo", "Memo"), memoText ? t("confirm.memo_plain", "Plain: %(text)s", { text: memoText }) : t("confirm.memo_none", "(none)")]);
-          if (memoText) rows.push([t("debit.memo_warning_row", "Memo warning"), t("asset.issue_memo_warning", "Attach a memo — it is stored on-chain in plaintext.")]);
+          rows.push([t("confirm.memo", "Memo"), memoText ? t("confirm.memo_plain", "Plain: %(text)s", { text: memoText }) : t("confirm.memo_none", "(none)"), null, "confirm.memo"]);
+          if (memoText) rows.push([t("debit.memo_warning_row", "Memo warning"), t("asset.issue_memo_warning", "Attach a memo — it is stored on-chain in plaintext."), null, "debit.memo_warning_row"]);
         }
-        rows.push([t("borrow.network", "Network"), netName()]);
+        rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var halfFee;
         try { halfFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr4) { halfFee = String(f.amount) + " (core)"; }
@@ -581,14 +590,14 @@ var AssetManageUI = (function () {
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         var before = info.supply_raw;
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
-        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-          [t("borrow.account", "Account"), me.name + " (" + me.id + ")"],
-          [t("confirm.amount", "Amount"), Format.formatAmount(raw, info.precision) + " " + info.symbol, raw]];
-        rows.push([t("borrow.network", "Network"), netName()]);
+        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("borrow.account", "Account"), me.name + " (" + me.id + ")", null, "borrow.account"],
+          [t("confirm.amount", "Amount"), Format.formatAmount(raw, info.precision) + " " + info.symbol, raw, "confirm.amount"]];
+        rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var settleFee;
         try { settleFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr5) { settleFee = String(f.amount) + " (core)"; }
-        var settleDlg = ConfirmDialog.show({ title: t("prediction.confirm_settle", "Confirm settle"),
+        var settleDlg = ConfirmDialog.show({ title: t("prediction.confirm_settle", "Confirm settle"), titleKey: "prediction.confirm_settle",
           rows: rows, feeHuman: settleFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
@@ -643,20 +652,20 @@ var AssetManageUI = (function () {
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
         var amtHuman = Format.formatAmount(raw, info.precision) + " " + info.symbol;
-        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-          [t("explorer.issuer_row", "Issuer"), me.name + " (" + me.id + ")"],
-          [t("confirm.amount", "Amount"), amtHuman, raw]];
+        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("explorer.issuer_row", "Issuer"), me.name + " (" + me.id + ")", null, "explorer.issuer_row"],
+          [t("confirm.amount", "Amount"), amtHuman, raw, "confirm.amount"]];
         if (before !== null) {
           var beforeHuman = before;
           try { beforeHuman = Format.formatAmount(before, info.precision) + " " + info.symbol; }
           catch (e) { beforeHuman = before; }
-          rows.push([t("explorer.accumulated_fees", "Accumulated fees"), beforeHuman, before]);
+          rows.push([t("explorer.accumulated_fees", "Accumulated fees"), beforeHuman, before, "explorer.accumulated_fees"]);
         }
-        rows.push([t("borrow.network", "Network"), netName()]);
+        rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var claimFee;
         try { claimFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr6) { claimFee = String(f.amount) + " (core)"; }
-        var claimDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"),
+        var claimDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"), titleKey: "debit.confirm_claim",
           rows: rows, feeHuman: claimFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
@@ -712,20 +721,20 @@ var AssetManageUI = (function () {
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
         var amtHuman = Format.formatAmount(raw, coreP) + " (core)";
-        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-          [t("explorer.issuer_row", "Issuer"), me.name + " (" + me.id + ")"],
-          [t("confirm.amount", "Amount"), amtHuman, raw]];
+        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("explorer.issuer_row", "Issuer"), me.name + " (" + me.id + ")", null, "explorer.issuer_row"],
+          [t("confirm.amount", "Amount"), amtHuman, raw, "confirm.amount"]];
         if (before !== null) {
           var beforeHuman = before;
           try { beforeHuman = Format.formatAmount(before, coreP) + " (core)"; }
           catch (e) { beforeHuman = before; }
-          rows.push([t("explorer.fee_pool", "Fee pool"), beforeHuman, before]);
+          rows.push([t("explorer.fee_pool", "Fee pool"), beforeHuman, before, "explorer.fee_pool"]);
         }
-        rows.push([t("borrow.network", "Network"), netName()]);
+        rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var poolFee;
         try { poolFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr7) { poolFee = String(f.amount) + " (core)"; }
-        var poolDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"),
+        var poolDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"), titleKey: "debit.confirm_claim",
           rows: rows, feeHuman: poolFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
@@ -781,13 +790,13 @@ var AssetManageUI = (function () {
         var pair = AssetOps.buildUpdateIssuer({ issuerId: me.id, assetId: info.id, newIssuerId: to.id });
         var f = await AssetOps.fee(pair, CORE); pair[1].fee = { amount: f.amount, asset_id: f.asset_id };
         if (g !== gen) return; wipe(root); var w2 = wrap(d, root), pp = await feePrec(f.asset_id);
-        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")"],
-          [t("explorer.issuer_row", "Issuer"), (info.issuer_name || info.issuer_id) + " → " + to.name + " (" + to.id + ")"]];
-        rows.push([t("borrow.network", "Network"), netName()]);
+        var rows = [[t("asset_ops.title", "Asset"), info.symbol + " (" + info.id + ")", null, "asset_ops.title"],
+          [t("explorer.issuer_row", "Issuer"), (info.issuer_name || info.issuer_id) + " → " + to.name + " (" + to.id + ")", null, "explorer.issuer_row"]];
+        rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
         var issuerFee;
         try { issuerFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr8) { issuerFee = String(f.amount) + " (core)"; }
-        var issuerDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"),
+        var issuerDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"), titleKey: "asset.confirm_update",
           rows: rows, feeHuman: issuerFee, feeTerm: t("borrow.fee", "Fee"),
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },

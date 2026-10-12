@@ -392,7 +392,7 @@ var TrollboxUI = (function () {
           var sizeUsed = 0;
           try { sizeUsed = T.utf8Length(text); } catch (e) { sizeUsed = text.length; }
           UnlockConfirm.open({
-            title: t("trollbox.post_review_title", "Review message"),
+            title: t("trollbox.post_review_title", "Review message"), titleKey: "trollbox.post_review_title",
             rows: [
               [t("trollbox.channel_row", "Channel"), "#" + S.channel + " (" + S.lang + ")"],
               [t("trollbox.message_row", "Message"), text],

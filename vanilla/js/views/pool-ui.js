@@ -254,7 +254,7 @@ var PoolUI = (function () {
   }
   function sendConfirm(doc, out, cfg, myGen) { /* confirm + publish: fresh-WIF sign, re-read proof, result */
     DOM.clear(out);
-    var dlg = ConfirmDialog.show({ title: cfg.title, rows: cfg.rows || [],
+    var dlg = ConfirmDialog.show({ title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows || [],
       backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       rawObj: cfg.pair,
       rawLabel: t("confirm.op_json_label", "Show unsigned operation JSON"),
@@ -313,7 +313,7 @@ var PoolUI = (function () {
    * @param {Document} doc owner document
    * @param {HTMLElement} out output box (cleared + rebuilt)
    * @param {number} myGen route generation (liveness token)
-   * @param {any} cfg {build, rows, title, ok, fail, btn?}
+   * @param {any} cfg {build, rows, title, titleKey?, ok, fail, btn?}
    * @returns {void} */
   function reviewPaid(doc, out, myGen, cfg) {
     DOM.clear(out); if (cfg.btn) cfg.btn.disabled = true;
@@ -323,7 +323,7 @@ var PoolUI = (function () {
       if (myGen !== gen) return done();
       feeText((/** @type {any} */ (built).fee)).then(function (f) {
         if (myGen !== gen) return done();
-        sendConfirm(doc, out, { title: cfg.title, rows: cfg.rows(built, f), pair: (/** @type {any} */ (built).pair),
+        sendConfirm(doc, out, { title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows(built, f), pair: (/** @type {any} */ (built).pair),
           makeUnsigned: function () { return Tx.buildTx([(/** @type {any} */ (built).pair)]); },
           prove: (/** @type {any} */ (built).prove), okText: cfg.ok(built) }, myGen);
         done();
@@ -450,7 +450,7 @@ var PoolUI = (function () {
           return;
         }
         UnlockConfirm.open({
-          title: t("pool.uc_title", "Unlock to continue"),
+          title: t("pool.uc_title", "Unlock to continue"), titleKey: "pool.uc_title",
           rows: [[t("pool.uc_action", "Action"), cfg.title || ""]],
           feeHuman: null,
           rawObj: cfg.pair,
@@ -963,16 +963,20 @@ var PoolUI = (function () {
               return rows.length ? rows[0] : null;
             } catch (e) { return null; } } };
       },
+      /* Row terms carry their locale key in the 4th slot; sendConfirm forwards the
+       * rows verbatim to ConfirmDialog, which mounts every dt through RiskText
+       * so a machine-filled locale can disclose the English reference. Values
+       * (symbols, ids, percents) are §3.5 locale-independent and stay unkeyed. */
       rows: function (R, fee) {
         var op = R.pair[1];
-        return [[t("account.card_account", "Account"),  whoText(R.me)], [t("pool.asset_a_field", "Asset A"),  R.a.symbol + " (" + R.a.id + ")"],
-          [t("pool.asset_b_field", "Asset B"),  R.b.symbol + " (" + R.b.id + ")"], [t("pool.share_asset_field", "Share asset"),  R.sh.symbol + " (" + R.sh.id + ")"],
-          [t("pool.orientation_row", "Orientation"),  "A < B by id: " + op.asset_a + " / " + op.asset_b],
-          [t("pool.taker_row", "Taker fee"),  pctText(op.taker_fee_percent), "raw " + op.taker_fee_percent],
-          [t("pool.withdrawal_row", "Withdrawal fee"),  pctText(op.withdrawal_fee_percent), "raw " + op.withdrawal_fee_percent],
-          [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw], [t("borrow.network", "Network"),  networkName()]];
+        return [[t("account.card_account", "Account"),  whoText(R.me), null, "account.card_account"], [t("pool.asset_a_field", "Asset A"),  R.a.symbol + " (" + R.a.id + ")", null, "pool.asset_a_field"],
+          [t("pool.asset_b_field", "Asset B"),  R.b.symbol + " (" + R.b.id + ")", null, "pool.asset_b_field"], [t("pool.share_asset_field", "Share asset"),  R.sh.symbol + " (" + R.sh.id + ")", null, "pool.share_asset_field"],
+          [t("pool.orientation_row", "Orientation"),  "A < B by id: " + op.asset_a + " / " + op.asset_b, null, "pool.orientation_row"],
+          [t("pool.taker_row", "Taker fee"),  pctText(op.taker_fee_percent), "raw " + op.taker_fee_percent, "pool.taker_row"],
+          [t("pool.withdrawal_row", "Withdrawal fee"),  pctText(op.withdrawal_fee_percent), "raw " + op.withdrawal_fee_percent, "pool.withdrawal_row"],
+          [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw, "borrow.fee"], [t("borrow.network", "Network"),  networkName(), null, "borrow.network"]];
       },
-      title: t("pool.confirm_create", "Confirm pool create"), ok: function () { return "Pool created."; }, fail: t("credit.could_not_prepare_the_create", "Could not prepare the create.") });
+      title: t("pool.confirm_create", "Confirm pool create"), titleKey: "pool.confirm_create", ok: function () { return "Pool created."; }, fail: t("credit.could_not_prepare_the_create", "Could not prepare the create.") });
   }
   return { renderPools: renderPools, getSelection: getSelection,
     _ui: { el: DOM.el, touchable: touchable, clearBox: DOM.clear, showError: showError, showStatus: showStatus,

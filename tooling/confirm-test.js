@@ -3,6 +3,15 @@
 // Fake-doc asserts the common confirm subset: heading + dl.confirm with
 // dt/dd pairs (textContent-only), fee line, Back (ghost) + Send buttons,
 // Esc→onBack, click Back→onBack, click Send→onSend.
+//
+// HARNESS FIDELITY (2026-10-12, i18n risk wiring): the fake element below
+// aggregates `textContent` across its children the way a real DOM element
+// does, and setting it clears them. Task 4 moved the title and each row
+// term into the RiskText widget mounted INSIDE the existing h3/dt, so a
+// host's text now lives in a child node. Before this, the flat-property fake
+// read such a host as "" — a false failure describing something no browser
+// does. Only the fake changed; every assertion below is untouched, and an
+// unkeyed dialog still renders byte-identical DOM in a browser.
 var path = require("path");
 var assert = require("assert");
 
@@ -42,6 +51,22 @@ function fakeEl(tag) {
   el.removeEventListener = function (t, fn) {
     if (this.__handlers[t] === fn) delete this.__handlers[t];
   };
+  /* Real textContent semantics: a write replaces the subtree, a read
+   * concatenates it. See the harness-fidelity note at the top. */
+  var ownText = "";
+  Object.defineProperty(el, "textContent", {
+    get: function () {
+      if (!this.children.length) return ownText;
+      return this.children.map(function (c) {
+        return (c && c.textContent !== undefined && c.textContent !== null)
+          ? String(c.textContent) : "";
+      }).join("");
+    },
+    set: function (v) {
+      ownText = (v === undefined || v === null) ? "" : String(v);
+      this.children.length = 0;
+    }
+  });
   return el;
 }
 

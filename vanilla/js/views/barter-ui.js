@@ -382,10 +382,14 @@ var BarterUI = (function () {
    * ride inside the dialog above its actions; unlock-gating + broadcast stay here. */
   function confirmPropose(doc, out, myGen, prev, built, feeHuman, btn) {
     DOM.clear(out);
-    var rows = [[t("barter.fee_payer", "Fee payer"), prev.A.acct.name + " (" + prev.A.acct.id + ")"],
-     [t("barter.expiration", "Expiration"), built.pair[1].expiration_time],
-     [t("barter.review_period", "Review period"), (built.pair[1].review_period_seconds === null ? t("barter.none", "none") : Proposal.durToHuman(built.pair[1].review_period_seconds))],
-     [t("barter.enclosed_transfers", "Enclosed transfers"), String(built.pair[1].proposed_ops.length)]];
+    /* Terms carry their locale key in the 4th slot — the ONE path to the
+     * English reference on a signing dialog (ui/confirm.js mounts every dt
+     * through RiskText). The title is interpolated ("…(op 22)"), so it
+     * stays unkeyed: a key would pin an English reference to one op number. */
+    var rows = [[t("barter.fee_payer", "Fee payer"), prev.A.acct.name + " (" + prev.A.acct.id + ")", null, "barter.fee_payer"],
+     [t("barter.expiration", "Expiration"), built.pair[1].expiration_time, null, "barter.expiration"],
+     [t("barter.review_period", "Review period"), (built.pair[1].review_period_seconds === null ? t("barter.none", "none") : Proposal.durToHuman(built.pair[1].review_period_seconds)), null, "barter.review_period"],
+     [t("barter.enclosed_transfers", "Enclosed transfers"), String(built.pair[1].proposed_ops.length), null, "barter.enclosed_transfers"]];
     var dlg = ConfirmDialog.show({ title: t("barter.confirm_barter_proposal_op_22", "Confirm barter proposal (op %(op)s)", { op: 22 }),
       rows: rows, feeHuman: feeHuman, feeTerm: t("common.fee_live", "Fee (live)"),
       backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
@@ -437,7 +441,7 @@ var BarterUI = (function () {
          * proposal is RE-PREVIEWED (same as the old inline row: the legs
          * were resolved for the viewing-as account — the note says so). */
         UnlockConfirm.open({
-          title: t("barter.uc_title", "Unlock to sign"),
+          title: t("barter.uc_title", "Unlock to sign"), titleKey: "barter.uc_title",
           rows: rows,
           feeHuman: feeHuman,
           feeTerm: t("common.fee_live", "Fee (live)"),

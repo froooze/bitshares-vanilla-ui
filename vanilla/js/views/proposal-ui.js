@@ -251,7 +251,7 @@ var ProposalUI = (function () {
         else dlg.appendChild(node);
       } catch (e2) { try { dlg.appendChild(node); } catch (e3) { /* display-only */ } }
     }
-    dlg = ConfirmDialog.show({ title: cfg.title, rows: cfg.rows || [],
+    dlg = ConfirmDialog.show({ title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows || [],
       backLabel: t("proposal.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       onBack: function () { DOM.clear(out); },
       onSend: function () {
@@ -297,7 +297,7 @@ var ProposalUI = (function () {
    * @param {Document} doc owner document
    * @param {HTMLElement} out output box (cleared + rebuilt)
    * @param {number} myGen route generation (liveness token)
-   * @param {any} cfg {build, rows, title, ok, fail, extra?, btn?}
+   * @param {any} cfg {build, rows, title, titleKey?, ok, fail, extra?, btn?}
    * @returns {void} */
   function reviewPaid(doc, out, myGen, cfg) {
     DOM.clear(out); if (cfg.btn) cfg.btn.disabled = true;
@@ -307,7 +307,7 @@ var ProposalUI = (function () {
       if (myGen !== gen) return done();
       feeText((/** @type {any} */ (built).fee)).then(function (f) {
         if (myGen !== gen) return done();
-        sendConfirm(doc, out, { title: cfg.title, rows: cfg.rows(built, f),
+        sendConfirm(doc, out, { title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows(built, f),
           extra: (typeof cfg.extra === "function" ? function (d) { return cfg.extra(d, built); } : null),
           makeUnsigned: function () { return Tx.buildTx((/** @type {any} */ (built).ops) || [(/** @type {any} */ (built).pair)]); },
           prove: (/** @type {any} */ (built).prove), okText: cfg.ok(built) }, myGen);
@@ -747,10 +747,14 @@ var ProposalUI = (function () {
           } };
       },
       title: t("proposal.confirm_proposal_create_op_22", "Confirm proposal create (op %(op)s)", { op: 22 }),
+      /* Row terms carry their locale key in the 4th slot; sendConfirm
+       * forwards the rows verbatim to ConfirmDialog, which mounts every dt
+       * through RiskText (machine-filled locales disclose the English
+       * reference). Values are ids and a fee string, unkeyed (§3.5). */
       rows: function (built, f) {
-        return [[t("proposal.fee_payer", "Fee payer"), built.pair[1].fee_paying_account], [t("proposal.expiration", "Expiration"), timeHuman(built.pair[1].expiration_time)],
-          [t("proposal.review_period", "Review period"), (built.pair[1].review_period_seconds === null ? t("proposal.none", "none") : Proposal.durToHuman(built.pair[1].review_period_seconds))],
-          [t("proposal.enclosed_ops", "Enclosed ops"), String(built.pair[1].proposed_ops.length)], [t("common.fee_live", "Fee (live)"), f]];
+        return [[t("proposal.fee_payer", "Fee payer"), built.pair[1].fee_paying_account, null, "proposal.fee_payer"], [t("proposal.expiration", "Expiration"), timeHuman(built.pair[1].expiration_time), null, "proposal.expiration"],
+          [t("proposal.review_period", "Review period"), (built.pair[1].review_period_seconds === null ? t("proposal.none", "none") : Proposal.durToHuman(built.pair[1].review_period_seconds)), null, "proposal.review_period"],
+          [t("proposal.enclosed_ops", "Enclosed ops"), String(built.pair[1].proposed_ops.length), null, "proposal.enclosed_ops"], [t("common.fee_live", "Fee (live)"), f, null, "common.fee_live"]];
       },
       extra: function (doc, built) {
         var box = doc.createElement("div");
@@ -897,8 +901,8 @@ var ProposalUI = (function () {
           },
           title: "Confirm " + ab[0].toLowerCase() + " (op 23)",
           rows: function (built, f) {
-            return [[t("proposal.proposal", "Proposal"), String(p.id)], [(ab[1] ? t("proposal.removed", "Removed") : t("proposal.added", "Added")) + " approval", built.who + " (" + ow.value + ")"],
-              [t("proposal.fee_payer", "Fee payer"), built.pair[1].fee_paying_account], [t("common.fee_live", "Fee (live)"), f]];
+            return [[t("proposal.proposal", "Proposal"), String(p.id), null, "proposal.proposal"], [(ab[1] ? t("proposal.removed", "Removed") : t("proposal.added", "Added")) + " approval", built.who + " (" + ow.value + ")"],
+              [t("proposal.fee_payer", "Fee payer"), built.pair[1].fee_paying_account, null, "proposal.fee_payer"], [t("common.fee_live", "Fee (live)"), f, null, "common.fee_live"]];
           },
           ok: function () { return "Approval " + (ab[1] ? "removed" : "recorded") + " and re-read on chain."; } });
       });
@@ -923,7 +927,7 @@ var ProposalUI = (function () {
         },
         title: t("proposal.confirm_proposal_delete_op_24", "Confirm proposal delete (op %(op)s)", { op: 24 }),
         rows: function (built, f) {
-          return [[t("proposal.proposal", "Proposal"), String(p.id)], [t("proposal.owner_authority", "Owner authority"), chk.checked ? t("proposal.yes_veto", "yes (veto)") : t("proposal.no", "no")], [t("common.fee_live", "Fee (live)"), f]];
+          return [[t("proposal.proposal", "Proposal"), String(p.id), null, "proposal.proposal"], [t("proposal.owner_authority", "Owner authority"), chk.checked ? t("proposal.yes_veto", "yes (veto)") : t("proposal.no", "no"), null, "proposal.owner_authority"], [t("common.fee_live", "Fee (live)"), f, null, "common.fee_live"]];
         },
         ok: function () { return t("proposal.proposal_deleted_re_read_confirms_it_is_gone", "Proposal deleted (re-read confirms it is gone)."); } });
     }).catch(function (e) {

@@ -413,7 +413,7 @@ var PredictionFlows = (function () {
         return;
       }
       UnlockConfirm.open({
-        title: t("prediction.uc_title", "Unlock to sign"),
+        title: t("prediction.uc_title", "Unlock to sign"), titleKey: "prediction.uc_title",
         rows: modal.rows || [],
         feeHuman: (modal.feeHuman === undefined) ? null : modal.feeHuman,
         feeTerm: modal.feeTerm,
@@ -729,12 +729,15 @@ var PredictionFlows = (function () {
           if (myGen !== gen) return;
           var feeHuman = fa ? Format.formatAmount(String(S.fee.amount), fa.precision) + " " + fa.symbol : String(S.fee.amount);
           DOM.clear(pfConfirm);
+          /* Terms carry their locale key in the 4th slot; ui/confirm.js mounts every
+           * dt through RiskText, so this is the ONE place a settle row gets
+           * its English reference. Values are amounts/ids and stay unkeyed. */
           var sRows = [
-            [t("borrow.account", "Account"), me.name + " (" + me.id + ")"],
-            [t("prediction.asset", "Asset"), (h.balance.symbol || h.balance.asset_id) + " (" + h.balance.asset_id + ")"],
-            [t("confirm.amount", "Amount"), S.amountHuman + " " + (h.balance.symbol || ""), "raw " + S.holdingRaw],
-            [t("borrow.fee", "Fee"), feeHuman, "raw " + String(S.fee.amount)],
-            [t("borrow.network", "Network"), "testnet"]];
+            [t("borrow.account", "Account"), me.name + " (" + me.id + ")", null, "borrow.account"],
+            [t("prediction.asset", "Asset"), (h.balance.symbol || h.balance.asset_id) + " (" + h.balance.asset_id + ")", null, "prediction.asset"],
+            [t("confirm.amount", "Amount"), S.amountHuman + " " + (h.balance.symbol || ""), "raw " + S.holdingRaw, "confirm.amount"],
+            [t("borrow.fee", "Fee"), feeHuman, "raw " + String(S.fee.amount), "borrow.fee"],
+            [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var sDlg = null;
           /* Back clears the preview and re-arms the Settle button. */
           function sBack() { DOM.clear(pfConfirm); if (btn) btn.disabled = false; }
@@ -774,7 +777,7 @@ var PredictionFlows = (function () {
               sendB.disabled = false; backB.disabled = false;
             });
           }
-          sDlg = ConfirmDialog.show({ title: t("prediction.confirm_settle", "Confirm settle"), rows: sRows,
+          sDlg = ConfirmDialog.show({ title: t("prediction.confirm_settle", "Confirm settle"), titleKey: "prediction.confirm_settle", rows: sRows,
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: sBack, onSend: sSend });
           /* Principle #6 (raw in title): sRows carry native r[2] raw

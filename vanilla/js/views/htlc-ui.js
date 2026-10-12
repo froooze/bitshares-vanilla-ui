@@ -214,7 +214,7 @@ var HtlcUI = (function () {
    * clearing (cfg.clear) below are unchanged. */
   function sendConfirm(doc, out, cfg, myGen) { /* confirm + publish: fresh-WIF sign, re-read proof, result */
     DOM.clear(out);
-    var dlg = ConfirmDialog.show({ title: cfg.title, rows: cfg.rows || [],
+    var dlg = ConfirmDialog.show({ title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows || [],
       backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       onBack: function () { DOM.clear(out); },
       onSend: function () { attemptSend(0); } });
@@ -247,7 +247,7 @@ var HtlcUI = (function () {
             return;
           }
           UnlockConfirm.open({
-            title: t("htlc.uc_title", "Unlock to sign"),
+            title: t("htlc.uc_title", "Unlock to sign"), titleKey: "htlc.uc_title",
             rows: cfg.rows || [],
             feeHuman: null,
             rawObj: cfg.pair,
@@ -286,7 +286,7 @@ var HtlcUI = (function () {
    * @param {Document} doc owner document
    * @param {HTMLElement} out output box (cleared + rebuilt)
    * @param {number} myGen route generation (liveness token)
-   * @param {any} cfg {build, rows, title, ok, fail, clear?, btn?}
+   * @param {any} cfg {build, rows, title, titleKey?, ok, fail, clear?, btn?}
    * @returns {void} */
   function reviewPaid(doc, out, myGen, cfg) {
     DOM.clear(out); if (cfg.btn) cfg.btn.disabled = true;
@@ -296,7 +296,7 @@ var HtlcUI = (function () {
       if (myGen !== gen) return done();
       feeText((/** @type {any} */ (built).fee)).then(function (f) {
         if (myGen !== gen) return done();
-        sendConfirm(doc, out, { title: cfg.title, rows: cfg.rows(built, f),
+        sendConfirm(doc, out, { title: cfg.title, titleKey: cfg.titleKey, rows: cfg.rows(built, f),
           pair: (/** @type {any} */ (built).pair),
           makeUnsigned: function () { return Tx.buildTx([(/** @type {any} */ (built).pair)]); },
           prove: (/** @type {any} */ (built).prove), okText: cfg.ok(built), clear: cfg.clear || [] }, myGen);
@@ -478,20 +478,24 @@ var HtlcUI = (function () {
                 return lists.sent.concat(lists.received).find(function (r) { return r.hash_hex === hashHex; }) || null;
               } catch (e) { return null; } } };
         },
+        /* Row terms carry their locale key in the 4th slot; sendConfirm
+         * forwards the rows verbatim to ConfirmDialog, which mounts every dt
+         * through RiskText (machine-filled locales disclose the English
+         * reference). Values are amounts/ids and stay unkeyed (§3.5). */
         rows: function (R, fee) {
           var opData = R.pair[1], hashPair = opData.preimage_hash, secs = opData.claim_period_seconds, amtHuman, periodHuman,
             algoName = hashPair[0] === 2 ? "sha256" : (hashPair[0] === 0 ? "ripemd160" : "unknown(" + hashPair[0] + ")");
           try { amtHuman = Format.formatAmount(opData.amount.amount, R.asset.precision) + " " + R.asset.symbol; }
           catch (e) { amtHuman = String(opData.amount.amount); }
           try { periodHuman = Htlc.formatDuration(secs) + " (" + secs + " s)"; } catch (e) { periodHuman = secs + " s"; }
-          var rows = [[t("confirm.from", "From"),  me.name + " (" + me.id + ")"], [t("confirm.to", "To"),  R.to.name + " (" + R.to.id + ")"],
-            [t("confirm.amount", "Amount"),  amtHuman, "raw " + opData.amount.amount], [t("htlc.algo_row", "Hash algorithm"),  algoName],
-            [t("htlc.hash_row", "Preimage hash"),  shortHash(hashPair[1]), hashPair[1]], [t("htlc.size_row", "Preimage size"),  opData.preimage_size + " bytes"],
-            [t("htlc.period_row", "Claim period"),  periodHuman], [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw]];
-          if (secs > 86400) rows.push([t("htlc.netnote_row", "Network note"),  "Fee scales per day (fee_per_day)"]);
-          rows.push([t("borrow.network", "Network"),  "testnet"]); return rows;
+          var rows = [[t("confirm.from", "From"),  me.name + " (" + me.id + ")", null, "confirm.from"], [t("confirm.to", "To"),  R.to.name + " (" + R.to.id + ")", null, "confirm.to"],
+            [t("confirm.amount", "Amount"),  amtHuman, "raw " + opData.amount.amount, "confirm.amount"], [t("htlc.algo_row", "Hash algorithm"),  algoName, null, "htlc.algo_row"],
+            [t("htlc.hash_row", "Preimage hash"),  shortHash(hashPair[1]), hashPair[1], "htlc.hash_row"], [t("htlc.size_row", "Preimage size"),  opData.preimage_size + " bytes", null, "htlc.size_row"],
+            [t("htlc.period_row", "Claim period"),  periodHuman, null, "htlc.period_row"], [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw, "borrow.fee"]];
+          if (secs > 86400) rows.push([t("htlc.netnote_row", "Network note"),  "Fee scales per day (fee_per_day)", null, "htlc.netnote_row"]);
+          rows.push([t("borrow.network", "Network"),  "testnet", null, "borrow.network"]); return rows;
         },
-        title: t("htlc.confirm_create", "Confirm HTLC"), ok: function () { return t("htlc.created", "HTLC created."); }, clear: [fSecret.input, fHash.input, fSize.input], fail: t("htlc.create_failed", "Could not prepare the HTLC.") });
+        title: t("htlc.confirm_create", "Confirm HTLC"), titleKey: "htlc.confirm_create", ok: function () { return t("htlc.created", "HTLC created."); }, clear: [fSecret.input, fHash.input, fSize.input], fail: t("htlc.create_failed", "Could not prepare the HTLC.") });
   }
   /** Route entry: #/htlc/:id — detail + redeem + extend; unknown id is an empty state.
    * @param {HTMLElement} root router mount element
@@ -567,10 +571,10 @@ var HtlcUI = (function () {
               catch (e) { return String((e && e.message) || "") === "unknown-htlc" ? { gone: true } : null; } } };
         },
         rows: function (R, fee) {
-          return [[t("htlc.title", "HTLC"),  row.id], [t("htlc.redeemer_row", "Redeemer"),  me.name + " (" + me.id + ")"], [t("htlc.preimage_label", "Preimage"),  R.preBytes + " bytes, hash-match ✓"],
-            [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw], [t("borrow.network", "Network"),  "testnet"]];
+          return [[t("htlc.title", "HTLC"),  row.id, null, "htlc.title"], [t("htlc.redeemer_row", "Redeemer"),  me.name + " (" + me.id + ")", null, "htlc.redeemer_row"], [t("htlc.preimage_label", "Preimage"),  R.preBytes + " bytes, hash-match ✓", null, "htlc.preimage_label"],
+            [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw], [t("borrow.network", "Network"),  "testnet", null, "borrow.network"]];
         },
-        title: t("htlc.confirm_redeem", "Confirm redeem"), ok: function () { return "Redeemed: contract " + row.id + " is gone."; }, clear: [inp], fail: t("htlc.redeem_fee_failed", "Could not estimate the redeem fee.") });
+        title: t("htlc.confirm_redeem", "Confirm redeem"), titleKey: "htlc.confirm_redeem", ok: function () { return "Redeemed: contract " + row.id + " is gone."; }, clear: [inp], fail: t("htlc.redeem_fee_failed", "Could not estimate the redeem fee.") });
     reviewBtn.disabled = true;
   }
   function extendBox(doc, box, me, row, myGen) { /* presets + custom, new-expiry preview, live fee */
@@ -603,10 +607,10 @@ var HtlcUI = (function () {
             } catch (e) { return null; } } };
         },
         rows: function (R, fee) {
-          return [[t("htlc.title", "HTLC"),  row.id], [t("explorer.issuer_row", "Issuer"),  me.name + " (" + me.id + ")"], [t("htlc.added_row", "Added time"),  R.h.dur], [t("htlc.expiry_row", "New expiry"),  R.h.when],
-            [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw], [t("borrow.network", "Network"),  "testnet"]];
+          return [[t("htlc.title", "HTLC"),  row.id, null, "htlc.title"], [t("explorer.issuer_row", "Issuer"),  me.name + " (" + me.id + ")", null, "explorer.issuer_row"], [t("htlc.added_row", "Added time"),  R.h.dur, null, "htlc.added_row"], [t("htlc.expiry_row", "New expiry"),  R.h.when, null, "htlc.expiry_row"],
+            [t("borrow.fee", "Fee"),  fee.text, "raw " + fee.raw], [t("borrow.network", "Network"),  "testnet", null, "borrow.network"]];
         },
-        title: t("htlc.confirm_extend", "Confirm extend"), ok: function (R) { return "Extended by " + R.n + " seconds."; }, fail: t("htlc.extend_fee_failed", "Could not estimate the extend fee.") });
+        title: t("htlc.confirm_extend", "Confirm extend"), titleKey: "htlc.confirm_extend", ok: function (R) { return "Extended by " + R.n + " seconds."; }, fail: t("htlc.extend_fee_failed", "Could not estimate the extend fee.") });
   }
   return { renderHtlc: renderHtlc, renderHtlcDetail: renderHtlcDetail, _ui: {
       el: DOM.el, touchable: touchable, clearBox: DOM.clear, shortHash: shortHash, showError: showError, showStatus: showStatus,
