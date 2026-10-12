@@ -416,7 +416,7 @@ var PredictionFlows = (function () {
         title: t("prediction.uc_title", "Unlock to sign"), titleKey: "prediction.uc_title",
         rows: modal.rows || [],
         feeHuman: (modal.feeHuman === undefined) ? null : modal.feeHuman,
-        feeTerm: modal.feeTerm,
+        feeTerm: modal.feeTerm, feeTermKey: modal.feeTermKey,
         rawObj: (modal.rawObj === undefined) ? null : modal.rawObj,
         rawLabel: t("confirm.op_json_label", "Show unsigned operation JSON"),
         needPassword: true,
@@ -743,12 +743,11 @@ var PredictionFlows = (function () {
           function sBack() { DOM.clear(pfConfirm); if (btn) btn.disabled = false; }
           function sSend() {
             if (myGen !== gen) return;
-            var btns = sDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(sDlg), backB = cbtns.back, sendB = cbtns.send;
             sendB.disabled = true; backB.disabled = true;
             var st = showStatus(doc, pfConfirm, t("common.status_broadcasting", "Broadcasting…"));
             var wif = (typeof Wallet !== "undefined" && Wallet.keys && Wallet.keys.active) ? Wallet.keys.active.wif : null;
-            if (!wif) { pfConfirm.removeChild(st); signGateLockedP(pfConfirm, sendB, backB, { rows: sRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), rawObj: S.pair }); return; }
+            if (!wif) { pfConfirm.removeChild(st); signGateLockedP(pfConfirm, sendB, backB, { rows: sRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee", rawObj: S.pair }); return; }
             Tx.buildTx([S.pair]).then(function (unsigned) {
               return AssetOps.sendAndProve(unsigned, wif, async function () {
                 try {

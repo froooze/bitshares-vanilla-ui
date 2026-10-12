@@ -10,8 +10,19 @@
 // term into the RiskText widget mounted INSIDE the existing h3/dt, so a
 // host's text now lives in a child node. Before this, the flat-property fake
 // read such a host as "" — a false failure describing something no browser
-// does. Only the fake changed; every assertion below is untouched, and an
-// unkeyed dialog still renders byte-identical DOM in a browser.
+// does. Only the fake changed; every assertion below is untouched.
+//
+// ONE HONEST DEVIATION (same date): an unkeyed dialog is NOT byte-identical
+// in a browser. Hosts, tags, classes, text, the `dd`s, the fee `dt` and the
+// actions row are all unchanged — but every `h3`/`dt` line now carries one
+// extra inline `<span class="i18n-risk-plain">` around its text. That span is
+// RiskText's plain path: `line()` builds the semantic host EMPTY and mounts
+// the widget inside it, because RiskText answers a `<span>`, and substituting
+// it for the host would demote the dialog heading to a span and un-pair every
+// `<dl>` dt/dd. This file's assertions are textContent-based and therefore
+// blind to the extra wrapper; the structural contract it does pin (h3 / dl /
+// dt+dd / actions) is intact. tooling/confirm-risk-test.js section 1 pins the
+// real DOM shape.
 var path = require("path");
 var assert = require("assert");
 

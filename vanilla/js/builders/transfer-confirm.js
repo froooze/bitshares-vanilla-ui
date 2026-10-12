@@ -338,8 +338,7 @@ var TransferConfirm = (function () {
       try { location.hash = "#/transfer"; } catch (e) { /* no nav */ }
     }
     function doSend() {
-      var btns = dlg.getElementsByTagName("button");
-      var backBtn = btns[0], sendBtn = btns[1];
+      var cbtns = ConfirmDialog.buttons(dlg), backBtn = cbtns.back, sendBtn = cbtns.send;
       /* H3: suspicious-fee transfers need the explicit acked second click. */
       if (ctx.feeWarning && !(feeAckBox && feeAckBox.checked)) {
         showError(doc, wrap,
@@ -398,17 +397,20 @@ var TransferConfirm = (function () {
         });
     }
     dlg = ConfirmDialog.show({ title: t("confirm.title", "Confirm transfer"), titleKey: "confirm.title",
-      rows: rows, feeHuman: feeHuman, feeTerm: t("confirm.fee", "Fee"),
+      rows: rows, feeHuman: feeHuman, feeTerm: t("confirm.fee", "Fee"), feeTermKey: "confirm.fee",
       feeRawTitle: String(ctx.fee.amount),
       backLabel: t("confirm.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       doc: doc, onBack: doBack, onSend: doSend });
     /* Stable hooks: the shared dialog owns the buttons — keep the old ids
-     * so automation/tests keep finding Back + Send. The outlet appended
-     * below lands third, so btns[0]/btns[1] stay Back/Send (pool-ui note). */
+     * so automation/tests keep finding Back + Send. Resolved through
+     * ConfirmDialog.buttons(), never by index: the RiskText disclosure
+     * asterisks above the actions are real <button>s, so index 0/1 would
+     * stamp these ids onto an asterisk on a machine-filled locale. The
+     * TxBuilder outlet appended below lands third either way. */
     try {
-      var dlgBtns = dlg.getElementsByTagName("button");
-      if (dlgBtns[0]) dlgBtns[0].id = "xfer-back";
-      if (dlgBtns[1]) dlgBtns[1].id = "xfer-send";
+      var dlgBtns = ConfirmDialog.buttons(dlg);
+      if (dlgBtns.back) dlgBtns.back.id = "xfer-back";
+      if (dlgBtns.send) dlgBtns.send.id = "xfer-send";
     } catch (idErr) { /* ids are hooks-only */ }
     /* Slot notes above the actions (old rows-then-notes-then-buttons
      * order, textContent-only; falls back to plain append when the

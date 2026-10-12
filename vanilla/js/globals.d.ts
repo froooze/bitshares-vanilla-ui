@@ -199,9 +199,26 @@ declare var nobleSignAsync: any;
 declare var nobleGetSharedSecret: any;
 declare var ScryptKdf: any;
 declare var I18n: any;
+/* RiskTextLine — what RiskText.render()/wrap() hand back.
+ * The CONTRACT is "always something a caller can appendChild without a
+ * null check", because appendChild(null) prints the literal text "null" into
+ * a signing dialog. A real HTMLElement satisfies this shape, and so does the
+ * no-document floor (ui/risk-text.js degraded()), which cannot create an
+ * element because no document exists to create it from. Declared
+ * structurally rather than as HTMLElement so the type does not claim a
+ * guarantee the floor cannot keep; every caller in the tree reaches it
+ * through ConfirmDialog.risk(), which is deliberately `any`. */
+declare interface RiskTextLine {
+  className: string;
+  textContent: string;
+  children: ArrayLike<any>;
+  parentNode: any;
+  id: string;
+  appendChild(child: any): any;
+}
 declare var RiskText: {
-  render(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement;
-  wrap(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement;
+  render(doc: Document, text: string | number | null | undefined, key?: string | null): RiskTextLine;
+  wrap(doc: Document, text: string | number | null | undefined, key?: string | null): RiskTextLine;
   isActive(): boolean;
 };
 declare var RiskKeys: {

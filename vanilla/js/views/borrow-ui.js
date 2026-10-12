@@ -107,7 +107,7 @@ var BorrowUI = (function () {
       title: t("borrow.uc_title", "Unlock to sign"), titleKey: "borrow.uc_title",
       rows: modal.rows || [],
       feeHuman: (modal.feeHuman === undefined) ? null : modal.feeHuman,
-      feeTerm: modal.feeTerm,
+      feeTerm: modal.feeTerm, feeTermKey: modal.feeTermKey,
       rawObj: (modal.rawObj === undefined) ? null : modal.rawObj,
       rawLabel: t("confirm.op_json_label", "Show unsigned operation JSON"),
       needPassword: true,
@@ -515,7 +515,7 @@ var BorrowUI = (function () {
             [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var adjDlg = ConfirmDialog.show({ title: t("borrow.confirm_margin_adjust", "Confirm margin adjust"),
             titleKey: "borrow.confirm_margin_adjust",
-            rows: adjRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
+            rows: adjRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },
             onSend: function () { doAdjSend(); } });
@@ -529,12 +529,11 @@ var BorrowUI = (function () {
           btn.disabled = false;
           function doAdjSend() {
             if (myGen !== gen) return;
-            var btns = adjDlg.getElementsByTagName("button");
-            var back = btns[0], send = btns[1];
+            var cbtns = ConfirmDialog.buttons(adjDlg), back = cbtns.back, send = cbtns.send;
             send.disabled = true; back.disabled = true;
             var status = showStatus(doc, out, t("common.status_broadcasting", "Broadcasting…"));
             var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;
-            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: adjRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), rawObj: R.pair }); return; }
+            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: adjRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee", rawObj: R.pair }); return; }
             Tx.buildTx([R.pair]).then(function (unsigned) {
               return Credit.sendAndProve(unsigned, wif, async function () {
                 try {
@@ -735,7 +734,7 @@ var BorrowUI = (function () {
             [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var openDlg = ConfirmDialog.show({ title: t("borrow.confirm_new_borrow", "Confirm new borrow"),
             titleKey: "borrow.confirm_new_borrow",
-            rows: openRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
+            rows: openRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },
             onSend: function () { doOpenSend(); } });
@@ -749,12 +748,11 @@ var BorrowUI = (function () {
           btn.disabled = false;
           function doOpenSend() {
             if (myGen !== gen) return;
-            var btns = openDlg.getElementsByTagName("button");
-            var back = btns[0], send = btns[1];
+            var cbtns = ConfirmDialog.buttons(openDlg), back = cbtns.back, send = cbtns.send;
             send.disabled = true; back.disabled = true;
             var status = showStatus(doc, out, t("common.status_broadcasting", "Broadcasting…"));
             var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;
-            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: openRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), rawObj: R.pair }); return; }
+            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: openRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee", rawObj: R.pair }); return; }
             Tx.buildTx([R.pair]).then(function (unsigned) {
               return Credit.sendAndProve(unsigned, wif, async function () {
                 try {
@@ -1087,7 +1085,7 @@ var BorrowUI = (function () {
             [t("borrow.network", "Network"), "testnet", null, "borrow.network"]];
           var bidDlg = ConfirmDialog.show({ title: t("borrow.confirm_settlement_bid", "Confirm settlement bid"),
             titleKey: "borrow.confirm_settlement_bid",
-            rows: bidRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
+            rows: bidRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("borrow.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { DOM.clear(out); btn.disabled = false; },
             onSend: function () { doBidSend(); } });
@@ -1101,12 +1099,11 @@ var BorrowUI = (function () {
           btn.disabled = false;
           function doBidSend() {
             if (myGen !== gen) return;
-            var btns = bidDlg.getElementsByTagName("button");
-            var back = btns[0], send = btns[1];
+            var cbtns = ConfirmDialog.buttons(bidDlg), back = cbtns.back, send = cbtns.send;
             send.disabled = true; back.disabled = true;
             var status = showStatus(doc, out, t("common.status_broadcasting", "Broadcasting…"));
             var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;
-            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: bidRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), rawObj: S.pair }); return; }
+            if (!wif) { out.removeChild(status); signGateLocked(doc, out, send, back, { rows: bidRows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee", rawObj: S.pair }); return; }
             Tx.buildTx([S.pair]).then(function (unsigned) {
               return Credit.sendAndProve(unsigned, wif, async function () {
                 try {

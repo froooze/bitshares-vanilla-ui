@@ -130,20 +130,55 @@ global.Wallet = { keys: {} };
 global.Crypto = { encryptMemo: function () { return Promise.resolve({}); } };
 global.touchable = require("../vanilla/js/utils/touchable.js");
 
-/* ConfirmDialog stub: captures onBack/onSend, returns a button-bearing dlg. */
+/* ConfirmDialog stub: captures onBack/onSend, returns a button-bearing dlg.
+ * It mirrors the REAL module's contract, not just its show() signature:
+ * show() stamps id="confirm-back"/"confirm-send" on the two action buttons
+ * and buttons(box) reads them back by id (ui/confirm.js). The stub grew
+ * buttons() in fix wave 2 when transfer-confirm.js stopped indexing buttons
+ * by position — the RiskText disclosure asterisk is a real <button> inside
+ * the dialog's h3/dt, so on a machine-filled locale `getElementsByTagName(
+ * "button")[0]/[1]` resolve to asterisks and the anti-double-broadcast guard
+ * silently disarmed two asterisks instead of Back/Sign & Send. Stubbing only
+ * `show` would have let that class of bug back in unnoticed.
+ *
+ * backBtn/sendBtn are re-assigned by individual cases before each show, so
+ * every lookup below reads the CURRENT binding rather than a captured one.
+ *
+ * `machineLocale` is the trap itself: on a machine-filled locale the dialog's
+ * h3/dt carry RiskText disclosure ASTERISKS, and those are real <button>s in
+ * DOCUMENT ORDER BEFORE .confirm-actions. A stub that always answered
+ * [Back, Send] could never have caught the positional-indexing defect — the
+ * defect is invisible until the earlier buttons are in the list. */
 var capturedSend = null;
 var capturedBack = null;
 var backBtn = { disabled: false };
 var sendBtn = { disabled: false };
+var machineLocale = false;
+function asteriskButtons() {
+  return [
+    { className: "i18n-risk-star", id: "", disabled: false },
+    { className: "i18n-risk-star", id: "", disabled: false }
+  ];
+}
 global.ConfirmDialog = {
   show: function (opts) {
     capturedSend = opts.onSend;
     capturedBack = opts.onBack;
+    backBtn.id = "confirm-back";
+    sendBtn.id = "confirm-send";
     var dlg = fakeEl("div");
     dlg.getElementsByTagName = function (tag) {
-      return tag === "button" ? [backBtn, sendBtn] : [];
+      if (tag !== "button") return [];
+      return machineLocale ? asteriskButtons().concat([backBtn, sendBtn]) : [backBtn, sendBtn];
     };
+    dlg.__buttons = { back: backBtn, send: sendBtn };
     return dlg;
+  },
+  buttons: function (dlg) {
+    /* The real lookup is an id walk over the subtree; the stub answers from
+     * the same nodes show() stamped, so a caller that reached for the wrong
+     * thing here would be visibly wrong. */
+    return (dlg && dlg.__buttons) ? dlg.__buttons : { back: null, send: null };
   }
 };
 
@@ -240,6 +275,47 @@ function baseVals(over) {
     assert.strictEqual(signRoutedCalls, 0, "locked wallet signs nothing either");
   });
 
+  /* 9b: C3 — the two action buttons stay REACHABLE and correctly
+   * disable-able through ConfirmDialog's stable hooks, and the xfer-back /
+   * xfer-send automation ids land on THEM. Before fix wave 2 this file
+   * reached its buttons with `dlg.getElementsByTagName("button")[0]/[1]`;
+   * the RiskText disclosure asterisk is a real <button> living inside the
+   * dialog's h3/dt, so on a machine-filled locale those indices resolved to
+   * ASTERISKS — which silently disarmed the anti-double-broadcast guard
+   * (`sendBtn.disabled = true`) and stamped the automation ids onto two
+   * asterisks. The stub above models the real ids, so these assertions fail
+   * if the builder regresses to positional indexing. */
+  await t("showConfirm keeps Back/Sign & Send on the stable hooks", async function () {
+    FEE_MODE = "ok";
+    /* The condition the defect needed: a machine-filled locale, so the
+     * dialog really does carry asterisk buttons ahead of the actions. */
+    machineLocale = true;
+    var ctx = await TransferConfirm.review(baseVals({ amount: "1" }));
+    var doc = fakeDoc();
+    var wrap = fakeBox();
+    signRoutedCalls = 0;
+    backBtn = { disabled: false };
+    sendBtn = { disabled: false };
+    TransferConfirm.showConfirm(doc, wrap, fakeBox(),
+      { name: "alice", id: "1.2.1" }, ctx, function () {});
+    assert.strictEqual(backBtn.id, "xfer-back",
+      "xfer-back landed on Back (the btn-ghost action button)");
+    assert.strictEqual(sendBtn.id, "xfer-send", "xfer-send landed on Sign & Send");
+    assert.strictEqual(backBtn.disabled, false, "neither button starts disabled");
+    assert.strictEqual(sendBtn.disabled, false, "neither button starts disabled");
+    /* Drive the send path to its wallet-locked refusal. The guard's transient
+     * disable is proven against the REAL module in confirm-risk-test.js
+     * section 9; what is observable HERE — and what positional indexing
+     * would have broken — is the id rename and the re-enable, because under
+     * indexing neither of these two objects was ever the node being touched. */
+    capturedSend();
+    assert.strictEqual(backBtn.disabled, false,
+      "after a refusal Back is re-enabled — so the guard reached it and undid it");
+    assert.strictEqual(sendBtn.disabled, true,
+      "and Sign & Send stays disabled until the promise chain resolves");
+    assert.strictEqual(signRoutedCalls, 0, "and still nothing was signed");
+  });
+
   /* 10: TradeCancel invalid order id refuses with a shaped error. */
   await t("orderCancelBox rejects non-1.7 id", async function () {
     var doc = fakeDoc();
@@ -317,6 +393,7 @@ function baseVals(over) {
   delete global.ConfirmDialog;
   delete global.touchable;
   delete global.Format;
+  machineLocale = false;
 
   if (failures.length) {
     failures.forEach(function (f) { console.log(f); });

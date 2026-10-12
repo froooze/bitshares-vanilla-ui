@@ -1,12 +1,19 @@
 /* ui/confirm.js — shared transaction-confirm builder.
  * Owns: div.confirm-dialog (h3 title + dl.confirm named rows + fee line +
  *   opt-in details.raw drill-down + div.confirm-actions holding Back
- *   (btn-ghost) + Sign & Send buttons;
- *   Esc routes to onBack; returns the container for the caller to mount).
+ *   (btn-ghost) + Sign & Send buttons; Esc routes to onBack; returns the
+ *   container for the caller to mount).
  *   Also owns the ONE place a signing line reaches the honesty surface: the
- *   title and every row term mount through RiskText, so a machine-filled
- *   locale shows the English master beside a string the user is about to
- *   sign. Dual-line vs plain stays RiskText's single decision, never ours.
+ *   title, every row term AND the fee term mount through RiskText, so a
+ *   machine-filled locale shows the English master beside a string the user is
+ *   about to sign. Dual-line vs plain stays RiskText's single decision, never
+ *   ours. Values (the row `dd`s and the fee amount) are NEVER keyed — they are
+ *   amounts, symbols and ids, locale-independent by §3.5.
+ *   Also owns the STABLE BUTTON HOOKS: show() stamps id="confirm-back" /
+ *   id="confirm-send" on the two action buttons, and buttons(box) reads
+ *   them back. Callers MUST use buttons(box) — never
+ *   box.getElementsByTagName("button")[0]/[1], which resolve to RiskText's
+ *   disclosure asterisks on a machine-filled locale (see BACK_ID/SEND_ID).
  * Consumes: DOM global (el/append — never reimplemented here; raw
  *   createElement fallback only when DOM is absent, e.g. Node without the
  *   shim), touchable() global for the 44px touch floor (guarded: skipped
@@ -97,6 +104,53 @@ var ConfirmDialog = (function () {
     return mk(doc, "span", text);
   }
 
+  /* BACK_ID / SEND_ID: the STABLE BUTTON HOOKS. Callers must reach the two
+   * action buttons through ConfirmDialog.buttons(box), never through
+   * box.getElementsByTagName("button")[0]/[1]: the RiskText disclosure
+   * asterisk is a real <button> living INSIDE the h3/dt above
+   * .confirm-actions, so on a machine-filled locale the positional indices
+   * resolve to asterisks — which silently disarmed ~30 call sites'
+   * anti-double-broadcast guard (`sendB.disabled = true`) and wrote the
+   * transfer automation ids onto asterisks. The asterisk stays where it is:
+   * inside the heading is the accessible place for it.
+   * Ids, not an attribute the caller could clobber, because
+   * builders/transfer-confirm.js deliberately renames Back/Send to
+   * xfer-back/xfer-send for its own automation hooks. */
+  var BACK_ID = "confirm-back";
+  var SEND_ID = "confirm-send";
+
+  /* findById: depth-first search of a subtree for one id.
+   * @param {any} root subtree root (may be null/undefined).
+   * @param {string} id id to find.
+   * @return {any} the matching node or null. Failure: never throws — an
+   *   unreadable `children` just ends that branch. */
+  function findById(root, id) {
+    if (!root) return null;
+    if (root.id === id) return root;
+    var kids = root.children, i;
+    if (kids && kids.length) {
+      for (i = 0; i < kids.length; i++) {
+        var hit = findById(kids[i], id);
+        if (hit) return hit;
+      }
+    }
+    return null;
+  }
+
+  /* buttons: THE stable lookup for the two action buttons of a box that
+   * show() returned. Position-independent by construction — a subtree walk
+   * for the ids, so asterisks (or anything else a caller appended above the
+   * actions) can never be mistaken for Back or Sign & Send.
+   * @param {any} box a container returned by show().
+   * @return {{back: any, send: any}} both members are the action buttons;
+   *   null when the box is not a confirm box at all (a caller bug — the
+   *   members are typed any precisely because this module supports bare
+   *   fake documents whose elements are not real HTMLElements).
+   * Failure: never throws; `buttons(null)` answers {back:null, send:null}. */
+  function buttons(box) {
+    return { back: findById(box, BACK_ID), send: findById(box, SEND_ID) };
+  }
+
   /* line: one SEMANTIC slot (the h3 heading, or a row's dt) whose CONTENT is
    * a RiskText line. The host is built EMPTY and the widget mounted inside
    * it, deliberately: RiskText answers a <span> on the plain path and a
@@ -129,6 +183,12 @@ var ConfirmDialog = (function () {
    *   feeHuman: string (human fee line; skipped when null/undefined),
    *   feeTerm?: string (caller's already-keyed fee dt, e.g.
    *   t("borrow.fee", "Fee"); fallback "Fee" when absent),
+   *   feeTermKey?: string (the fee dt's dotted locale key — the SAME
+   *   opt-in contract as titleKey and rows[i][3], because the fee term is
+   *   a static label exactly like a row term and used to be the one
+   *   signing-dialog line with no English reference on a machine-filled
+   *   locale. Absent renders plain; the VALUE (cfg.feeHuman) is never
+   *   keyed — an amount is locale-independent by §3.5),
    *   feeRawTitle?: string|null (raw fee integer for the fee dd title,
    *   principle #6: human terms with raw in title; no title when absent),
    *   onBack: function, onSend: function,
@@ -142,9 +202,10 @@ var ConfirmDialog = (function () {
    *   (default "Sign & Send") — translated labels ride in from the caller
    *   so this module carries no locale machinery.}
    * @return {HTMLElement} div.confirm-dialog (caller appends it; the
-   *   returned node stays usable after Back/Send fire).
-   * Failure: throws Error("confirm: no document") with no document;
-   *   null/undefined rows render as an empty list (never throws). */
+    *   returned node stays usable after Back/Send fire). Read its two
+    *   action buttons back with buttons(box) — never by index.
+    * Failure: throws Error("confirm: no document") with no document;
+    *   null/undefined rows render as an empty list (never throws). */
   function show(cfg) {
     cfg = cfg || {};
     var D = dom();
@@ -174,7 +235,7 @@ var ConfirmDialog = (function () {
       list.appendChild(dd);
     }
     if (cfg.feeHuman !== undefined && cfg.feeHuman !== null) {
-      list.appendChild(mk(doc, "dt", feeTerm));
+      list.appendChild(line(doc, "dt", feeTerm, cfg.feeTermKey));
       dd = mk(doc, "dd", cfg.feeHuman);
       if (cfg.feeRawTitle) dd.title = cfg.feeRawTitle;
       list.appendChild(dd);
@@ -184,8 +245,10 @@ var ConfirmDialog = (function () {
     actions = mk(doc, "div", null, "confirm-actions");
     back = floor(mk(doc, "button", backLabel, "btn-ghost"));
     back.type = "button";
+    back.id = BACK_ID;
     send = floor(mk(doc, "button", sendLabel));
     send.type = "button";
+    send.id = SEND_ID;
     if (D) D.append(actions, back, send);
     else { actions.appendChild(back); actions.appendChild(send); }
     /* Raw drill-down (opt-in, TransactionConfirm view-qr/JSON concept +
@@ -255,7 +318,8 @@ var ConfirmDialog = (function () {
   }
 
   return {
-    show: show
+    show: show,
+    buttons: buttons
   };
 })();
 

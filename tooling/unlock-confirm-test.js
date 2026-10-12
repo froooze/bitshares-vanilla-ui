@@ -299,6 +299,39 @@ async function main() {
   h9b.close();
 
   delete global.Wallet;
+  // 10. Keyed signing lines FORWARD verbatim to ConfirmDialog (i18n honesty
+  // surface). UnlockConfirm embeds the shared dialog, so it is the one hop
+  // between a caller's titleKey / row termKey / feeTermKey and RiskText. It
+  // must pass them through untouched — a dropped key silently degrades the
+  // line to plain text on the highest-traffic signing path in the app (the
+  // trade desk's BUY/SELL unlock modal, vanilla/js/views/trade-panels.js).
+  var doc10 = fakeDoc();
+  global.Wallet = { unlock: function () { return Promise.resolve(); } };
+  var seenCfg = null;
+  var realShow = ConfirmDialog.show;
+  ConfirmDialog.show = function (cfg) { seenCfg = cfg; return realShow.call(ConfirmDialog, cfg); };
+  var h10 = UnlockConfirm.open(baseCfg(doc10, {
+    title: "Revisar mensaje",
+    titleKey: "trollbox.post_review_title",
+    rows: [["Canal", "#general", null, "trollbox.channel"], ["Mensaje", "hola"]],
+    feeHuman: "0.01000 BTS",
+    feeTerm: "Comisión",
+    feeTermKey: "trollbox.fee"
+  }));
+  ConfirmDialog.show = realShow;
+  assert.ok(seenCfg, "the modal builds a ConfirmDialog");
+  assert.strictEqual(seenCfg.titleKey, "trollbox.post_review_title",
+    "titleKey reaches ConfirmDialog verbatim (not rewritten or dropped)");
+  assert.strictEqual(seenCfg.rows[0][3], "trollbox.channel",
+    "a row's 4th slot (term key) is forwarded as-is");
+  assert.strictEqual(seenCfg.rows[1][3], undefined,
+    "an unkeyed row stays unkeyed — the key is opt-in, never implied");
+  assert.strictEqual(seenCfg.feeTermKey, "trollbox.fee",
+    "feeTermKey reaches ConfirmDialog verbatim");
+  passed += 5;
+  h10.close();
+  delete global.Wallet;
+
   console.log("unlock-confirm-test: PASS (" + passed + " asserts)");
 }
 

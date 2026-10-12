@@ -207,7 +207,7 @@ var TransferPropose = (function () {
       [t("confirm.memo", "Memo"), memoText, null, "confirm.memo"],
       [t("confirm.network", "Network"), networkNameLocal(), null, "confirm.network"]];
     var dlg = ConfirmDialog.show({ title: t("transfer.confirm_proposal_title", "Confirm proposal (op %(op)s)", { op: 22 }),
-      rows: rows, feeHuman: fh.text, feeTerm: t("common.fee_live", "Fee (live)"),
+      rows: rows, feeHuman: fh.text, feeTerm: t("common.fee_live", "Fee (live)"), feeTermKey: "common.fee_live",
       backLabel: t("confirm.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       onBack: function () { if (typeof onBack === "function") onBack(); },
       onSend: function () { doPropSend(); } });
@@ -238,8 +238,7 @@ var TransferPropose = (function () {
       wrap.appendChild(detOp);
     })();
     function doPropSend() {
-      var btns = dlg.getElementsByTagName("button");
-      var backBtn = btns[0], sendBtn = btns[1];
+      var cbtns = ConfirmDialog.buttons(dlg), backBtn = cbtns.back, sendBtn = cbtns.send;
       backBtn.disabled = true;
       sendBtn.disabled = true;
       var status = env.showStatus(doc, wrap, t("common.status_signing", "Signing…"));

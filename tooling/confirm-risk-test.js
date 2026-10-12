@@ -66,6 +66,13 @@ function el(tag) {
     },
     addEventListener: function () {}
   };
+  /* Listener bookkeeping: recorded so a test can prove a hooked node is the
+   * SAME node ConfirmDialog wired its click handler to (section 9), not a
+   * look-alike at the same index. Recording changes no dispatch behaviour —
+   * nothing in the loaded modules reads it. */
+  node.__handlers = {};
+  var realAdd = node.addEventListener;
+  node.addEventListener = function (t, fn) { node.__handlers[t] = fn; return realAdd.apply(this, arguments); };
   var ownText = "";
   var hiddenFlag = false;
   /* `type` reflects to attributes the way real elements do, so
@@ -115,6 +122,7 @@ var doc = makeDoc();
  * not "contains the words". */
 var EN = {
   "confirm.title": "Confirm transfer",
+  "confirm.fee": "Fee",
   "trade.co_orderid": "Order ID",
   "settings.th_node": "Node",
   "credit.uc_title": "Unlock to sign"
@@ -244,6 +252,7 @@ var mbox = ConfirmDialog.show({
   ],
   feeHuman: "0.10 BTS",
   feeTerm: "Comisión",
+  feeTermKey: "confirm.fee",
   onBack: function () {},
   onSend: function () {}
 });
@@ -258,6 +267,24 @@ eq(mdts[1].tagName, "DT", "and it is still a <dt>, so the <dl> pairing survives"
 ok(findCls(mdds[0], "i18n-risk").length === 0, "a VALUE is never wrapped — amounts/ids are locale-independent (§3.5)");
 eq(mdds[0].textContent, "1.7.42", "the id reads verbatim");
 eq(mdds[1].textContent, "1.234,56 BTS", "the amount reads verbatim");
+/* The fee dt was the ONE signing-dialog line left unrouted: its term is a
+ * static label exactly like a row term, so it takes the same opt-in key and
+ * gets the same English reference. Its VALUE (the amount) stays unkeyed. */
+ok(findCls(mdts[2], "i18n-risk").length === 1, "the fee term dual-lines when keyed");
+eq(findCls(mdts[2], "i18n-risk-en")[0].textContent, "Fee",
+  "the fee term's reference is the en master for ITS OWN key");
+ok(findCls(mdds[2], "i18n-risk").length === 0, "the fee AMOUNT is never wrapped (§3.5)");
+eq(mdds[2].textContent, "0.10 BTS", "and the fee reads verbatim");
+/* An unkeyed fee term (the other 27-key opt-out) renders plain, exactly like
+ * an unkeyed row term — the key is opt-in, never implied. */
+var noFeeKeyBox = ConfirmDialog.show({
+  doc: doc, title: "x", rows: [],
+  feeHuman: "0.10 BTS", feeTerm: "Comisión",
+  onBack: function () {}, onSend: function () {}
+});
+var nfDt = findAll(findAll(noFeeKeyBox, "DL")[0], "DT")[0];
+ok(findCls(nfDt, "i18n-risk").length === 0, "an unkeyed fee term stays plain");
+eq(nfDt.textContent, "Comisión", "and still reads exactly as written");
 
 /* ------------------------------------------------------------------ *
  * 4. rows[i][3] IS the key slot; rows[i][2] is still the raw title
@@ -385,5 +412,249 @@ eq(findAll(bdl, "DT").length, 1, "no RiskText: the row term is still a dt");
 eq(findAll(bdl, "DT")[0].textContent, "Order ID", "no RiskText: the term text survives");
 eq(findAll(bdl, "DD")[0].textContent, "1.7.42", "no RiskText: the value survives");
 ok(findCls(bbox, "i18n-risk").length === 0, "no RiskText: no disclosure markup, and no throw");
+
+/* ------------------------------------------------------------------ *
+ * 9. THE ASTERISK MUST NOT STEAL THE ACTION BUTTONS (C3).
+ *    The disclosure asterisk is a real <button>, and it lives INSIDE the
+ *    h3/dt that precede .confirm-actions. ~30 call sites used to reach
+ *    for their buttons with `box.getElementsByTagName("button")[0]/[1]`
+ *    expecting Back and Sign & Send — on a machine-filled locale those
+ *    indices resolve to ASTERISKS, so the anti-double-broadcast guard
+ *    (`sendB.disabled = true`) disabled two asterisks and the user could
+ *    press Sign & Send twice. The fix is a stable hook on the box, not a
+ *    relocation of the asterisk (moving it out of the heading would undo
+ *    the accessibility argument for keeping it there).
+ *
+ *    ConfirmDialog.buttons(box) is that hook: it answers the two action
+ *    buttons by id, regardless of how many buttons precede them.
+ * ------------------------------------------------------------------ */
+var hookDoc = makeDoc();
+var hookBack = 0, hookSend = 0;
+var hookBox = ConfirmDialog.show({
+  doc: hookDoc,
+  title: "Confirmar la transferencia",
+  titleKey: "confirm.title",
+  rows: [
+    ["ID de orden", "1.7.42", null, "trade.co_orderid"],
+    ["Nodo", "wss://node.example", "raw wss://node.example", "settings.th_node"]
+  ],
+  feeHuman: "0.10 BTS",
+  feeTerm: "Comisión",
+  feeTermKey: "confirm.fee",
+  onBack: function () { hookBack += 1; },
+  onSend: function () { hookSend += 1; }
+});
+/* The machine locale really did produce asterisks before .confirm-actions —
+ * that is the condition under which the old indexing broke. */
+var starsInBox = findCls(hookBox, "i18n-risk-star");
+eq(starsInBox.length, 4, "title + both keyed rows + the keyed fee term carry an asterisk on a machine locale");
+/* Document the trap the guard exists for: in raw document order the
+ * asterisks come FIRST, so positional indexing would be wrong here. */
+var allButtonsInOrder = findAll(hookBox, "BUTTON");
+eq(allButtonsInOrder.length, 6, "six buttons total: 4 asterisks + Back + Send");
+eq(allButtonsInOrder[0].className, "i18n-risk-star",
+  "document-order button[0] is an ASTERISK — positional indexing is the bug, not a footnote");
+
+var hooks = ConfirmDialog.buttons(hookBox);
+ok(hooks && hooks.back && hooks.send, "buttons() answers both action buttons with asterisks present");
+ok(hooks.back !== starsInBox[0] && hooks.send !== starsInBox[0],
+  "buttons() never answers an asterisk");
+eq(hooks.back.id, "confirm-back", "Back carries the stable confirm-back hook");
+eq(hooks.send.id, "confirm-send", "Send carries the stable confirm-send hook");
+eq(hooks.back.className, "btn-ghost", "Back is still the ghost button");
+/* The guard the ~30 call sites perform, on the real nodes: this is the
+ * anti-double-broadcast path — send must actually become disabled. */
+hooks.send.disabled = true;
+hooks.back.disabled = true;
+eq(hooks.send.disabled, true, "the Sign & Send guard disables the send button itself");
+eq(hooks.back.disabled, true, "the Back guard disables the back button itself");
+ok(starsInBox[0].disabled !== true, "and no asterisk was disabled in its place");
+ok(starsInBox.every(function (s) { return s.disabled !== true; }),
+  "no asterisk anywhere in the box was disabled in its place");
+/* Identity, not just position: the same nodes the dialog's own listeners
+ * were attached to (so a disabled guard and a click agree). */
+hooks.send.__handlers.click({});
+eq(hookSend, 1, "the hooked send button is the node ConfirmDialog wires onSend to");
+hooks.back.__handlers.click({});
+eq(hookBack, 1, "the hooked back button is the node ConfirmDialog wires onBack to");
+
+/* The OTHER consequence named in the review: builders/transfer-confirm.js
+ * deliberately renames Back/Send to its own automation ids right after
+ * show(). Under positional indexing those landed on two ASTERISKS on a
+ * machine-filled locale, silently breaking the xfer-back/xfer-send hooks its
+ * tests and automation read. Reproduce those exact lines. */
+var xferDoc = makeDoc();
+var xferBox = ConfirmDialog.show({
+  doc: xferDoc,
+  title: "Confirmar la transferencia",
+  titleKey: "confirm.title",
+  rows: [["ID de orden", "1.7.42", null, "trade.co_orderid"]],
+  feeHuman: "0.10 BTS", feeTerm: "Comisión", feeTermKey: "confirm.fee",
+  onBack: function () {}, onSend: function () {}
+});
+var xferBtns = ConfirmDialog.buttons(xferBox);
+var xferWasBack = xferBtns.back, xferWasSend = xferBtns.send;
+xferBtns.back.id = "xfer-back";
+xferBtns.send.id = "xfer-send";
+var xferAsterisks = findCls(xferBox, "i18n-risk-star");
+eq(findAll(xferBox, "BUTTON").filter(function (b) { return b.id === "xfer-back"; }).length, 1,
+  "exactly one node in the box carries xfer-back");
+eq(findAll(xferBox, "BUTTON").filter(function (b) { return b.id === "xfer-send"; }).length, 1,
+  "exactly one node in the box carries xfer-send");
+eq(xferWasBack.className, "btn-ghost", "xfer-back landed on Back (the ghost button)");
+ok(xferAsterisks.every(function (s) { return s.id !== "xfer-back" && s.id !== "xfer-send"; }),
+  "and no asterisk was stamped with either id — which is exactly what the old " +
+  "positional lookup did on a machine-filled locale");
+eq(xferAsterisks.length, 3, "the asterisks the old code would have stamped are still present, un-stamped");
+
+/* An UNKEYED dialog (no asterisks at all) answers the same hooks, and a
+ * foreign/unknown box degrades to nulls instead of throwing — callers
+ * already treat a missing button as a no-op nicety. */
+var plainDoc2 = makeDoc();
+var plainBox = ConfirmDialog.show({
+  doc: plainDoc2, title: "Cancel order?", rows: [["Amount", "12.0 BTS"]],
+  onBack: function () {}, onSend: function () {}
+});
+var plainHooks = ConfirmDialog.buttons(plainBox);
+eq(plainHooks.back.id, "confirm-back", "an unkeyed dialog carries the same stable hooks");
+eq(plainHooks.send.id, "confirm-send", "both hooks, keyed or not");
+var noHooks = ConfirmDialog.buttons(null);
+eq(noHooks.back, null, "buttons(null) degrades to null rather than throwing");
+eq(noHooks.send, null, "both members, not just one");
+
+/* ------------------------------------------------------------------ *
+ * 10. A THROWING RiskText.render degrades the LINE, never the dialog.
+ *     risk() wraps the widget call in try/catch precisely because the
+ *     honesty surface decorates a signing dialog it must never take
+ *     down — that catch had no assertion of its own, so it was one
+ *     refactor away from being deleted.
+ * ------------------------------------------------------------------ */
+var realRender = sandbox.RiskText.render;
+sandbox.RiskText.render = function () { throw new Error("risk-text exploded"); };
+var throwBox = ConfirmDialog.show({
+  doc: doc,
+  title: "Confirmar la transferencia",
+  titleKey: "confirm.title",
+  rows: [["ID de orden", "1.7.42", null, "trade.co_orderid"]],
+  feeHuman: "0.10 BTS",
+  feeTerm: "Comisión",
+  onBack: function () {},
+  onSend: function () {}
+});
+sandbox.RiskText.render = realRender;
+var throwH3 = findAll(throwBox, "H3")[0], throwDl = findAll(throwBox, "DL")[0];
+eq(throwH3.textContent, "Confirmar la transferencia", "a throwing RiskText: the heading still carries the title");
+eq(findAll(throwDl, "DT")[0].textContent, "ID de orden", "and the row term still carries its text");
+eq(findAll(throwDl, "DD")[0].textContent, "1.7.42", "and the value survives");
+ok(findCls(throwBox, "i18n-risk").length === 0, "no half-built widget leaks into the dialog");
+eq(findAll(throwDl, "DT").length, 2, "both dt elements still render");
+eq(throwBox.children.map(function (c) { return c.tagName; }).join(","), "H3,DL,DIV",
+  "and the dialog keeps its h3 / dl / actions shape");
+
+/* ------------------------------------------------------------------ *
+ * 11. THE POSITIONAL TRAP MUST NOT COME BACK (C3 regression guard).
+ *     Section 9 proves the hook works; this proves nobody re-introduces
+ *     positional button indexing in a file that owns a ConfirmDialog box —
+ *     the exact line that silently disarmed the anti-double-broadcast guard
+ *     once the asterisks arrived.
+ *     UnlockConfirm.open() files are scanned too: it embeds the same
+ *     ConfirmDialog, so its send button is exposed to the same trap (and
+ *     it once walked box.lastChild -> actions.lastChild, which the hook
+ *     replaced in this wave).
+ *
+ *     The rule is "no getElementsByTagName("button") at all", NOT a regex
+ *     for the inline `[0]` form. The narrower version passed a file that
+ *     did `var b = box.getElementsByTagName("button"); b[0].id = …` — which
+ *     is precisely the shape the defect arrived in. Comments and string
+ *     literals are stripped first so the prose that explains the rule (in
+ *     ui/confirm.js, builders/transfer-confirm.js) is not itself a hit.
+ * ------------------------------------------------------------------ */
+/* stripComments: blank out line and block comments (offsets preserved), so a
+ * scan for CODE cannot match the documentation that explains the rule — the
+ * prose in ui/confirm.js and builders/transfer-confirm.js names
+ * getElementsByTagName("button") on purpose. String literals are LEFT ALONE:
+ * blanking them would also blank the "button" argument, and the scan must
+ * match on it. (The block-comment opener is spelled in prose above on
+ * purpose: writing it literally here would close this comment early.) */
+function stripComments(src) {
+  var out = "";
+  var i = 0;
+  var n = src.length;
+  while (i < n) {
+    var c = src[i];
+    if (c === "/" && src[i + 1] === "/") {
+      var j = src.indexOf("\n", i);
+      i = j === -1 ? n : j;
+      continue;
+    }
+    if (c === "/" && src[i + 1] === "*") {
+      var k = src.indexOf("*/", i + 2);
+      i = k === -1 ? n : k + 2;
+      continue;
+    }
+    out += c;
+    i += 1;
+  }
+  return out;
+}
+var jsRoot = path.join(__dirname, "..", "vanilla", "js");
+var offenders = [];
+var scanned = 0;
+(function walk(dir) {
+  fs.readdirSync(dir).forEach(function (name) {
+    var full = path.join(dir, name);
+    if (fs.statSync(full).isDirectory()) { if (name !== "vendor") return walk(full); return; }
+    if (!/\.js$/.test(name)) return;
+    var src = fs.readFileSync(full, "utf8");
+    if (!/ConfirmDialog\.show\(/.test(src) && !/UnlockConfirm\.open\(/.test(src)) return;
+    scanned += 1;
+    if (/getElementsByTagName\(\s*"button"/.test(stripComments(src))) {
+      offenders.push(path.relative(jsRoot, full));
+    }
+  });
+})(jsRoot);
+ok(offenders.length === 0,
+  "no ConfirmDialog/UnlockConfirm call site reaches its buttons by position (" + offenders.join(", ") + ")");
+ok(scanned >= 20, "the guard actually scanned the dialog-owning files (" + scanned + ")");
+
+/* ------------------------------------------------------------------ *
+ * 12. VALID CONTENT MODEL (I4). h1-h6 accept PHRASING content only;
+ *     <dt> accepts flow content. RiskText's dual-line wrapper is nested
+ *     inside the dialog's <h3> by section 2, so it — and every node it
+ *     contains — must be phrasing. The brief's draft (and Task 3's
+ *     first cut) built a <div> wrapper with a <div> English panel, which
+ *     is an invalid content model in a heading: browsers tolerate it,
+ *     assistive tech and validators do not.
+ * ------------------------------------------------------------------ */
+var PHRASING = { SPAN: 1, BUTTON: 1, A: 1, EM: 1, STRONG: 1, B: 1, I: 1, SMALL: 1, TIME: 1, ABBR: 1, BR: 1 };
+/* Walk the CONTENT of `host`, never `host` itself: the caller passes the
+ * dialog's own <h3>, which is by definition not phrasing (it is the phrasing
+ * CONTAINER). Asserting on it would be asserting that the heading is not a
+ * heading. Every node the widget contributes lives one level in, and this is
+ * the assertion that catches a flow-content element (a <div> wrapper, a <div>
+ * English panel) sneaking into the heading. */
+function assertPhrasingInside(host, where) {
+  (host.children || []).forEach(function (child) {
+    (function walk(n) {
+      var tag = String(n.tagName || "").toUpperCase();
+      ok(PHRASING[tag] === 1, where + ": <" + String(n.tagName).toLowerCase() + "> is phrasing content");
+      (n.children || []).forEach(walk);
+    })(child);
+  });
+}
+var wrapTag = String(wrap.tagName).toUpperCase();
+eq(wrapTag, "SPAN", "the dual-line widget wrapper is a <span>, legal inside <h3>");
+assertPhrasingInside(th3, "inside the heading");
+/* The English panel keeps its block display from CSS (.i18n-risk-en), so
+ * the tag change costs no layout — assert the class hook still rides the
+ * node that carries the reference. */
+var enPanel = findCls(th3, "i18n-risk-en")[0];
+eq(String(enPanel.tagName).toUpperCase(), "SPAN", "the English reference panel is a <span> too");
+eq(enPanel.textContent, "Confirm transfer", "and still carries the en master byte-exact");
+eq(String(findCls(th3, "i18n-risk-more")[0].tagName).toUpperCase(), "A", "the article link stays an <a>");
+/* Same widget in a <dt> — flow content, but the markup is identical, so
+ * the same assertion holds. */
+var dtWrap = findCls(mdts[0], "i18n-risk")[0];
+eq(String(dtWrap.tagName).toUpperCase(), "SPAN", "the row-term widget is the same <span> wrapper");
 
 console.log("ConfirmDialog risk wiring: " + passed + " passed, 0 failed");

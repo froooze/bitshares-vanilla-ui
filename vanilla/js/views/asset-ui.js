@@ -458,12 +458,11 @@ var AssetUI = (function () {
           catch (feeErr) { feeHuman = String(f.amount) + " (core)"; }
           rows.push([t("borrow.network", "Network"), netName(), null, "borrow.network"]);
           var dlg = ConfirmDialog.show({ title: t("asset.confirm_create", "Confirm asset create"), titleKey: "asset.confirm_create",
-            rows: rows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"),
+            rows: rows, feeHuman: feeHuman, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderCreate(root); },
             onSend: function () {
-              var btns = dlg.getElementsByTagName("button");
-              var backB = btns[0], sendB = btns[1];
+              var cbtns = ConfirmDialog.buttons(dlg), backB = cbtns.back, sendB = cbtns.send;
               backB.disabled = true; sendB.disabled = true;
               var st = status(d, w2, "Signing…");
               publish(root, d, g, pair, async function () {

@@ -366,12 +366,11 @@ var AssetManageUI = (function () {
           try { updFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
           catch (feeErr) { updFee = String(f.amount) + " (core)"; }
           var updDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"), titleKey: "asset.confirm_update",
-            rows: rows, feeHuman: updFee, feeTerm: t("borrow.fee", "Fee"),
+            rows: rows, feeHuman: updFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderUpdate(root, info.symbol); },
             onSend: function () {
-              var btns = updDlg.getElementsByTagName("button");
-              var backB = btns[0], sendB = btns[1];
+              var cbtns = ConfirmDialog.buttons(updDlg), backB = cbtns.back, sendB = cbtns.send;
               backB.disabled = true; sendB.disabled = true;
               var st = status(d, w2, "Signing…");
               publish(root, d, g, pair, async function () {
@@ -420,12 +419,11 @@ var AssetManageUI = (function () {
             try { bitFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
             catch (feeErr2) { bitFee = String(f.amount) + " (core)"; }
             var bitDlg = ConfirmDialog.show({ title: t("asset.confirm_bitasset", "Confirm bitasset update"), titleKey: "asset.confirm_bitasset",
-              rows: bitRows, feeHuman: bitFee, feeTerm: t("borrow.fee", "Fee"),
+              rows: bitRows, feeHuman: bitFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
               backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
               onBack: function () { renderUpdate(root, info.symbol); },
               onSend: function () {
-                var btns = bitDlg.getElementsByTagName("button");
-                var backB = btns[0], sendB = btns[1];
+                var cbtns = ConfirmDialog.buttons(bitDlg), backB = cbtns.back, sendB = cbtns.send;
                 backB.disabled = true; sendB.disabled = true;
                 var st = status(d, w3, "Signing…");
                 publish(root, d, g, pair, async function () {
@@ -461,12 +459,11 @@ var AssetManageUI = (function () {
           try { prodFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
           catch (feeErr3) { prodFee = String(f.amount) + " (core)"; }
           var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"), titleKey: "asset.confirm_producers",
-            rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"),
+            rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
             backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
             onBack: function () { renderUpdate(root, info.symbol); },
             onSend: function () {
-              var btns = prodDlg.getElementsByTagName("button");
-              var backB = btns[0], sendB = btns[1];
+              var cbtns = ConfirmDialog.buttons(prodDlg), backB = cbtns.back, sendB = cbtns.send;
               backB.disabled = true; sendB.disabled = true;
               var st = status(d, w4, "Signing…");
               publish(root, d, g, pair, async function () { return true; },
@@ -535,12 +532,11 @@ var AssetManageUI = (function () {
         try { halfFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr4) { halfFee = String(f.amount) + " (core)"; }
         var halfDlg = ConfirmDialog.show({ title: isReserve ? "Confirm reserve" : "Confirm issue",
-          rows: rows, feeHuman: halfFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: rows, feeHuman: halfFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
           onSend: function () {
-            var btns = halfDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(halfDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             publish(root, d, g, pair, async function () {
@@ -598,12 +594,11 @@ var AssetManageUI = (function () {
         try { settleFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr5) { settleFee = String(f.amount) + " (core)"; }
         var settleDlg = ConfirmDialog.show({ title: t("prediction.confirm_settle", "Confirm settle"), titleKey: "prediction.confirm_settle",
-          rows: rows, feeHuman: settleFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: rows, feeHuman: settleFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
           onSend: function () {
-            var btns = settleDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(settleDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             publish(root, d, g, pair, async function () {
@@ -666,12 +661,11 @@ var AssetManageUI = (function () {
         try { claimFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr6) { claimFee = String(f.amount) + " (core)"; }
         var claimDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"), titleKey: "debit.confirm_claim",
-          rows: rows, feeHuman: claimFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: rows, feeHuman: claimFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
           onSend: function () {
-            var btns = claimDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(claimDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             publish(root, d, g, pair, async function () {
@@ -735,12 +729,11 @@ var AssetManageUI = (function () {
         try { poolFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr7) { poolFee = String(f.amount) + " (core)"; }
         var poolDlg = ConfirmDialog.show({ title: t("debit.confirm_claim", "Confirm claim"), titleKey: "debit.confirm_claim",
-          rows: rows, feeHuman: poolFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: rows, feeHuman: poolFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
           onSend: function () {
-            var btns = poolDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(poolDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             publish(root, d, g, pair, async function () {
@@ -797,12 +790,11 @@ var AssetManageUI = (function () {
         try { issuerFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr8) { issuerFee = String(f.amount) + " (core)"; }
         var issuerDlg = ConfirmDialog.show({ title: t("asset.confirm_update", "Confirm asset update"), titleKey: "asset.confirm_update",
-          rows: rows, feeHuman: issuerFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: rows, feeHuman: issuerFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderIssue(root); },
           onSend: function () {
-            var btns = issuerDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(issuerDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             publish(root, d, g, pair, async function () {

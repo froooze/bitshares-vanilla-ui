@@ -256,8 +256,7 @@ var ProposalUI = (function () {
       onBack: function () { DOM.clear(out); },
       onSend: function () {
         if (myGen !== gen) return;
-        var btns = dlg.getElementsByTagName("button");
-        var backB = btns[0], sendB = btns[1];
+        var cbtns = ConfirmDialog.buttons(dlg), backB = cbtns.back, sendB = cbtns.send;
         sendB.disabled = true; backB.disabled = true;
         var status = showStatus(doc, out, t("common.status_signing", "Signing…"));
         var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;

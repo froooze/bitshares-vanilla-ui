@@ -267,8 +267,7 @@ var TradeCancel = (function () {
     ];
     var dlg = null;
     function doGo() {
-      var btns = dlg.getElementsByTagName("button");
-      var backBtn = btns[0], goBtn = btns[1];
+      var cbtns = ConfirmDialog.buttons(dlg), backBtn = cbtns.back, goBtn = cbtns.send;
       backBtn.disabled = true;
       goBtn.disabled = true;
       var status = showStatus(doc, box, t("trade.checking_fee", "Checking fee…"));
@@ -356,7 +355,7 @@ var TradeCancel = (function () {
       try { box.removeChild(pending); } catch (rm) { /* navigated away */ }
       dlg = ConfirmDialog.show({ title: "Cancel order " + id + "?",
         rows: rows,
-        feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeRawTitle: Q.feeRaw,
+        feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeTermKey: "trade.row_fee", feeRawTitle: Q.feeRaw,
         backLabel: t("trade.keep_order", "Keep order"), sendLabel: t("trade.confirm_cancel", "Confirm cancel"),
         doc: doc,
         onBack: function () { clearBox(box); },
@@ -436,8 +435,7 @@ var TradeCancel = (function () {
       ];
       var dlg = null;
       function doGo() {
-        var btns = dlg.getElementsByTagName("button");
-        var backBtn = btns[0], goBtn = btns[1];
+        var cbtns = ConfirmDialog.buttons(dlg), backBtn = cbtns.back, goBtn = cbtns.send;
         backBtn.disabled = true;
         goBtn.disabled = true;
         var status = showStatus(doc, box, t("trade.checking_fee", "Checking fee…"));
@@ -519,7 +517,7 @@ var TradeCancel = (function () {
         try { box.removeChild(pendingAll); } catch (rm) { /* navigated away */ }
         dlg = ConfirmDialog.show({ title: "Cancel all " + ids.length + " orders?",
           rows: rows,
-          feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeRawTitle: Q.feeRaw,
+          feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeTermKey: "trade.row_fee", feeRawTitle: Q.feeRaw,
           backLabel: t("trade.keep_orders", "Keep orders"), sendLabel: t("trade.confirm_cancel_all", "Confirm cancel-all"),
           doc: doc,
           onBack: function () { cancelAllBox(doc, box, orders, assets, onDone); },

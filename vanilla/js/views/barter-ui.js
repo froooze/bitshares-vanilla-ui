@@ -391,7 +391,7 @@ var BarterUI = (function () {
      [t("barter.review_period", "Review period"), (built.pair[1].review_period_seconds === null ? t("barter.none", "none") : Proposal.durToHuman(built.pair[1].review_period_seconds)), null, "barter.review_period"],
      [t("barter.enclosed_transfers", "Enclosed transfers"), String(built.pair[1].proposed_ops.length), null, "barter.enclosed_transfers"]];
     var dlg = ConfirmDialog.show({ title: t("barter.confirm_barter_proposal_op_22", "Confirm barter proposal (op %(op)s)", { op: 22 }),
-      rows: rows, feeHuman: feeHuman, feeTerm: t("common.fee_live", "Fee (live)"),
+      rows: rows, feeHuman: feeHuman, feeTerm: t("common.fee_live", "Fee (live)"), feeTermKey: "common.fee_live",
       backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
       onBack: function () { DOM.clear(out); },
       onSend: function () { doSend(); } });
@@ -424,8 +424,7 @@ var BarterUI = (function () {
     DOM.append(out, dlg);
     function doSend() {
       if (myGen !== gen) return;
-      var btns = dlg.getElementsByTagName("button");
-      var back = btns[0], send = btns[1];
+      var cbtns = ConfirmDialog.buttons(dlg), back = cbtns.back, send = cbtns.send;
       send.disabled = true; back.disabled = true;
       var status = showStatus(doc, out, t("common.status_signing", "Signing…"));
       var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;
@@ -444,7 +443,7 @@ var BarterUI = (function () {
           title: t("barter.uc_title", "Unlock to sign"), titleKey: "barter.uc_title",
           rows: rows,
           feeHuman: feeHuman,
-          feeTerm: t("common.fee_live", "Fee (live)"),
+          feeTerm: t("common.fee_live", "Fee (live)"), feeTermKey: "common.fee_live",
           rawObj: built.pair,
           rawLabel: t("confirm.op_json_label", "Show unsigned operation JSON"),
           needPassword: true,

@@ -98,7 +98,8 @@ var UnlockConfirm = (function () {
    *   string the user is about to sign; absent renders as before),
    *   rows: [[term, text, rawTitle?, termKey?]...] (a 4th element is the
    *   term's locale key — same opt-in rule, forwarded verbatim),
-   *   feeHuman?: string|null, feeTerm?: string, feeRawTitle?: string|null,
+   *   feeHuman?: string|null, feeTerm?: string, feeTermKey?: string,
+ *   feeRawTitle?: string|null,
  *   rawJson?: string|null, rawObj?: any, rawLabel?: string (forwarded to
  *   ConfirmDialog's details.raw drill-down — the op the modal reviews,
  *   when the caller has it built; omitted when the op only exists
@@ -143,6 +144,7 @@ var UnlockConfirm = (function () {
       rows: cfg.rows || [],
       feeHuman: (cfg.feeHuman === undefined) ? null : cfg.feeHuman,
       feeTerm: cfg.feeTerm,
+      feeTermKey: cfg.feeTermKey,
       feeRawTitle: (cfg.feeRawTitle === undefined) ? null : cfg.feeRawTitle,
       rawJson: (cfg.rawJson === undefined) ? null : cfg.rawJson,
       rawObj: (cfg.rawObj === undefined) ? null : cfg.rawObj,
@@ -154,16 +156,19 @@ var UnlockConfirm = (function () {
       onSend: function () { submit(); }
     });
 
-    /* Send/Back buttons: ConfirmDialog's fixed tail (actions is box tail,
-     * send is actions tail). Guarded — unresolved buttons only lose the
-     * disabled-while-pending nicety; the pending flag still blocks doubles. */
+    /* Send button: resolved through ConfirmDialog's STABLE hook, exactly as
+     * the ~30 view call sites do. The previous `box.lastChild ->
+     * actions.lastChild` walk was position-dependent and unguarded about
+     * WHAT it found — it only checked that the tail was a <button>, so any
+     * future node appended after the actions row (or any RiskText asterisk
+     * living above them) would have silently become the "disable while
+     * pending" target and disarmed the double-unlock guard. Guarded —
+     * an unresolved button only loses the disabled-while-pending nicety;
+     * the pending flag still blocks doubles. */
     var sendBtn = null;
     try {
-      var actions = box ? box.lastChild : null;
-      var tail = actions ? actions.lastChild : null;
-      var tag = "";
-      try { tag = String((tail && tail.tagName) || "").toUpperCase(); } catch (e) { tag = ""; }
-      sendBtn = (tag === "BUTTON") ? tail : null;
+      var resolved = ConfirmDialog.buttons(box);
+      sendBtn = resolved && resolved.send ? resolved.send : null;
     } catch (e) { sendBtn = null; }
 
     /* Password block (locked mode only): label + input + inline error.

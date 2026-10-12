@@ -1087,8 +1087,7 @@ var MarketOrders = (function () {
         if (ch.expiryShown !== null) rows.push([t("market.update_expiry_change", "Expiration (old → new)"), ch.expiryShown, null, "market.update_expiry_change"]);
         var dlg = null;
         function doGo() {
-          var btns = dlg.getElementsByTagName("button");
-          var backBtn = btns[0], goBtn = btns[1];
+          var cbtns = ConfirmDialog.buttons(dlg), backBtn = cbtns.back, goBtn = cbtns.send;
           backBtn.disabled = true;
           goBtn.disabled = true;
           var status = DOM.status(box, t("trade.checking_fee", "Checking fee…"));
@@ -1161,7 +1160,7 @@ var MarketOrders = (function () {
         }
         dlg = ConfirmDialog.show({ title: t("market.update_title", "Adjust order") + " " + id + "?",
           rows: rows,
-          feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeRawTitle: Q.feeRaw,
+          feeHuman: Q.feeHuman, feeTerm: t("trade.row_fee", "Fee"), feeTermKey: "trade.row_fee", feeRawTitle: Q.feeRaw,
           backLabel: t("trade.keep_order", "Keep order"), sendLabel: t("market.confirm_adjust", "Confirm adjust"),
           doc: doc,
           onBack: function () { orderUpdateBox(doc, box, order, assets, onDone,

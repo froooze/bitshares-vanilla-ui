@@ -104,14 +104,32 @@ var RiskText = (function () {
   }
 
   /* degraded: the no-document floor for render(). With no document there is
-   * no element to build, but the answer must still NOT be null: Task 4 mounts
-   * this straight into ConfirmDialog with appendChild, and appendChild(null)
-   * inserts the visible text "null" into the dialog. An empty plain wrapper is
-   * the honest floor — nothing is rendered rather than something wrong.
+   * no element to build — no document, no createElement, nothing honest to
+   * call an HTMLElement — but the answer must still NOT be null: Task 4
+   * mounts this straight into ConfirmDialog with appendChild, and
+   * appendChild(null) inserts the visible text "null" into the dialog. An
+   * empty stand-in with the element surface callers touch (className,
+   * textContent, children, parentNode, id, appendChild) is the honest floor:
+   * nothing is rendered rather than something wrong. That stand-in is why
+   * globals.d.ts declares RiskTextLine STRUCTURALLY rather than as
+   * HTMLElement — the return type must not promise an element this path
+   * cannot produce.
    * Unreachable in a page: every caller resolves a document first (and
-   * ConfirmDialog.show throws "confirm: no document" without one). */
+   * ConfirmDialog.show throws "confirm: no document" without one), so this
+   * only answers a Node harness that calls render() with no doc at all. */
   function degraded() {
-    return { className: "i18n-risk-plain", textContent: "", children: [] };
+    return {
+      className: "i18n-risk-plain",
+      textContent: "",
+      children: [],
+      parentNode: null,
+      id: "",
+      appendChild: function (child) {
+        this.children.push(child);
+        if (child) child.parentNode = this;
+        return child;
+      }
+    };
   }
 
   /* dualEnglish: the ONE decision about dual-line rendering, in one place so
@@ -212,8 +230,10 @@ var RiskText = (function () {
    * @param {string|number|null|undefined} text the already-translated text to
    *   display; non-strings are stringified, null/undefined render empty.
    * @param {string} [key] dotted locale key enabling the English reference.
-   * @returns {HTMLElement} span.i18n-risk-plain or div.i18n-risk — never a
-   *   bare string, so callers can append unconditionally. Never throws. */
+   * @returns {any} span.i18n-risk-plain or span.i18n-risk — never a
+   *   bare string, never null, so callers can append unconditionally.
+   *   Never an HTMLElement on the no-document floor (see degraded(); the
+   *   declared type is globals.d.ts's structural RiskTextLine). */
   function render(doc, text, key) {
     var str = (text === undefined || text === null) ? "" : String(text);
     var owner = (doc && typeof doc.createElement === "function") ? doc
@@ -224,7 +244,14 @@ var RiskText = (function () {
 
     uid += 1;
     var enId = "i18n-risk-en-" + uid;
-    var wrap = mk(owner, "div", null, WRAP_CLASS);
+    /* PHRASING, not flow: ConfirmDialog mounts this widget inside the
+     * dialog's <h3> (and each row's <dt>), and h1-h6 accept phrasing
+     * content only — a <div> wrapper (and a <div> English panel) is an
+     * invalid content model there. Everything below is span/button/span/a,
+     * so the whole subtree is legal. The English line still renders on its
+     * own line: .i18n-risk-en carries display:block in app.css, which a
+     * <span> honours exactly as a <div> did. */
+    var wrap = mk(owner, "span", null, WRAP_CLASS);
     wrap.appendChild(mk(owner, "span", str, "i18n-risk-native"));
 
     var star = mk(owner, "button", "*", STAR_CLASS);
@@ -236,7 +263,7 @@ var RiskText = (function () {
     wrap.appendChild(star);
 
     /* enText is the SAME string the decision compared against — one lookup. */
-    var en = mk(owner, "div", enText, EN_CLASS);
+    var en = mk(owner, "span", enText, EN_CLASS);
     en.id = enId;
     en.hidden = true;
     wrap.appendChild(en);

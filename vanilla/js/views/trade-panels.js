@@ -468,27 +468,32 @@ var TradePanels = (function () {
   /* orderSummaryRows: modal summary for a single order (raw input strings —
    * NOT a validated review; reviewSingle validates downstream and
    * paintConfirmSingle is the human-readable confirm). Params: P, side,
-   * vals ({amount, price}). Returns [[term, text], ...]. */
+   * vals ({amount, price}). Returns [[term, text, rawTitle?, termKey?]...] —
+   * the FOURTH slot is the term's dotted locale key (ConfirmDialog's
+   * opt-in RiskText contract), so on a machine-filled locale each static
+   * term discloses its English master; the VALUES stay unkeyed (amounts and
+   * symbols are locale-independent, §3.5). */
   function singleSummaryRows(P, side, vals) {
     var ctx = P.ctx;
     return [
-      [t("trade.row_side", "Side"), (side === "buy" ? "Buy " : "Sell ") + ctx.quoteSym],
-      [t("trade.uc_amount", "Amount"), String(vals.amount || "") + " " + ctx.quoteSym],
-      [t("trade.uc_price", "Price"), String(vals.price || "") + " " + ctx.baseSym + " per " + ctx.quoteSym]
+      [t("trade.row_side", "Side"), (side === "buy" ? "Buy " : "Sell ") + ctx.quoteSym, null, "trade.row_side"],
+      [t("trade.uc_amount", "Amount"), String(vals.amount || "") + " " + ctx.quoteSym, null, "trade.uc_amount"],
+      [t("trade.uc_price", "Price"), String(vals.price || "") + " " + ctx.baseSym + " per " + ctx.quoteSym, null, "trade.uc_price"]
     ];
   }
 
   /* scaledSummaryRows: modal summary for scaled orders (raw inputs, same
-   * caveat as singleSummaryRows). Params: P, spec ({n, low, high, total,
-   * side}). Returns [[term, text], ...]. */
+   * caveat as singleSummaryRows; the 4th slot is the term key). Params: P,
+   * spec ({n, low, high, total, side}). Returns [[term, text, rawTitle?,
+   * termKey?]...]. */
   function scaledSummaryRows(P, spec) {
     var ctx = P.ctx;
     var sellS = spec.side === "buy" ? ctx.baseSym : ctx.quoteSym;
     return [
-      [t("trade.row_side", "Side"), (spec.side === "buy" ? "Buy " : "Sell ") + ctx.quoteSym],
-      [t("trade.uc_orders", "Orders"), String(spec.n || "")],
-      [t("trade.uc_range", "Price range"), String(spec.low || "") + " – " + String(spec.high || "") + " " + ctx.baseSym + " per " + ctx.quoteSym],
-      [t("trade.uc_total", "Total to sell"), String(spec.total || "") + " " + sellS]
+      [t("trade.row_side", "Side"), (spec.side === "buy" ? "Buy " : "Sell ") + ctx.quoteSym, null, "trade.row_side"],
+      [t("trade.uc_orders", "Orders"), String(spec.n || ""), null, "trade.uc_orders"],
+      [t("trade.uc_range", "Price range"), String(spec.low || "") + " – " + String(spec.high || "") + " " + ctx.baseSym + " per " + ctx.quoteSym, null, "trade.uc_range"],
+      [t("trade.uc_total", "Total to sell"), String(spec.total || "") + " " + sellS, null, "trade.uc_total"]
     ];
   }
 
@@ -501,6 +506,13 @@ var TradePanels = (function () {
       return false;
     }
     cfg.title = t("trade.uc_title", "Unlock to continue");
+    /* The title is a FULLY STATIC string on the trade desk's BUY/SELL
+     * unlock modal — a high-traffic signing path — so it earns the same
+     * opt-in RiskText key every other ConfirmDialog/UnlockConfirm title
+     * carries. Paired with the term keys in single/scaledSummaryRows, a
+     * machine-filled locale can now disclose the English master for the
+     * whole modal instead of leaving it silent. */
+    cfg.titleKey = "trade.uc_title";
     cfg.feeHuman = null;
     cfg.needPassword = lockedNow();
     cfg.submitLabel = t("trade.unlock_review", "Unlock & review");

@@ -457,12 +457,11 @@ var AssetFeedUI = (function () {
         try { feedFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr) { feedFee = String(f.amount) + " (core)"; }
         var feedDlg = ConfirmDialog.show({ title: t("asset.confirm_feed", "Confirm feed"), titleKey: "asset.confirm_feed",
-          rows: feedRows, feeHuman: feedFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: feedRows, feeHuman: feedFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderFeed(root); },
           onSend: function () {
-            var btns = feedDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(feedDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             (async function () {
@@ -518,12 +517,11 @@ var AssetFeedUI = (function () {
         try { prodFee = Format.formatAmount(String(f.amount), pp) + " (core)"; }
         catch (feeErr2) { prodFee = String(f.amount) + " (core)"; }
         var prodDlg = ConfirmDialog.show({ title: t("asset.confirm_producers", "Confirm feed producers"), titleKey: "asset.confirm_producers",
-          rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"),
+          rows: prodRows, feeHuman: prodFee, feeTerm: t("borrow.fee", "Fee"), feeTermKey: "borrow.fee",
           backLabel: t("barter.back", "Back"), sendLabel: t("common.sign_send", "Sign & Send"),
           onBack: function () { renderFeed(root); },
           onSend: function () {
-            var btns = prodDlg.getElementsByTagName("button");
-            var backB = btns[0], sendB = btns[1];
+            var cbtns = ConfirmDialog.buttons(prodDlg), backB = cbtns.back, sendB = cbtns.send;
             backB.disabled = true; sendB.disabled = true;
             var st = status(d, w2, "Signing…");
             (async function () {

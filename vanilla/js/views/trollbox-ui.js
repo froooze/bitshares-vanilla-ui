@@ -399,7 +399,7 @@ var TrollboxUI = (function () {
               [t("trollbox.size_row", "Size"), String(sizeUsed) + " / " + String(S.maxBytes) + " " + t("trollbox.bytes_unit", "bytes")]
             ],
             feeHuman: feeHuman(f),
-            feeTerm: t("trollbox.fee", "Fee"),
+            feeTerm: t("trollbox.fee", "Fee"), feeTermKey: "trollbox.fee",
             feeRawTitle: String(f.fee.amount),
             needPassword: !unlockedNow(),
             submitLabel: t("trollbox.unlock_post", "Unlock & post"),

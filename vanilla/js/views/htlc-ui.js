@@ -228,14 +228,13 @@ var HtlcUI = (function () {
       if (depth > 0) {
         if (myGen !== gen) return;
         out.appendChild(DOM.el(doc, "p", t("borrow.unlocked_rereview_note", "Unlocked — press Back and re-run Review so the transaction uses your account."), "muted"));
-        var btnsR = dlg.getElementsByTagName("button");
-        btnsR[0].disabled = false; btnsR[1].disabled = false;
+        var cbtnsR = ConfirmDialog.buttons(dlg);
+        cbtnsR.back.disabled = false; cbtnsR.send.disabled = false;
         return;
       }
       if (myGen !== gen) return;
       (function () {
-        var btns = dlg.getElementsByTagName("button");
-        var backB = btns[0], sendB = btns[1];
+        var cbtns = ConfirmDialog.buttons(dlg), backB = cbtns.back, sendB = cbtns.send;
         sendB.disabled = true; backB.disabled = true;
         var status = showStatus(doc, out, "Signing…");
         var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;

@@ -261,16 +261,15 @@ var CreditUI = (function () {
       if (depth > 0) {
         if (myGen !== gen) return;
         out.appendChild(DOM.el(doc, "p", t("credit.unlocked_rereview_note", "Unlocked — press Back and re-run Review so the transaction uses your account."), "muted"));
-        var btnsR = dlg.getElementsByTagName("button");
-        btnsR[0].disabled = false; btnsR[1].disabled = false;
+        var cbtnsR = ConfirmDialog.buttons(dlg);
+        cbtnsR.back.disabled = false; cbtnsR.send.disabled = false;
         return;
       }
       if (myGen !== gen) return;
       /* First-try send body, scope-isolated (same shape as the pre-modal
        * code — disable, status, wif gate, publish chain). */
       (function () {
-        var btns = dlg.getElementsByTagName("button");
-        var backB = btns[0], sendB = btns[1];
+        var cbtns = ConfirmDialog.buttons(dlg), backB = cbtns.back, sendB = cbtns.send;
         sendB.disabled = true; backB.disabled = true;
         var status = showStatus(doc, out, t("common.status_signing", "Signing…"));
         var wif = Wallet.keys && Wallet.keys.active ? Wallet.keys.active.wif : null;
@@ -750,6 +749,40 @@ var CreditUI = (function () {
     }
     return out;
   }
+  /* offerCreateRows: the NAMED ROWS of the op-69 create confirm dialog.
+   * Hoisted out of createBox so the signing rows are testable without
+   * driving the whole form (tooling/credit-offer-confirm-test.js): a
+   * renamed op field here silently corrupted a signing dialog once already
+   * (see the FIELD NAMES note below — that is why this is a named export).
+   * FIELD NAMES are the serializer's (api/credit.js:349-352 buildOfferCreate,
+   * op-69 credit_offer.hpp): `acceptable_borrowers`, `auto_disable_time`.
+   * Auto-disable renders the ISO DATE itself, never yes/no — the form
+   * requires the time (createBox rejects an unset one), so a yes/no row
+   * would be provably false for every offer that can reach this dialog.
+   * Term slot 4 is the term's locale key (ui/confirm.js routes it through
+   * RiskText); VALUES stay unkeyed — amounts, ids and dates are
+   * locale-independent by §3.5.
+   * @param {any} R review result {pair, me, a} from cfg.build
+   * @param {any} fee {text, raw} human fee + raw integer (principle #6)
+   * @returns {any[]} [[term, text, rawTitle|null, termKey]...]
+   * @throws nothing of its own; reads op fields (a renamed one throws). */
+  function offerCreateRows(R, fee) {
+    var op = R.pair[1];
+    return [
+      [t("credit.owner", "Owner"), who(R.me), null, "credit.owner"],
+      [t("credit.asset", "Asset"), R.a.symbol + " (" + R.a.id + ")", null, "credit.asset"],
+      [t("credit.balance", "Balance"), Format.formatAmount(op.balance, R.a.precision) + " " + R.a.symbol, "raw " + op.balance, "credit.balance"],
+      [t("credit.fee_rate", "Fee rate"), Credit.rateUnitsToHuman(op.fee_rate) + "% (denom 1,000,000)", "raw " + op.fee_rate, "credit.fee_rate"],
+      [t("credit.max_duration", "Max duration"), Credit.durToHuman(op.max_duration_seconds), null, "credit.max_duration"],
+      [t("credit.min_deal", "Min deal"), Format.formatAmount(op.min_deal_amount, R.a.precision) + " " + R.a.symbol, "raw " + op.min_deal_amount, "credit.min_deal"],
+      [t("credit.enabled", "Enabled"), op.enabled ? t("credit.yes", "yes") : t("credit.no", "no"), null, "credit.enabled"],
+      [t("credit.auto_disable", "Auto-disable"), op.auto_disable_time, null, "credit.auto_disable"],
+      [t("credit.collateral_legs", "Collateral legs"), String(op.acceptable_collateral.length), null, "credit.collateral_legs"],
+      [t("credit.borrowers", "Borrowers"), String(op.acceptable_borrowers.length), null, "credit.borrowers"],
+      [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw, "credit.fee"],
+      [t("credit.network", "Network"), "testnet", null, "credit.network"]];
+  }
+
   /* Op-69 create form: human balance/rate/duration/min-deal + collateral/borrower rows. */
   function createBox(doc, box, myGen) {
     var lockedC = !isUnlockedNow();
@@ -812,21 +845,7 @@ var CreditUI = (function () {
                 if (rows[k].asset_id === a.id && rows[k].total_raw === balRaw) return rows[k];
             } catch (e) { return null; } return null; } };
       },
-      rows: function (R, fee) {
-var op = R.pair[1], out = [[t("credit.owner", "Owner"), who(R.me), null, "credit.owner"],
-          [t("credit.asset", "Asset"), R.a.symbol + " (" + R.a.id + ")", null, "credit.asset"],
-          [t("credit.balance", "Balance"), Format.formatAmount(op.balance, R.a.precision) + " " + R.a.symbol, "raw " + op.balance, "credit.balance"],
-          [t("credit.fee_rate", "Fee rate"), Credit.rateUnitsToHuman(op.fee_rate) + "% (denom 1,000,000)", "raw " + op.fee_rate, "credit.fee_rate"],
-          [t("credit.max_duration", "Max duration"), Credit.durToHuman(op.max_duration_seconds), null, "credit.max_duration"],
-          [t("credit.min_deal", "Min deal"), Format.formatAmount(op.min_deal_amount, R.a.precision) + " " + R.a.symbol, "raw " + op.min_deal_amount, "credit.min_deal"],
-          [t("credit.enabled", "Enabled"), op.enabled ? t("credit.yes", "yes") : t("credit.no", "no"), null, "credit.enabled"],
-          [t("credit.auto_disable", "Auto-disable"), op.auto_disable ? t("credit.yes", "yes") : t("credit.no", "no"), null, "credit.auto_disable"],
-          [t("credit.collateral_legs", "Collateral legs"), String(op.acceptable_collateral.length), null, "credit.collateral_legs"],
-          [t("credit.borrowers", "Borrowers"), String(op.accepted_borrowers.length), null, "credit.borrowers"],
-          [t("credit.fee", "Fee"), fee.text, "raw " + fee.raw, "credit.fee"],
-          [t("credit.network", "Network"), "testnet", null, "credit.network"]];
-        return out;
-      },
+      rows: offerCreateRows,
       title: t("credit.confirm_offer_create", "Confirm offer create"), titleKey: "credit.confirm_offer_create", ok: function () { return t("credit.offer_created", "Offer created."); }, fail: t("credit.could_not_prepare_the_create", "Could not prepare the create.") });
   }
 
@@ -835,6 +854,7 @@ var op = R.pair[1], out = [[t("credit.owner", "Owner"), who(R.me), null, "credit
       confirmList: confirmList, field: field, tableHead: tableHead, deskTable: deskTable,
       feeText: feeText, headBlock: headBlock, amt: amt, rateText: rateText, who: who,
       sendConfirm: sendConfirm, reviewPaid: reviewPaid, reviewSection: reviewSection,
+      offerCreateRows: offerCreateRows,
       routeReady: routeReady,
       isUnlockedNow: isUnlockedNow, viewingAsNotice: viewingAsNotice, signNotice: signNotice,
       viewingAsId: VIEWING_AS_ID,
