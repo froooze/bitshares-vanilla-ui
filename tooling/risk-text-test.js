@@ -15,6 +15,10 @@
  *   2. The fake document supplies only createElement + addEventListener, and
  *      reflects `type`/`hidden` to attributes the way real elements do, so
  *      `[hidden]` CSS and getAttribute assertions see the same truth.
+ *   3. Sections 8-9 stand up two more sandboxes with parts of that harness
+ *      MISSING on purpose (no DOM global; no document at all) — the module
+ *      claims it never throws and never answers null, and that claim is only
+ *      testable away from the fully-loaded sandbox.
  * Anything richer than this is the browser probe's job (tooling/visual/). */
 "use strict";
 var assert = require("assert");
@@ -72,21 +76,39 @@ vm.runInContext(load("vanilla/js/utils/touchable.js"), sandbox);
 vm.runInContext(load("vanilla/js/utils/dom.js"), sandbox);
 vm.runInContext(load("vanilla/js/utils/event.js"), sandbox);
 
-/* Fake I18n mirroring the shipped Task 2 contract: locale() names the active
- * code, isMachineLocale(code) takes that code (calling it with no argument is
- * how a caller silently gets false), enFor(key) may be undefined when neither
- * the en master nor a recorded t() default knows the key. */
+/* Fake I18n mirroring the shipped Task 2 contract (i18n.js:95-109) EXACTLY:
+ * locale() names the active code, isMachineLocale(code) takes that code, and
+ * enFor(key) may be undefined when neither the en master nor a recorded t()
+ * default knows the key.
+ *
+ * The isMachineLocale fake is deliberately STRICT, because a permissive one
+ * hides the bug this widget exists to be careful about: the real function is
+ * provenance(code) === "machine", and provenance answers "none" for anything
+ * that is not a loaded non-en locale — a non-string code included. A fake
+ * written as `machine && code !== "en"` says true for undefined, so calling
+ * isMachineLocale() with no argument (the mistake this module must not make)
+ * still renders dual-line and the suite stays GREEN over the real defect.
+ * Faithful terms, therefore: a non-empty string code that is not "en". */
 var localeCode = "es";
 var machine = true;
-sandbox.I18n = {
-  locale: function () { return localeCode; },
-  isMachineLocale: function (code) { return machine && code !== "en"; },
-  enFor: function (k) {
-    if (k === "unlockconfirm.confirm") return "Unlock to sign";
-    if (k === "menu.dashboard") return "Dashboard";
-    return undefined;
-  }
-};
+var enForCalls = 0;
+/* One factory, so the degraded sandboxes below get the SAME contract instead
+ * of a second, laxer copy. */
+function fakeI18n() {
+  return {
+    locale: function () { return localeCode; },
+    isMachineLocale: function (code) {
+      return machine && typeof code === "string" && !!code && code !== "en";
+    },
+    enFor: function (k) {
+      enForCalls += 1;
+      if (k === "unlockconfirm.confirm") return "Unlock to sign";
+      if (k === "menu.dashboard") return "Dashboard";
+      return undefined;
+    }
+  };
+}
+sandbox.I18n = fakeI18n();
 
 vm.runInContext(load("vanilla/js/ui/risk-text.js"), sandbox);
 var RiskText = sandbox.RiskText;
@@ -120,7 +142,10 @@ var en = find(node, "i18n-risk-en");
 assert.ok(en, "english line exists");
 assert.strictEqual(en.hidden, true, "english starts hidden");
 assert.strictEqual(en.id, star.getAttribute("aria-controls"), "aria-controls points at the english line");
-assert.ok(en.textContent.indexOf("Unlock to sign") !== -1, "english text is the reference");
+/* The en reference is byte-exact, not "contains the words": the panel shows
+ * the en master string and nothing else (the limitations link is a SIBLING of
+ * the panel, asserted below). */
+assert.strictEqual(en.textContent, "Unlock to sign", "english text is the reference, byte-exact");
 var more = find(node, "i18n-risk-more");
 assert.ok(more, "the limitations link is reachable from the line itself");
 assert.strictEqual(more.tagName, "A", "limitations link is an anchor");
@@ -148,7 +173,20 @@ machine = true;
 localeCode = "en";
 var enLocale = RiskText.render(document, "Unlock to sign", "unlockconfirm.confirm");
 assert.strictEqual(enLocale.className, "i18n-risk-plain", "the english locale needs no reference line");
+/* The ACTIVE LOCALE has to be what decides, so prove it with a pair where the
+ * text is NOT the english source. The assertion above passes on the "text
+ * already is the english" short-circuit, which holds whatever locale the
+ * module reads; this one cannot. Same key, same differing text, plain here
+ * and dual-line one step below — the locale is the only variable, so a module
+ * that hardcoded a code (or ignored I18n.locale() entirely) fails both. */
+var enSamePair = RiskText.render(document, "Desbloquear para firmar", "unlockconfirm.confirm");
+assert.strictEqual(enSamePair.className, "i18n-risk-plain",
+  "under en, a high-risk key whose text differs from the en master stays plain");
+assert.strictEqual(RiskText.isActive(), false, "isActive is false when the active locale is en");
 localeCode = "es";
+var esSamePair = RiskText.render(document, "Desbloquear para firmar", "unlockconfirm.confirm");
+assert.strictEqual(esSamePair.className, "i18n-risk",
+  "the identical pair dual-lines once the active locale is machine-filled");
 assert.strictEqual(RiskText.isActive(), true, "isActive is true on a machine locale");
 
 /* 5. unknown english source -> plain, never an empty english line
@@ -159,16 +197,25 @@ assert.strictEqual(unknown.className, "i18n-risk-plain", "no english source degr
 assert.strictEqual(unknown.textContent, "Texte dynamique", "the degraded text is untouched");
 
 /* 6. the disclosure toggles through the shared delegated listener. */
-var t1 = RiskText.render(document, "Desbloquear para firmar", "unlockconfirm.confirm");
+var t1 = RiskText.render(document, "Desbloquear para firma", "unlockconfirm.confirm");
 var s1 = find(t1, "i18n-risk-star");
 var e1 = find(t1, "i18n-risk-en");
 var id1 = e1.id;
+/* The class IS the CSS: `.i18n-risk.is-open .i18n-risk-more { display:inline }`
+ * in app.css is the only thing that reveals the "About these translations"
+ * link, so a module that stopped toggling it would leave that link as
+ * permanently invisible markup while aria/hidden assertions still passed. */
+assert.ok(String(t1.className).indexOf("is-open") === -1, "wrapper starts without the open class");
 click(s1);
 assert.strictEqual(s1.getAttribute("aria-expanded"), "true", "first tap expands");
 assert.strictEqual(e1.hidden, false, "first tap reveals the english");
+assert.ok(String(t1.className).split(/\s+/).indexOf("is-open") !== -1,
+  "first tap puts is-open on the wrapper — the class app.css needs for .i18n-risk-more");
 click(s1);
 assert.strictEqual(s1.getAttribute("aria-expanded"), "false", "second tap collapses");
 assert.strictEqual(e1.hidden, true, "second tap hides it again");
+assert.ok(String(t1.className).split(/\s+/).indexOf("is-open") === -1,
+  "second tap removes is-open, and never leaves the class behind twice");
 
 /* ids are unique, so one disclosure never drives another's panel. */
 var t2 = RiskText.render(document, "Desbloquear para firmar", "unlockconfirm.confirm");
@@ -189,5 +236,50 @@ assert.strictEqual(RiskText.render(document, null, null).textContent, "", "null 
 assert.strictEqual(RiskText.render(document, 42, null).textContent, "42", "non-string text is stringified");
 assert.strictEqual(RiskText.render(document, "x", 42).className, "i18n-risk-plain",
   "a non-string key is not a key");
+
+/* 8. ONE English lookup per dual-line line. The decision compares the en
+ *    source against the text, and the panel then renders that same source; two
+ *    lookups can disagree (the master could be re-read between them), which
+ *    would put a line's panel out of sync with the reason it was rendered. */
+enForCalls = 0;
+var once = RiskText.render(document, "Desbloquear para firmar", "unlockconfirm.confirm");
+assert.strictEqual(once.className, "i18n-risk", "the counted render dual-lined");
+assert.strictEqual(enForCalls, 1, "the English source is resolved once and reused for the panel");
+assert.strictEqual(find(once, "i18n-risk-en").textContent, "Unlock to sign",
+  "the panel shows the source the decision compared against");
+
+/* 9. a missing helper degrades instead of throwing. Two harnesses, neither of
+ *    which any real page can be: (a) no DOM global (utils/dom.js not loaded)
+ *    with a document present, and (b) no document at all. The module header
+ *    claims "never throws", so both must answer a node. */
+
+/* (a) document present, DOM absent. */
+var bareDoc = { createElement: el, addEventListener: function () {} };
+var bare = { document: bareDoc, I18n: fakeI18n() };
+bare.window = bare;
+vm.createContext(bare);
+vm.runInContext(load("vanilla/js/ui/risk-text.js"), bare);
+var bareOut = bare.RiskText.render(bareDoc, "Desbloquear para firma", "unlockconfirm.confirm");
+assert.ok(bareOut, "no DOM global must not throw and must still answer a node");
+assert.strictEqual(bareOut.className, "i18n-risk",
+  "without the DOM helper the dual-line line still renders (raw createElement)");
+assert.ok(find(bareOut, "i18n-risk-star"), "the asterisk survives a missing DOM helper");
+assert.ok(find(bareOut, "i18n-risk-en"), "the english panel survives a missing DOM helper");
+assert.strictEqual(bare.RiskText.render(bareDoc, "Unlock to sign", "unlockconfirm.confirm").className,
+  "i18n-risk-plain", "and the plain path survives a missing DOM helper too");
+
+/* (b) no document at all. Task 4 mounts this straight into ConfirmDialog with
+ *     appendChild, which stringifies a null return into the dialog as the
+ *     visible text "null" — so the degraded answer is an EMPTY plain wrapper,
+ *     never null. */
+var headless = {};
+headless.window = headless;
+vm.createContext(headless);
+vm.runInContext(load("vanilla/js/ui/risk-text.js"), headless);
+var noDoc = headless.RiskText.render(undefined, "Desbloquear para firmar", "unlockconfirm.confirm");
+assert.ok(noDoc, "no document must not throw and must not answer null");
+assert.strictEqual(noDoc.className, "i18n-risk-plain", "the no-document floor is a plain wrapper");
+assert.strictEqual(noDoc.textContent, "", "and it is empty — nothing is rendered, rather than \"null\"");
+assert.ok(headless.RiskText.isActive() === false, "isActive is false without I18n");
 
 console.log("OK: risk-text");

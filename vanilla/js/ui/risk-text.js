@@ -1,5 +1,5 @@
 /* ui/risk-text.js — the dual-line honesty surface for high-risk locale strings.
- * Owns: the one decision (dual-line vs plain, see shouldDual), the asterisk
+ * Owns: the one decision (dual-line vs plain, see dualEnglish), the asterisk
  *   disclosure button (real <button type="button">, aria-expanded +
  *   aria-controls, 44px touch floor — never a hover-only affordance, AGENTS.md
  *   §3.6), the English reference panel it toggles, and the link to the
@@ -75,29 +75,66 @@ var RiskText = (function () {
    * _meta.verified list (per-key human review) and answers true there, which
    * drops the asterisk from that line while leaving every unverified key of
    * the same machine-filled locale labelled. Kept as its own function so that
-   * addition is one return statement, not a rewrite of shouldDual.
+   * addition is one return statement, not a rewrite of dualEnglish.
    * @param {string} key dotted locale key (unused until Task 5 wires it).
    * @returns {boolean} always false today. */
   function isVerified(key) {
     return false;
   }
 
-  /* shouldDual: the ONE decision about dual-line rendering, in one place so
+  /* mk: ONE element through the SHARED DOM helper — never reimplemented here.
+   * Falls back to the raw owner.createElement only when the DOM global is
+   * absent (a harness that did not load utils/dom.js), the same guard shape
+   * ui/confirm.js uses, so a missing helper degrades the widget instead of
+   * throwing a ReferenceError out of a signing dialog.
+   * @param {Document} owner owner document (createElement known good — render
+   *   resolves it before calling).
+   * @param {string} tag tag name.
+   * @param {string|null} text textContent; null leaves the element empty.
+   * @param {string} [cls] optional className.
+   * @returns {HTMLElement} new detached element. */
+  function mk(owner, tag, text, cls) {
+    if (typeof DOM !== "undefined" && DOM && typeof DOM.el === "function") {
+      return DOM.el(owner, tag, text, cls);
+    }
+    var n = owner.createElement(tag);
+    if (text !== undefined && text !== null) n.textContent = text;
+    if (cls) n.className = cls;
+    return n;
+  }
+
+  /* degraded: the no-document floor for render(). With no document there is
+   * no element to build, but the answer must still NOT be null: Task 4 mounts
+   * this straight into ConfirmDialog with appendChild, and appendChild(null)
+   * inserts the visible text "null" into the dialog. An empty plain wrapper is
+   * the honest floor — nothing is rendered rather than something wrong.
+   * Unreachable in a page: every caller resolves a document first (and
+   * ConfirmDialog.show throws "confirm: no document" without one). */
+  function degraded() {
+    return { className: "i18n-risk-plain", textContent: "", children: [] };
+  }
+
+  /* dualEnglish: the ONE decision about dual-line rendering, in one place so
    * views (Task 4 mounts every signing row through this) and this test agree.
+   * Returns the English source to DISCLOSE, not a boolean, so the decision
+   * and the panel share one lookup: a second I18n.enFor call could read a
+   * different value and leave a line's panel disagreeing with the reason the
+   * line was rendered dual-line.
    * @param {string} [key] dotted locale key; falsy for dynamic values
    *   (amounts, ids, symbols) which have no English source by construction.
    * @param {string} text the already-translated text about to be displayed.
-   * @returns {boolean} true only when: the value is a real string, the key is
-   *   a non-empty string, the key is not verified, the active locale is
+   * @returns {string|null} the English reference to show, or null for the
+   *   plain path — returned only when: the value is a real string, the key
+   *   is a non-empty string, the key is not verified, the active locale is
    *   machine-filled, an English source exists, and that source differs from
    *   the text on screen. Never throws. */
-  function shouldDual(key, text) {
-    if (typeof key !== "string" || !key) return false;
-    if (typeof text !== "string" || !text) return false;
-    if (isVerified(key)) return false;
-    if (!activeMachine()) return false;
+  function dualEnglish(key, text) {
+    if (typeof key !== "string" || !key) return null;
+    if (typeof text !== "string" || !text) return null;
+    if (isVerified(key)) return null;
+    if (!activeMachine()) return null;
     var src = englishSource(key);
-    return !!src && src !== text;
+    return (src && src !== text) ? src : null;
   }
 
   /* setOpen: add/remove the open-state class on the wrapper.
@@ -168,24 +205,29 @@ var RiskText = (function () {
   }
 
   /* render: the string, dual-line when warranted, plain otherwise. Callers
-   * append the result unconditionally — the wrapper is never a bare string.
+   * append the result unconditionally — the answer is always an element,
+   * never a bare string and never null (Task 4 mounts this with appendChild,
+   * and appendChild(null) would insert the text "null").
    * @param {Document} doc owner document (callers pass theirs).
-   * @param {string} text the already-translated text to display.
+   * @param {string|number|null|undefined} text the already-translated text to
+   *   display; non-strings are stringified, null/undefined render empty.
    * @param {string} [key] dotted locale key enabling the English reference.
-   * @returns {HTMLElement|null} span.i18n-risk-plain or div.i18n-risk; null only
-   *   when no document exists at all. Never throws. */
+   * @returns {HTMLElement} span.i18n-risk-plain or div.i18n-risk — never a
+   *   bare string, so callers can append unconditionally. Never throws. */
   function render(doc, text, key) {
     var str = (text === undefined || text === null) ? "" : String(text);
-    var owner = doc || ((typeof document !== "undefined") ? document : null);
-    if (!owner || typeof owner.createElement !== "function") return null;
-    if (!shouldDual(key, str)) return DOM.el(owner, "span", str, "i18n-risk-plain");
+    var owner = (doc && typeof doc.createElement === "function") ? doc
+      : ((typeof document !== "undefined" && document && typeof document.createElement === "function") ? document : null);
+    if (!owner) return degraded();
+    var enText = dualEnglish(key, str);
+    if (enText === null) return mk(owner, "span", str, "i18n-risk-plain");
 
     uid += 1;
     var enId = "i18n-risk-en-" + uid;
-    var wrap = DOM.el(owner, "div", null, WRAP_CLASS);
-    wrap.appendChild(DOM.el(owner, "span", str, "i18n-risk-native"));
+    var wrap = mk(owner, "div", null, WRAP_CLASS);
+    wrap.appendChild(mk(owner, "span", str, "i18n-risk-native"));
 
-    var star = DOM.el(owner, "button", "*", STAR_CLASS);
+    var star = mk(owner, "button", "*", STAR_CLASS);
     star.type = "button";
     star.setAttribute("aria-expanded", "false");
     star.setAttribute("aria-controls", enId);
@@ -193,15 +235,17 @@ var RiskText = (function () {
     if (typeof touchable === "function") touchable(star);
     wrap.appendChild(star);
 
-    var en = DOM.el(owner, "div", /** @type {string} */ (englishSource(key)), EN_CLASS);
+    /* enText is the SAME string the decision compared against — one lookup. */
+    var en = mk(owner, "div", enText, EN_CLASS);
     en.id = enId;
     en.hidden = true;
     wrap.appendChild(en);
 
     /* The link sits on the wrapper, not inside the panel, so the English
      * reference stays byte-for-byte the en master string with nothing appended
-     * to it. CSS keeps it out of sight until the line is open. */
-    var more = DOM.el(owner, "a", ABOUT_LABEL, "i18n-risk-more");
+     * to it. CSS (.i18n-risk.is-open .i18n-risk-more) keeps it out of sight
+     * until the line is open — which is why toggle() owns that class. */
+    var more = mk(owner, "a", ABOUT_LABEL, "i18n-risk-more");
     more.href = ARTICLE;
     wrap.appendChild(more);
 
