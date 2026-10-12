@@ -200,8 +200,8 @@ declare var nobleGetSharedSecret: any;
 declare var ScryptKdf: any;
 declare var I18n: any;
 declare var RiskText: {
-  render(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement | null;
-  wrap(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement | null;
+  render(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement;
+  wrap(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement;
   isActive(): boolean;
 };
 declare var RiskKeys: {
