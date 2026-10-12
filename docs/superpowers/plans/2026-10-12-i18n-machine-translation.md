@@ -36,7 +36,7 @@
   - `RiskKeys.isHighRisk(key, enValue)` → `boolean`
   - `RiskKeys.listFor(dict, enDict)` → `string[]` (keys of `dict` that are high-risk, sorted).
     NOTE: this enumerates ALL keys, not just untranslated ones — 1117 for `es`.
-    The 69 figure in the spec §6 table is a *fill bucket* (high-risk ∩ the 688
+    The 103 figure in the spec §6 table is a *fill bucket* (high-risk ∩ the 688
     stubs), not the total high-risk set. The rule keys off English wording, so
     danger is independent of whether a locale already has a translation.
   - `RiskKeys.HIGH_RISK_SECTIONS` → `Object<string, number>`
@@ -1447,7 +1447,7 @@ console.log("coverage",es._meta.coverage.length,"high_risk",es._meta.high_risk.l
 '
 ```
 
-Expected output: `coverage 3921 high_risk 1046`.
+Expected output: `coverage 3921 high_risk 1117`.
 
 - [ ] **Step 3: Verify**
 
@@ -1493,7 +1493,7 @@ For each key in `coverage` whose current value equals the English value, write t
 4. **Numbers**: Spanish decimal comma (`1.234,56`) **only** inside prose sentences that quote a figure; a bare value line is left alone because `Format` owns rendering (§3.5). Never re-format a chain integer by hand.
 5. **Identical-to-English is allowed** for true loanwords (`DEX`, `HTLC`, `BitShares`, `BTS`); those stay English and are recorded in the review-note list from `check_i18n.py`, not faked.
 
-Translate the **69 high-risk** strings with the most care (they render dual-line, so both the Spanish and the fact that an English reference exists are user-visible), then the **611** ordinary strings, then the **8** long help-prose bodies.
+Translate the **103 high-risk** strings with the most care (they render dual-line, so both the Spanish and the fact that an English reference exists are user-visible), then the **574** ordinary strings, then the **11** long help-prose bodies.
 
 - [ ] **Step 3: Verify the fill**
 
@@ -1522,7 +1522,7 @@ Each in `ref-ui-theme`, `dex-ux-theme`, `vanilla-ui-theme`, at 360px and 1440px.
 git add vanilla/locales/es.json docs/i18n-glossary/es.md
 git commit -m "feat(i18n): fill es locale to full coverage (machine, unverified)
 
-688 strings: 69 high-risk dual-line, 8 long prose, 611 ordinary. Glossary
+688 strings: 103 high-risk dual-line, 11 long prose, 574 ordinary. Glossary
 -constrained, placeholders/ids/URLs byte-verbatim, informal tú register,
 decimal comma only inside prose. provenance stays machine — filling
 strings is not verification. validate_translations es now exits 0."

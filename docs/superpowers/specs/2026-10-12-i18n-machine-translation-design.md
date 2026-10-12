@@ -211,12 +211,14 @@ text; the section set is data in one module if this ever reads as too busy.
 
 | bucket | count | treatment |
 |---|---|---|
-| high-risk, ≤120 chars | **69** | dual-line + glossary + `*` |
-| high-risk, >120 chars (help prose) | **8** | page-level warning only |
-| ordinary labels/prose | **611** | machine fill, badge covers it |
+| high-risk, ≤120 chars | **103** | dual-line + glossary + `*` |
+| high-risk, >120 chars (help prose) | **11** | page-level warning only |
+| ordinary labels/prose | **574** | machine fill, badge covers it |
 
-Longest high-risk string is 98 characters, so every dual-line renders as
-two short lines, never a wall of text.
+Longest high-risk string is 114 characters, so every dual-line renders as
+two short lines, never a wall of text. (Recounted after the Task 1 review
+widened `DANGER_RE` to catch inflections and added the `password` and
+`approval` sections; the rule now flags **1117** keys overall.)
 
 Per-string rules for the fill, in order of precedence:
 1. Placeholders (`%(name)s`), object IDs (`1.2.x`), URLs, operation
