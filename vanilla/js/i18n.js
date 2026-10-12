@@ -129,12 +129,16 @@ var I18n = (function () {
     } catch (e) { /* cache optional: memory registry still applies */ }
   }
 
-  /* THE single fetch call site in this file (grep-provable): dict loader. */
+  /* THE single fetch call site in this file (grep-provable): dict loader.
+   * no-store (not a ?v= token): dictionaries must never serve stale —
+   * a cached dict shows yesterday's words with today's code (the stale
+   * "Explore" incident). Same precedent as the version.json fetch in
+   * app.js. Injected stub fetchers ignore the extra options arg. */
   function fetchDict(code, fetcher) {
     var f = fetcher || ((typeof fetch !== "undefined") ? fetch : null);
     if (!f) return Promise.resolve({ ok: false, reason: "fetch-failed" });
     var url = DICT_PATH + code + ".json";
-    return f(url).then(function (r) {
+    return f(url, { cache: "no-store" }).then(function (r) {
       if (!r || (typeof r.ok === "boolean" && !r.ok)) return { ok: false, reason: "fetch-failed" };
       return r.json().then(function (d) { return { ok: true, dict: d }; },
         function () { return { ok: false, reason: "fetch-failed" }; });

@@ -516,7 +516,7 @@ var PoolNetUI = (function () {
         }
         try {
           if (typeof fetch === "function") {
-            Promise.resolve().then(function () { return fetch("data/pools.json"); }).then(function (r) { return r.json(); }).then(done, function () { done({ pools: [] }); });
+            Promise.resolve().then(function () { return fetch("data/pools.json", { cache: "no-store" }); }).then(function (r) { return r.json(); }).then(done, function () { done({ pools: [] }); });
           } else {
             done({ pools: [] });
           }
