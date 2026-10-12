@@ -57,9 +57,6 @@ var DOM = (function () {
     while (root.firstChild) {
       root.removeChild(root.firstChild);
     }
-    if (root.children) {
-      root.children.length = 0;
-    }
   }
 
   function text(el, text) {
