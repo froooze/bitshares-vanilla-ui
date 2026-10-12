@@ -52,15 +52,16 @@
   <button id="acting-as" class="acting-as" type="button" title="Acting account">committee-account</button>
   <!-- i18n honesty chip slot (ui/i18n-badge.js): EMPTY for English and for
     human-reviewed locales — the chip is not in the DOM at all there, so those
-    users pay zero pixels (principle #7). Between acting-as and the shield, so
-    the documented shield-immediately-left-of-lock pairing is untouched. The
-    chip and its expanded note are children of this slot; display:contents
-    (app.css) puts the chip in the control cluster and gives the note its own
-    wrapped row, so nothing is ever covered. -->
-  <div id="i18n-badge-slot" class="i18n-badge-slot"></div>
+    users pay zero pixels (principle #7). LAST in the bar, after the burger:
+    DOM order, tab order and visual order are then the same sequence, so the
+    header needs no `order:` hack to put the expanded note on its own wrapped
+    row (it is already the final flex item). display:contents (app.css) puts
+    the chip in the control cluster and lets the note wrap under everything
+    else, so nothing is ever covered. -->
   <a id="ext-sign-badge" href="#/login" aria-label="Signing route"><img class="nav-icon icon-state" src="assets/icons/shield-bad.png" alt="" aria-hidden="true" width="24" height="24"></a>
   <a id="lock-toggle" href="#/login" aria-label="Unlock"><img class="nav-icon icon-state" src="assets/icons/lock-closed.png" alt="" aria-hidden="true" width="24" height="24"></a>
   <button id="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  <div id="i18n-badge-slot" class="i18n-badge-slot"></div>
 </header>
 <nav id="nav" aria-label="Main">
   <a href="#/">Dashboard</a>

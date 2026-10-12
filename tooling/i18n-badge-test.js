@@ -43,30 +43,67 @@ function load(rel) { return fs.readFileSync(path.join(ROOT, rel), "utf8"); }
 
 /* --- fake DOM ---------------------------------------------------------- */
 var clickListeners = [];
+
+/* children: an HTMLCollection-shaped LIVE view, NOT a bare array. On a real
+ * DOM `node.children` is an HTMLCollection whose `length` is a readonly
+ * WebIDL attribute, so `node.children.length = 0` throws TypeError in strict
+ * mode (which is how the module's dead clearHost() fallback behaved) and is a
+ * silent no-op in sloppy mode (which is how utils/dom.js's DOM.clear still
+ * behaves — see .superpowers/sdd/task-5-report.md, finding for the reviewer).
+ * The target below therefore carries a GETTER-ONLY length so the engine
+ * reproduces both behaviours itself — a hand-written set trap would be stricter
+ * than the real platform and would have failed sloppy-mode code that browsers
+ * run without complaint — while the get trap keeps index reads live over the
+ * node's child list. This is what made the defect invisible before: a plain
+ * array's length is writable, so the fallback passed here and failed in
+ * Chromium. */
+function htmlCollection(node) {
+  var target = {};
+  Object.defineProperty(target, "length", {
+    get: function () { return node._kids.length; },
+    configurable: true
+  });
+  return new Proxy(target, {
+    get: function (t, p) {
+      if (p === "length") return node._kids.length;
+      if (p === "indexOf") return function (c) { return node._kids.indexOf(c); };
+      if (typeof p === "string" && /^\d+$/.test(p)) return node._kids[Number(p)];
+      return t[p];
+    },
+    has: function (t, p) {
+      return p === "length" || p === "indexOf" || (typeof p === "string" && /^\d+$/.test(p));
+    }
+  });
+}
+
 function el(tag) {
   var node = {
     tagName: String(tag).toUpperCase(),
-    children: [], attrs: {}, style: {},
+    _kids: [], attrs: {}, style: {},
     className: "", textContent: "", parentNode: null,
+    /* Every real element knows its document; the module reads it in preference
+     * to any cached argument, and so must the fake. */
+    ownerDocument: document,
     setAttribute: function (k, v) { this.attrs[k] = String(v); },
     getAttribute: function (k) {
       return Object.prototype.hasOwnProperty.call(this.attrs, k) ? this.attrs[k] : null;
     },
     hasAttribute: function (k) { return Object.prototype.hasOwnProperty.call(this.attrs, k); },
     removeAttribute: function (k) { delete this.attrs[k]; },
-    appendChild: function (c) { if (c) c.parentNode = this; this.children.push(c); return c; },
+    appendChild: function (c) { if (c) c.parentNode = this; this._kids.push(c); return c; },
     removeChild: function (c) {
-      var i = this.children.indexOf(c);
-      if (i !== -1) this.children.splice(i, 1);
+      var i = this._kids.indexOf(c);
+      if (i !== -1) this._kids.splice(i, 1);
       return c;
     },
     /* Deliberately inert: the shared delegated binder (EventDelegate) is the
      * only path that can make this test's click() reach a handler. */
     addEventListener: function () {}
   };
+  node.children = htmlCollection(node);
   var hiddenFlag = false;
   Object.defineProperty(node, "firstChild", {
-    get: function () { return this.children.length ? this.children[0] : null; }
+    get: function () { return this._kids.length ? this._kids[0] : null; }
   });
   Object.defineProperty(node, "type", {
     get: function () { return Object.prototype.hasOwnProperty.call(this.attrs, "type") ? this.attrs.type : ""; },
@@ -366,5 +403,74 @@ assert.ok(/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(badgeCss)
 assert.ok(badgeCss.indexOf(":hover") !== -1
   ? /\.i18n-badge-note[^{]*\{[^}]*:hover/.test(badgeCss) === false : true,
   "no hover-only affordance on the note — everything it offers is reachable by tap");
+
+/* Minor 5, pinned: DOM order must equal visual order, which means the note
+ * carries NO `order:` (the slot is last in the bar, so the note already wraps
+ * to its own row) and index.html must keep the slot after the burger. Before
+ * this the note used `order: 9` while the slot sat before shield/lock/burger,
+ * so at 360px the visual row read chip, burger, shield, lock, note while the
+ * tab order read chip, shield, lock, burger. */
+var noteRule = badgeCss.match(/\.i18n-badge-note \{[^}]*\}/);
+assert.ok(noteRule && !/\border\s*:/.test(noteRule[0]),
+  "the note has no CSS `order:` — DOM order and visual order are the same sequence");
+var html = load("vanilla/index.html");
+var slotAt = html.indexOf('id="i18n-badge-slot"');
+var burgerAt = html.indexOf('id="nav-toggle"');
+var lockAt = html.indexOf('id="lock-toggle"');
+assert.ok(slotAt !== -1 && burgerAt !== -1 && lockAt !== -1, "the header still has slot, lock and burger");
+assert.ok(slotAt > burgerAt && slotAt > lockAt,
+  "index.html keeps #i18n-badge-slot after the lock and the burger, so tab order follows visual order");
+
+/* --- 9. Minor 4: the note's "what this means" promise is machine-checked --- */
+/* The badge links to a help article that a LATER task in this plan publishes.
+ * Until it does, the link is honestly a dead route (see ARTICLE in the module
+ * header) — but nothing anywhere asserted the slug existed, so the next task
+ * could rename it or skip the article and every gate would still be green.
+ * Four checks close that door:
+ *   1. the href the chip renders resolves against the router's own route
+ *      patterns, so a typo is a dead link rather than an article;
+ *   2. the slug must be PUBLISHED (in HelpUI.TOPICS, or carried by
+ *      BODY_DEFAULTS — topicBody() is its reader) or DECLARED by the plan that
+ *      owns this module, so the promise cannot quietly evaporate;
+ *   3. once published it must also be reachable from the sitemap;
+ *   4. no OTHER topic — by slug or title — may stand in for it, so shipping
+ *      the article under a different name fails here while the badge still
+ *      links to the old one. */
+global.I18n = global.I18n || { t: function (k, d) { return d; } };
+var HelpUI = require(path.join(ROOT, "vanilla/js/views/help-ui.js"));
+var hrefSlug = String(more.href).replace(/^#\/help\//, "");
+assert.ok(hrefSlug && hrefSlug !== String(more.href),
+  "the details link is a #/help/<slug> route, not a bare hash");
+
+var pats = [], patRe = /path:\s*"([^"]+)"/g, patM;
+while ((patM = patRe.exec(load("vanilla/js/router.js"))) !== null) pats.push(patM[1]);
+function resolves(path) {
+  return pats.some(function (p) {
+    if (p === "*") return true;
+    var rx = "^" + p.replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+      .replace(/\/\*\*/g, "(/.*)?").replace(/:[A-Za-z_]+/g, "[^/]+") + "$";
+    return new RegExp(rx).test(path);
+  });
+}
+assert.ok(resolves("#/help/" + hrefSlug),
+  "the promised article route resolves against the router (" + pats.length + " patterns)");
+
+var topics = HelpUI.TOPICS.map(function (r) { return { slug: r[0], title: String(r[1]) }; });
+var published = topics.some(function (t) { return t.slug === hrefSlug; }) ||
+  HelpUI._test.topicBody(hrefSlug).length > 0;
+var planSrc = load("docs/superpowers/plans/2026-10-12-i18n-machine-translation.md");
+var declaredByPlan = planSrc.indexOf('["' + hrefSlug + '"') !== -1 ||
+  planSrc.indexOf('"#/help/' + hrefSlug + '"') !== -1;
+assert.ok(published || declaredByPlan,
+  "the details link promises a help article that is PUBLISHED (" + hrefSlug +
+  " in TOPICS/BODY_DEFAULTS) or DECLARED by the plan — a rename in only one of the two fails here");
+if (published) {
+  assert.ok(HelpUI._test.topicBody("sitemap").join("\n").indexOf("](#/help/" + hrefSlug + ")") !== -1,
+    "a published article is reachable from the sitemap");
+}
+topics.forEach(function (t) {
+  assert.ok(t.slug === hrefSlug || !/translat|machine|limitation/i.test(t.slug + " " + t.title),
+    "help topic \"" + t.slug + "\" must not stand in for the promised \"" + hrefSlug + "\" article");
+});
 
 console.log("OK: i18n-badge");

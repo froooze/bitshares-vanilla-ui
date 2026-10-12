@@ -1811,13 +1811,18 @@ p.muted[aria-live="polite"],
 /* i18n honesty chip (ui/i18n-badge.js): the persistent header control that says
  * "this language is machine-written", for the whole app rather than one line.
  *
- * Layout, and why it is NOT a popover: the slot is box-less (display:contents),
- * so the chip joins the header's flex row in its declared position among the
- * other controls, while the EXPANDED NOTE (order 9, full width) wraps onto a row
- * of its own below them. The bar grows and the nav + page move down — nothing is
- * covered, at any viewport (the bar already wraps, so no media query is needed
- * to make room for it). A 340px absolutely-positioned panel would have been
- * simpler and would have buried the navigation on a 360px phone.
+ * Layout, and why it is NOT a popover: the slot is box-less (display:contents)
+ * and is the LAST child of the bar, so the chip joins the header's flex row in
+ * that declared position, and the EXPANDED NOTE (full width, capped at 520px,
+ * margin-left:auto) takes the rest of that row where there is room and wraps
+ * onto a row of its own where there is not — at 360px it gets its own line.
+ * DOM order, tab order and visual order are therefore one sequence and NO
+ * `order:` value is needed: an `order: 9` used to be required while the slot sat
+ * before the shield/lock/burger, and it silently made the visual order disagree
+ * with DOM and tab order at 360px. The bar grows and the nav + page move down —
+ * nothing is covered, at any viewport (the bar already wraps, so no media query
+ * is needed to make room for it). A 340px absolutely-positioned panel would have
+ * been simpler and would have buried the navigation on a 360px phone.
  *
  * Tokens only, so all three themes keep it free (principle #5) — no raw HEX
  * below; tooling/i18n-badge-test.js fails if one ever appears in this block.
@@ -1841,7 +1846,7 @@ p.muted[aria-live="polite"],
 .i18n-badge[aria-expanded="true"] { background: var(--hover-wash); }
 .i18n-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .i18n-badge-note {
-  flex: 0 0 auto; order: 9; align-self: center;
+  flex: 0 0 auto; align-self: center;
   width: 100%; max-width: 520px; margin: 8px 0 12px auto;
   padding: 10px 12px; font-size: 13px; line-height: 1.45; text-align: left;
   background: var(--panel); color: var(--text);
