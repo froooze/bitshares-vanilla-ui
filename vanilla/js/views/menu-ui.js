@@ -79,6 +79,7 @@ var MenuUI = (function () {
         { href: "#/markets", icon: "trade", titleKey: "menu.p_exchange", titleDefault: "Exchange", blurbKey: "menu.d_exchange", blurbDefault: "Order book, charts, and buy/sell desk." },
         { href: "#/instant-trade", icon: "instant-trade", titleKey: "menu.p_instant", titleDefault: "Instant Trade", blurbKey: "menu.d_instant", blurbDefault: "One-screen buy and sell at market price." },
         { href: "#/pools", icon: "pools", titleKey: "menu.p_pools", titleDefault: "Liquidity Pools", blurbKey: "menu.d_pools", blurbDefault: "Supply pairs and earn swap fees." },
+        { href: "#/cross-rates", icon: "swap", titleKey: "menu.p_xrates", titleDefault: "Cross Rates", blurbKey: "menu.d_xrates", blurbDefault: "Pool prices for every asset in BTS and more." },
         { href: "#/borrow", icon: "borrow", titleKey: "menu.p_borrow", titleDefault: "Borrow", blurbKey: "menu.d_borrow", blurbDefault: "Borrow smartcoins against BTS collateral." },
         { href: "#/barter", icon: "barter", titleKey: "menu.p_barter", titleDefault: "Barter", blurbKey: "menu.d_barter", blurbDefault: "Propose direct asset-for-asset trades." },
         { href: "#/deposit-withdraw", icon: "deposit", titleKey: "menu.p_gateway", titleDefault: "Deposit / Withdraw", blurbKey: "menu.d_gateway", blurbDefault: "Gateway bridges to outside chains." },

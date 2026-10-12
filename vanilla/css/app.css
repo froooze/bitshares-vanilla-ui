@@ -1734,3 +1734,49 @@ p.muted[aria-live="polite"],
 @media (max-width: 640px) {
   .an-depth { top: 8px; right: 8px; padding: 2px 6px; }
 }
+
+/* Cross-rates matrix (#/cross-rates): pixel-measured TradingView forex-matrix
+ * replica, hand-built (the Crypo cross-rates pages are a remote TradingView
+ * iframe — no DOM to port, must not depend on; measured 2026-10-12 off
+ * screenshots at 1440/light/dark + 390px + hover states, evidence kept
+ * outside the repo in /tmp/opencode/tv-cross-*.png by design).
+ * Measured dark widget: black ground, #2f2f2f hairlines (kept as --border
+ * #2a2e39: 5-step deviation, imperceptible, token-clean), white
+ * right-aligned ~13px numerals (alignment arrives inline via TableRenderer
+ * align:"right"), #242424 diagonal, dim dash, hover crosshair on the cell
+ * plus its row/column headers. Light widget: white ground, #f4f7ff
+ * diagonal, #e1e9ff hover. Theme-varying fills resolve through --xrate-*
+ * tokens (themes.css); everything else is structural. Untinted initially:
+ * the widget tints by day-change direction, a signal we do not have —
+ * inventing one would be fabrication (spec §2).
+ * TableRenderer renders table.node-table (sticky first column inherent);
+ * this block adds the scroll region, sticky header, tabular numerals,
+ * diagonal, hover, chips, and the phone opt-out below. */
+.xrate-scroll { overflow-x: auto; }
+.xrate-scroll table { min-width: 640px; table-layout: fixed; }
+.xrate-scroll th:first-child, .xrate-scroll td:first-child {
+  width: 140px; max-width: 140px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.xrate-scroll thead th { position: sticky; top: 0; z-index: 3;
+  background: var(--panel); text-align: center; }
+.xrate-scroll td { font-variant-numeric: tabular-nums; }
+.xrate-scroll tbody td a { text-decoration: none; }
+.xrate-scroll tbody td a:hover, .xrate-scroll tbody td a:focus-visible { text-decoration: underline; }
+.xrate-scroll td.xrate-diag { background: var(--xrate-diag); }
+.xrate-scroll td.xrate-hot, .xrate-scroll th.xrate-hot {
+  background: var(--xrate-hot); color: var(--xrate-hot-text); }
+.xrate-scroll td.xrate-hot a, .xrate-scroll th.xrate-hot a { color: inherit; }
+.xrate-controls { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; margin: 10px 0; }
+.xrate-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 10px; }
+.xrate-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  padding: 0 4px 0 12px; border: 1px solid var(--border); border-radius: 16px;
+  background: transparent; color: var(--text); }
+.xrate-chip button { min-height: 44px; min-width: 44px; padding: 0 8px;
+  background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1rem; }
+.xrate-foot { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+/* Phone opt-out of the node-table -> cards swap (app.css:221): a rate matrix
+ * cannot survive as stacked cards — it scrolls horizontally with a sticky
+ * first column instead (the widget's own 390px behavior, verified). */
+@media (max-width: 559px) {
+  .xrate-scroll > table { display: table; }
+}

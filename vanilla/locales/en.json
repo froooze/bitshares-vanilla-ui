@@ -2293,6 +2293,7 @@
       "menu.d_voting",
       "menu.d_wallet",
       "menu.d_worker",
+      "menu.d_xrates",
       "menu.filter",
       "menu.intro",
       "menu.no_match",
@@ -2348,6 +2349,7 @@
       "menu.p_voting",
       "menu.p_wallet",
       "menu.p_worker",
+      "menu.p_xrates",
       "menu.section_earn",
       "menu.section_explore",
       "menu.section_govern",
@@ -3138,6 +3140,7 @@
       "seo.desc_pools",
       "seo.desc_transfer",
       "seo.desc_voting",
+      "seo.desc_xrates",
       "seo.title_about",
       "seo.title_account",
       "seo.title_account_net",
@@ -3150,6 +3153,7 @@
       "seo.title_pools",
       "seo.title_transfer",
       "seo.title_voting",
+      "seo.title_xrates",
       "settings.add",
       "settings.add_node",
       "settings.age_s",
@@ -3897,7 +3901,25 @@
       "wallet.wallet_name_required_use_letters_digits_dash",
       "wallet.ways_in",
       "wallet.write_down_brainkey_keep_safe",
-      "wallet.wrote_it_down"
+      "wallet.wrote_it_down",
+      "xrate.add_btn",
+      "xrate.asset_col",
+      "xrate.base_pinned",
+      "xrate.empty",
+      "xrate.intro",
+      "xrate.load_failed",
+      "xrate.loading",
+      "xrate.no_route_col",
+      "xrate.refresh_btn",
+      "xrate.remove_btn",
+      "xrate.retry_btn",
+      "xrate.show_all",
+      "xrate.status",
+      "xrate.title",
+      "xrate.token_label",
+      "xrate.token_placeholder",
+      "xrate.unknown_token",
+      "xrate.unpriced"
     ]
   },
   "nav": {
@@ -7697,7 +7719,9 @@
     "p_about": "About",
     "d_about": "What this wallet is and why it is built this way.",
     "p_account_net": "Account Network",
-    "d_account_net": "transfer tracking"
+    "d_account_net": "transfer tracking",
+    "p_xrates": "Cross Rates",
+    "d_xrates": "Pool prices for every asset in BTS and more."
   },
   "about": {
     "hero_title": "BitShares, in your browser. Nothing to install.",
@@ -7801,7 +7825,9 @@
     "title_markets": "Markets — BitShares Wallet",
     "desc_markets": "Browse BitShares order-book markets by 24h volume and open any pair's trading desk. No login needed.",
     "title_account_net": "Account Network — BitShares Wallet",
-    "desc_account_net": "Map who an account sends to, lends to and borrows from — read from the community index. No login needed."
+    "desc_account_net": "Map who an account sends to, lends to and borrows from — read from the community index. No login needed.",
+    "title_xrates": "Cross Rates — BitShares Wallet",
+    "desc_xrates": "Every pool asset priced in BTS and more at last swap prices. No login needed."
   },
   "pool_net": {
     "title": "Pool network",
@@ -7948,5 +7974,25 @@
     "status_expansion_scanned": "%(n)s indexed operations from expansions",
     "status_expansion_truncated": "expansion scans truncated to newest operations",
     "twin_depth": "Hop"
+  },
+  "xrate": {
+    "title": "Cross Rates",
+    "intro": "Every pool asset priced at its last swap, crossed through the pool graph. Nothing is signed and nothing is stored.",
+    "token_label": "Add quote token",
+    "token_placeholder": "USD, CNY, BTC…",
+    "add_btn": "Add column",
+    "base_pinned": "BTS is the base column and cannot be removed.",
+    "loading": "Reading pools…",
+    "refresh_btn": "Refresh prices",
+    "show_all": "Show all assets",
+    "retry_btn": "Retry",
+    "remove_btn": "Remove ",
+    "empty": "No pool assets within 3 hops of BTS on this chain.",
+    "asset_col": "Asset",
+    "unknown_token": "No pool asset named %(sym)s.",
+    "unpriced": "A leg on this route has no recorded swap yet.",
+    "no_route_col": "No route to %(sym)s within 6 pool hops.",
+    "status": "%(pools)s pools · %(assets)s assets within 3 hops · %(done)s of %(total)s pools hold a last swap",
+    "load_failed": "Could not load cross rates: "
   }
 }

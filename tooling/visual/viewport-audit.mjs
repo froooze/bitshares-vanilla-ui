@@ -123,6 +123,7 @@ export const ROUTES = [
   { src: "/instant-trade/:marketID", hash: "#/instant-trade/USD_TEST", group: "live-id" },
   { src: "/pools/:id", hash: "#/pools/1.19.66", group: "live-id" },
   { src: "/pools", hash: "#/pools", group: "static" },
+  { src: "/cross-rates", hash: "#/cross-rates", group: "static" },
   { src: "/markets", hash: "#/markets", group: "static" },
   { src: "/alerts", hash: "#/alerts", group: "static" },
   { src: "/trollbox", hash: "#/trollbox", group: "static" },

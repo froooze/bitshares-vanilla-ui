@@ -271,6 +271,10 @@ var Router = (function () {
     { path: "/instant-trade/:marketID", title: "Instant Trade", render: function (root, params) { InstantTradeUI.renderInstant(root, params && params.marketID); } },
     { path: "/pools/:id", title: "Liquidity Pool", render: function (root, params) { PoolDetailUI.renderPoolDetail(root, params && params.id); } },
     { path: "/pools", title: "Liquidity Pools", render: function (root) { PoolUI.renderPools(root); } },
+    { path: "/cross-rates", title: "Cross Rates", render: function (root) {
+      if (typeof XRateUI !== "undefined" && XRateUI && typeof XRateUI.renderXRate === "function") { XRateUI.renderXRate(root); return; }
+      placeholder("Cross Rates")(root);
+    } },
     { path: "/markets", title: "Markets", render: function (root) {
       if (typeof MarketNetUI !== "undefined" && MarketNetUI && typeof MarketNetUI.renderMarkets === "function") { MarketNetUI.renderMarkets(root); return; }
       placeholder("Markets")(root);
@@ -324,6 +328,7 @@ var Router = (function () {
     "/": { titleKey: "seo.title_dashboard", title: "Dashboard — BitShares Wallet", descKey: "seo.desc_dashboard", description: "BitShares dashboard — balances, markets and chain activity at a glance. Browse freely; keys stay on your device." },
     "/market/BTS_USD": { titleKey: "seo.title_market", title: "BTS/USD Exchange — BitShares Wallet", descKey: "seo.desc_market", description: "Trade BTS for USD on the BitShares order book — live bids, asks and history, signed locally on your device." },
     "/pools": { titleKey: "seo.title_pools", title: "Liquidity Pools — BitShares Wallet", descKey: "seo.desc_pools", description: "Browse BitShares liquidity pools — pairs, balances and activity read live from the chain. No login needed." },
+    "/cross-rates": { titleKey: "seo.title_xrates", title: "Cross Rates — BitShares Wallet", descKey: "seo.desc_xrates", description: "Every pool asset priced in BTS and more at last swap prices. No login needed." },
     "/markets": { titleKey: "seo.title_markets", title: "Markets — BitShares Wallet", descKey: "seo.desc_markets", description: "Browse BitShares order-book markets by 24h volume and open any pair's trading desk. No login needed." },
     "/explorer": { titleKey: "seo.title_explorer", title: "Blockchain Explorer — BitShares Wallet", descKey: "seo.desc_explorer", description: "Explore BitShares blocks, transactions and assets — live chain data, browsable with no login." },
     "/transfer": { titleKey: "seo.title_transfer", title: "Send Funds — BitShares Wallet", descKey: "seo.desc_transfer", description: "Send BitShares assets to any account. Review every field, then sign locally — keys never leave your device." },

@@ -140,6 +140,8 @@ declare var VoteUI: any;
 declare var ViewingAs: any;
 declare var Wallet: any;
 declare var WalletUI: any;
+declare var XRate: any;
+declare var XRateUI: any;
 declare var touchable: <T extends HTMLElement>(el: T) => T;
 declare var DOM: {
   el: {

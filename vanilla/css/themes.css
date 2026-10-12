@@ -101,6 +101,11 @@
    * All three header bars are dark, so black-source SVGs invert to light.
    * ref-ui header text is pure white, so plain invert(1) matches exactly. */
   --header-icon-filter: invert(1);
+  /* --xrate-diag/--xrate-hot/--xrate-hot-text: cross-rates matrix replica
+   * (TradingView forex matrix measured 2026-10-12; dex values measured,
+   * ref rhymed darker-than-panel). Diagonal: darker than --panel #3f3f3f;
+   * hover navy works with light text in all three themes. */
+  --xrate-diag: #2a2a2a; --xrate-hot: #0e2157; --xrate-hot-text: #ffffff;
 }
 /* vanilla-ui-theme (light): sampled from the user's DeConna Homemade Vanilla
  * tub photo (vanilla/notes/vanilla-theme/tub.jpg, viewed 2026-09-28) —
@@ -170,6 +175,11 @@
    * white toward cream — an approximation (black-source SVGs only; full-
    * color state PNGs bypass via img.icon-state in app.css and are untouched). */
   --header-icon-filter: invert(1) sepia(0.28);
+  /* --xrate-diag/--xrate-hot/--xrate-hot-text: cross-rates matrix replica.
+   * Diagonal #f4f7ff + hover #e1e9ff measured off the light widget
+   * 2026-10-12; hover text is dark (--text) for contrast on the pale tint
+   * (white-on-#e1e9ff would fail). */
+  --xrate-diag: #f4f7ff; --xrate-hot: #e1e9ff; --xrate-hot-text: #2A1A12;
 }
 /* dex-ux-theme (dark): resampled from the Crypo designer template
  * (/workspace/reference/crypo/crypo/Crypo/ — HEX VALUES ONLY, no code/markup/
@@ -265,6 +275,10 @@
   /* --header-icon-filter tracks --header-text (pure white here, so plain
    * invert matches exactly, same as ref-ui-theme). */
   --header-icon-filter: invert(1);
+  /* --xrate-diag/--xrate-hot/--xrate-hot-text: cross-rates matrix replica,
+   * measured off the dark widget 2026-10-12 (diagonal #242424, hover navy
+   * #0e2157, white hover text). */
+  --xrate-diag: #242424; --xrate-hot: #0e2157; --xrate-hot-text: #ffffff;
 }
 /* Slice-16 toast shadow per theme (not a palette value — elevation only):
  * retro default, warm-tinted vanilla (chocolate shadow on cream), DEX-UX
