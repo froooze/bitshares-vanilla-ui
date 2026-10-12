@@ -99,20 +99,27 @@ def main():
             problems.append("%s _meta.version != 1" % code)
         allow = m.get("translated") or []
         is_full = (set(allow) == en_keys)
-        if code == "es" and not is_full:
+        if not is_full and m.get("untranslated") is not True:
+            # Partial translation in any language: honesty rules. Claimed
+            # keys must differ from en (no false translation claims);
+            # unclaimed non-identifier keys must equal en (honest stubs).
+            # (Historically only es could be partial, so this branch was
+            # es-gated; the rule itself is language-independent.)
             if m.get("untranslated") is not False:
-                problems.append("es.json _meta.untranslated must be false")
+                problems.append("%s _meta.untranslated must be false" % code)
             if set(allow) - en_keys:
-                problems.append("es.json allowlist has unknown keys: %s" % sorted(set(allow) - en_keys))
+                problems.append("%s allowlist has unknown keys: %s"
+                                % (code, sorted(set(allow) - en_keys)))
             if set(allow) & IDENTIFIERS:
-                problems.append("es.json allowlist must not contain identifiers: %s" % sorted(set(allow) & IDENTIFIERS))
+                problems.append("%s allowlist must not contain identifiers: %s"
+                                % (code, sorted(set(allow) & IDENTIFIERS)))
             for k in sorted(en_keys - set(allow) - IDENTIFIERS):
                 if flat.get(k) != en_flat[k]:
-                    problems.append("es.json: non-allowlisted %s != en value (dishonest stub)" % k)
+                    problems.append("%s: non-allowlisted %s != en value (dishonest stub)" % (code, k))
                     break
             for k in sorted(set(allow)):
                 if flat.get(k) == en_flat.get(k):
-                    problems.append("es.json: translated %s identical to en (mistake or identifier?)" % k)
+                    problems.append("%s: translated %s identical to en (mistake or identifier?)" % (code, k))
                     break
         else:
             if m.get("untranslated") is True:
@@ -125,13 +132,20 @@ def main():
             else:
                 # Fully translated dict (wave-1+): allowlist must cover every
                 # key, identifiers included (validate_translations enforces
-                # their byte-verbatim values pre-merge). Quality (meaning,
-                # placeholders) is the auditors' job (parity notes).
+                # their byte-verbatim values pre-merge). The identical-value
+                # check below also applies here (identifiers excepted, whose
+                # values must equal en): a "full" dict with English strings
+                # claimed as translated is the same lie as a partial one.
+                # Quality (meaning, placeholders) is the auditors' job.
                 if set(allow) != en_keys:
                     only = sorted(set(flat) - en_keys)
                     miss = sorted(en_keys - set(allow))
                     problems.append("%s allowlist drift (extra=%s missing=%s)"
                                     % (code, only[:5], miss[:5]))
+                for k in sorted(en_keys - IDENTIFIERS):
+                    if flat.get(k) == en_flat.get(k):
+                        problems.append("%s: translated %s identical to en (mistake or loanword? leave it unclaimed)" % (code, k))
+                        break
 
     # Call-site drift (ambiguity A): t() defaults must equal en.json values.
     calls = 0
