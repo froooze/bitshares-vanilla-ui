@@ -74,10 +74,18 @@ assert.strictEqual(RiskKeys.isHighRisk("nav.explorer", "Explore"), false);
 
 /* Length bound: long help prose is page-level-warning territory, never
  * two unreadable paragraphs. */
-var long = new Array(130).join("sign ");
-assert.strictEqual(long.length, RiskKeys.MAX_RISK_LEN - 1 + "sign".length - 1 || true, "len sanity");
-assert.strictEqual(long.length > RiskKeys.MAX_RISK_LEN, true);
+var long = new Array(130).join("sign "); /* 129 x "sign " */
+assert.ok(long.length > RiskKeys.MAX_RISK_LEN, "fixture really is over the bound");
 assert.strictEqual(RiskKeys.isHighRisk("help.topic_backups_body", long), false);
+
+/* A short string in the SAME section is still dual-lined: the bound cuts
+ * prose, it does not disable the section rule. */
+var shortProse = "Back up early";
+assert.ok(shortProse.length <= RiskKeys.MAX_RISK_LEN);
+assert.strictEqual(RiskKeys.isHighRisk("help.topic_backups_body", shortProse), false,
+  "help is not a named section and carries no danger word");
+assert.strictEqual(RiskKeys.isHighRisk("wallet.backup_body", shortProse), true,
+  "but wallet IS a named section, so its short strings are dual-lined");
 
 /* Missing/short values must not throw. */
 assert.strictEqual(RiskKeys.isHighRisk("x.y", ""), false);
@@ -804,11 +812,14 @@ assert.strictEqual(host.children.length, 0, "human-reviewed locales pay zero pix
 
 prov = "machine";
 B.mount(document, host);
-assert.strictEqual(host.children.length, 1, "machine locale shows the badge");
+/* Two nodes: the chip, then the hidden note it expands. The chip itself
+ * stays one 44px target. */
+assert.strictEqual(host.children.length, 2, "machine locale shows chip + note");
 assert.strictEqual(B.visible(), true);
 assert.strictEqual(host.children[0].className, "i18n-badge", "collapsed by default");
 assert.strictEqual(host.children[0].tagName, "BUTTON", "the badge is a real control");
 assert.ok(host.children[0].attrs["aria-expanded"] === "false", "starts collapsed");
+assert.strictEqual(host.children[1].hidden, true, "note starts hidden");
 
 /* Both links the warning promises must exist in the module source. */
 var src = fs.readFileSync(path.join(ROOT, "vanilla/js/ui/i18n-badge.js"), "utf8");
