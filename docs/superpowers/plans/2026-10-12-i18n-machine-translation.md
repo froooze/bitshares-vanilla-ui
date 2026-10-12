@@ -1497,7 +1497,7 @@ Translate the **103 high-risk** strings with the most care (they render dual-lin
 
 - [ ] **Step 3: Verify the fill**
 
-Run: `python3 tooling/check_i18n.py && python3 tooling/validate_translations.py es && bash tooling/check_types.sh && python3 tooling/check_rot.py && node tooling/risk-text-test.js && node tooling/i18n-risk-keys-test.js && node tooling/i18n-badge-test.js && node tooling/confirm-risk-test.js && node tooling/i18n-v2-meta-test.js`
+Run: `python3 tooling/check_i18n.py && python3 tooling/validate_translations.py es && bash tooling/check_types.sh && python3 tooling/check_rot.py && node tooling/risk-text-test.js && node tooling/i18n-risk-keys-test.js && node tooling/i18n-provenance-test.js && node tooling/i18n-badge-test.js && node tooling/confirm-risk-test.js && node tooling/i18n-v2-meta-test.js`
 Expected: every command PASS; `validate_translations.py es` exits 0 **for the first time**.
 
 - [ ] **Step 4: Fill the glossary's Spanish column**
