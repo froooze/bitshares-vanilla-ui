@@ -34,7 +34,11 @@
 - Produces: global `RiskKeys` with
   - `RiskKeys.MAX_RISK_LEN` → `120`
   - `RiskKeys.isHighRisk(key, enValue)` → `boolean`
-  - `RiskKeys.listFor(dict, enDict)` → `string[]` (keys of `dict` that are high-risk, sorted)
+  - `RiskKeys.listFor(dict, enDict)` → `string[]` (keys of `dict` that are high-risk, sorted).
+    NOTE: this enumerates ALL keys, not just untranslated ones — 1046 for `es`.
+    The 69 figure in the spec §6 table is a *fill bucket* (high-risk ∩ the 688
+    stubs), not the total high-risk set. The rule keys off English wording, so
+    danger is independent of whether a locale already has a translation.
   - `RiskKeys.HIGH_RISK_SECTIONS` → `Object<string, number>`
 
 `ConfirmDialog`, `RiskText`, `ui/i18n-badge.js` and the tests all read the rule from here; nothing else re-implements it.
@@ -215,7 +219,7 @@ declare var RiskKeys: {
 - [ ] **Step 4: Run the test to verify it passes**
 
 Run: `node tooling/i18n-risk-keys-test.js`
-Expected: PASS — `OK: i18n-risk-keys (69 high-risk keys in es)`.
+Expected: PASS — `OK: i18n-risk-keys (1046 high-risk keys in es)`.
 
 - [ ] **Step 5: Commit**
 
@@ -1290,7 +1294,7 @@ console.log("coverage",es._meta.coverage.length,"high_risk",es._meta.high_risk.l
 '
 ```
 
-Expected output: `coverage 3921 high_risk 69`.
+Expected output: `coverage 3921 high_risk 1046`.
 
 - [ ] **Step 3: Verify**
 

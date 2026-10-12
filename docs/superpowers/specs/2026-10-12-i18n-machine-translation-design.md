@@ -193,7 +193,15 @@ deleting it breaks nothing.
 
 ## 6. Pilot: es, 688 stubs → 3921
 
-Measured from `es.json` as of `89d90cc`:
+Measured from `es.json` as of `89d90cc`. These are **fill buckets** — how
+the 688 untranslated stubs divide by the care they need. The rule itself
+flags **1046** keys high-risk across all 3921, because danger keys off
+English wording and not off whether a locale happens to be translated
+already (977 of the 1046 already had Spanish). The asterisk is collapsed by
+default, so 1046 flagged keys cost one small marker each, not a wall of
+text; the section set is data in one module if this ever reads as too busy.
+
+
 
 | bucket | count | treatment |
 |---|---|---|
