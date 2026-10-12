@@ -840,9 +840,9 @@ Every "done" claim must ALSO pass the §4.5 anti-rot gate questions (a)–(c)
    - `ui/confirm.js` — `ConfirmDialog.show({ title, rows, feeHuman, onBack, onSend })`
    - `ui/overlay.js` — `Overlay.open({ content, onClose, className })`
    - `ui/table.js` — `TableRenderer.render({ columns, rows, keyExtractor, rowClass, onRowClick, stickyFirstCol })`
-   - `utils/dom.js` also provides `touchable(el)` — ensures 44×44px touch floor
-   - `utils/event.js` — `Event.delegate(parent, selector, eventType, handler)`
-   Any view or builder needing these patterns MUST import from the shared module (via global `DOM`, `Forms`, `ConfirmDialog`, `Overlay`, `TableRenderer`, `Event` — loaded via script tags in `index.html`). Writing local `function el()`, `clearRoot()`, `showStatus()`, `confirmList()`, `fieldRow()`, or `touchable()` is forbidden — it creates duplication and rot.
+   - `utils/touchable.js` — `touchable(el)` (a GLOBAL function, not a `DOM` method) — enforces the 44×44px touch floor; `ui/confirm.js` calls it defensively so it no-ops under Node tests
+   - `utils/event.js` — `EventDelegate.delegate(parent, selector, eventType, handler)`; the global is `EventDelegate`, NOT `Event`. The handler is invoked as `handler(evt, matched)` — the matched element is the **second argument**, NOT `evt.currentTarget`. It returns a no-op function (not `false`/`undefined`) when the parent or handler is unusable.
+   Any view or builder needing these patterns MUST use the shared module (via globals `DOM`, `Forms`, `ConfirmDialog`, `Overlay`, `TableRenderer`, `EventDelegate`, and the bare `touchable` — loaded via script tags in `index.html`). Writing local `function el()`, `clearRoot()`, `showStatus()`, `confirmList()`, `fieldRow()`, or `touchable()` is forbidden — it creates duplication and rot. **Verify the real signature before calling it:** `globals.d.ts` and the module's own header are authoritative, not this list.
 10. **Every page is listed and reachable.** Any new routable page must be (a) listed in the `#/help/sitemap` article body (`vanilla/js/views/help-ui.js` `BODY_DEFAULTS["sitemap"]`: same 7 burger-menu groupings, plus the Explore tab section and a section for flows without a menu card), and (b) navigable otherwise — a burger-menu link and/or in-app links that reach it. `tooling/help-test.js` enforces both directions: every burger-menu href appears as a sitemap link, and every sitemap link resolves against the router's route patterns. A page you can only reach by typing its hash is not done.
 
 ---
