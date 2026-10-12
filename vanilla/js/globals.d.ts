@@ -199,6 +199,11 @@ declare var nobleSignAsync: any;
 declare var nobleGetSharedSecret: any;
 declare var ScryptKdf: any;
 declare var I18n: any;
+declare var RiskText: {
+  render(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement | null;
+  wrap(doc: Document, text: string | number | null | undefined, key?: string | null): HTMLElement | null;
+  isActive(): boolean;
+};
 declare var RiskKeys: {
   HIGH_RISK_SECTIONS: { [section: string]: number };
   MAX_RISK_LEN: number;
