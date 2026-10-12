@@ -58,11 +58,10 @@ asks them to read a badge.
     unlockconfirm: 1, auth: 1, createaccount: 1, createworker: 1,
     vesting: 1, proposal: 1, proposals_ticket: 1, confirm: 1,
     ticket: 1, tickets: 1, htlc: 1, transfer: 1, credit: 1,
-    samet: 1, wallet: 1, security: 1, backup: 1, debit: 1
+    samet: 1, wallet: 1, security: 1, backup: 1, debit: 1,
+    password: 1, approval: 1
   };
-  var DANGER_RE = /\b(sign|send|irreversib|permanently|unrecover|password|
-    private key|brainkey|backup|scam|never share|withdraw|delegate|vesting|
-    memo)\b/i;
+  var DANGER_RE = /\b(sign(s|ed|ing|ature|atures)?|send(s|ing|er|ers)?|sent|irreversib(le|ly|ility)|permanent(ly)?|unrecover(able|ably|ed)?|passwords?|private keys?|brainkeys?|backups?|scam(s|mer|mers|ming)?|never share|withdraw(s|al|als|ing)?|delegat(e|ed|es|ing|ion|ions)|vest(ed|ing)?|memos?)\b/i;
   var MAX_RISK_LEN = 120;
   ```
 
@@ -70,6 +69,13 @@ asks them to read a badge.
   a translation would make the rule drift per locale. Sections are
   matched on the top-level segment, so `transfer.fee_note` is caught by
   section and `account.op_vesting_withdraw` by the word rule.
+  The leading `\b` is load-bearing: it is what stops `sign` from firing
+  inside `design` or `assign` (`e`/`s` are word characters, so no
+  boundary exists there). Every alternative therefore carries its own
+  inflection group before the trailing `\b` — a bare stem plus a
+  trailing `\b` can never match its own inflections, which is how
+  `irreversib` missed "irreversible" and `sign` missed "signed", the
+  very words this rule exists to catch.
 - **GitHub issues, no Crowdin.** The warning's "help improve" link
   targets `https://github.com/litepresence/bitshares-vanilla-ui/issues/new?labels=translation`.
   GitHub ignores unknown labels in that parameter, so the link works
