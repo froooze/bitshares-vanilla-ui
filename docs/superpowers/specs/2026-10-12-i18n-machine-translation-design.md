@@ -199,7 +199,7 @@ Measured from `es.json` as of `89d90cc`:
 |---|---|---|
 | high-risk, ≤120 chars | **69** | dual-line + glossary + `*` |
 | high-risk, >120 chars (help prose) | **8** | page-level warning only |
-| ordinary labels/prose | **619** | machine fill, badge covers it |
+| ordinary labels/prose | **611** | machine fill, badge covers it |
 
 Longest high-risk string is 98 characters, so every dual-line renders as
 two short lines, never a wall of text.
