@@ -379,6 +379,7 @@ var App = (function () {
       paintLock();
       paintActingAs();
       paintShieldBadge();
+      paintI18nBadge();
       paintFootActions();
       var nav = document.getElementById("nav");
       if (nav) localizeNav(nav);
@@ -1186,6 +1187,26 @@ var App = (function () {
         }
       } catch (e) { /* badge stands unbound */ }
     } catch (e) { /* header keeps prior paint */ }
+  }
+
+  /* Machine-locale honesty chip (i18n-badge.js): the ONE header control that
+   * exists only while the active dictionary is machine-filled. Same shape as
+   * paintLock/paintActingAs/paintShieldBadge — resolved from the static slot
+   * in index.html, never created here — so an English or human-reviewed locale
+   * leaves the slot empty and pays zero pixels. Called from localizeShell(),
+   * which runs at boot, on every locale switch (settings.js) and on every
+   * hashchange, so the chip follows the locale without a subscription to rot.
+   * Params: none. Returns nothing. Never throws — the header stands without
+   * the chip. */
+  function paintI18nBadge() {
+    if (typeof document === "undefined") return;
+    try {
+      var slot = document.getElementById("i18n-badge-slot");
+      if (!slot) return;
+      if (typeof I18nBadge !== "undefined" && I18nBadge && typeof I18nBadge.mount === "function") {
+        I18nBadge.mount(document, slot);
+      }
+    } catch (e) { /* header stands without the chip */ }
   }
 
   /* finishBoot: wire footer + settings subscriptions and first paint.

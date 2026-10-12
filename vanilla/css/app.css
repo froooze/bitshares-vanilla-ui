@@ -1807,3 +1807,58 @@ p.muted[aria-live="polite"],
 .i18n-risk-en[hidden] { display: none; }
 .i18n-risk-more { display: none; margin-left: 0.35em; font-size: 0.92em; }
 .i18n-risk.is-open .i18n-risk-more { display: inline; }
+
+/* i18n honesty chip (ui/i18n-badge.js): the persistent header control that says
+ * "this language is machine-written", for the whole app rather than one line.
+ *
+ * Layout, and why it is NOT a popover: the slot is box-less (display:contents),
+ * so the chip joins the header's flex row in its declared position among the
+ * other controls, while the EXPANDED NOTE (order 9, full width) wraps onto a row
+ * of its own below them. The bar grows and the nav + page move down — nothing is
+ * covered, at any viewport (the bar already wraps, so no media query is needed
+ * to make room for it). A 340px absolutely-positioned panel would have been
+ * simpler and would have buried the navigation on a 360px phone.
+ *
+ * Tokens only, so all three themes keep it free (principle #5) — no raw HEX
+ * below; tooling/i18n-badge-test.js fails if one ever appears in this block.
+ * The 44px chip floor is declared here as well as applied by the shared
+ * touchable(), so the affordance survives a page that skips the helper. */
+.i18n-badge-slot { display: contents; }
+.i18n-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 8px; min-width: 44px; min-height: 44px;
+  background: none; border: 1px solid currentColor; border-radius: 6px;
+  color: inherit; font: inherit; font-size: 0.75rem;
+  text-transform: none; letter-spacing: normal; cursor: pointer;
+}
+/* Same hover affordance as the other header controls (accent ring for
+ * keyboards; a wash for pointers). Nothing here is hover-ONLY: the chip is a
+ * button, the note a plain block, and both links are ordinary anchors. */
+.i18n-badge:hover { background: var(--hover-wash); }
+/* Open state keyed on aria-expanded, the SAME attribute the chip tells
+ * assistive tech about — so "what I hear" and "what I see" cannot drift, and
+ * the open chip is visibly pressed (state feedback is not motion). */
+.i18n-badge[aria-expanded="true"] { background: var(--hover-wash); }
+.i18n-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.i18n-badge-note {
+  flex: 0 0 auto; order: 9; align-self: center;
+  width: 100%; max-width: 520px; margin: 8px 0 12px auto;
+  padding: 10px 12px; font-size: 13px; line-height: 1.45; text-align: left;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+/* Author display:block would otherwise beat the UA [hidden] rule. */
+.i18n-badge-note[hidden] { display: none; }
+.i18n-badge-note:not([hidden]) { animation: i18n-badge-in 120ms ease-out; }
+@keyframes i18n-badge-in { from { opacity: 0; } to { opacity: 1; } }
+.i18n-badge-text { margin: 0; }
+.i18n-badge-links { margin: 4px 0 0; display: flex; gap: 14px; flex-wrap: wrap; }
+.i18n-badge-link {
+  display: inline-flex; align-items: center; min-height: 44px; color: var(--accent);
+}
+.i18n-badge-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Reduced motion (app.css §8 rule): the fade is the badge's ONLY motion and it
+ * is cosmetic, so it goes; the state itself (aria-expanded + hidden) stays. */
+@media (prefers-reduced-motion: reduce) {
+  .i18n-badge-note { animation: none; }
+}

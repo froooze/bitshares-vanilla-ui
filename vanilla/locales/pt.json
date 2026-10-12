@@ -7157,5 +7157,12 @@
     "no_route_col": "No route to %(sym)s within 6 pool hops.",
     "status": "%(pools)s pools · %(assets)s assets within 3 hops · %(done)s of %(total)s pools hold a last swap",
     "load_failed": "Could not load cross rates: "
+  },
+  "i18n": {
+    "badge_chip": "i18n",
+    "badge_label": "Translation status: machine translated, not human verified",
+    "badge_body": "These translations were written by a machine and have not been checked by a human. Lines marked * on the signing screens also show the original English.",
+    "badge_details": "What this means",
+    "badge_improve": "Help improve this translation"
   }
 }

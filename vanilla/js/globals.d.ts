@@ -221,6 +221,15 @@ declare var RiskText: {
   wrap(doc: Document, text: string | number | null | undefined, key?: string | null): RiskTextLine;
   isActive(): boolean;
 };
+/* I18nBadge — the header honesty chip. mount() takes the static slot from
+ * index.html; visible() is the zero-pixel promise in query form (false for
+ * English, human-reviewed and unreadable dictionaries), so callers never have
+ * to read the DOM to know whether the chip is on screen. */
+declare var I18nBadge: {
+  mount(doc: Document, host: Element | null | undefined): void;
+  refresh(): void;
+  visible(): boolean;
+};
 declare var RiskKeys: {
   HIGH_RISK_SECTIONS: { [section: string]: number };
   MAX_RISK_LEN: number;

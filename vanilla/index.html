@@ -50,6 +50,14 @@
 <header class="topbar">
   <a class="brand" href="#/" aria-label="BitShares"><img class="brand-logo" src="assets/logo-ico-blue.png" alt="BitShares" width="40" height="40"></a>
   <button id="acting-as" class="acting-as" type="button" title="Acting account">committee-account</button>
+  <!-- i18n honesty chip slot (ui/i18n-badge.js): EMPTY for English and for
+    human-reviewed locales — the chip is not in the DOM at all there, so those
+    users pay zero pixels (principle #7). Between acting-as and the shield, so
+    the documented shield-immediately-left-of-lock pairing is untouched. The
+    chip and its expanded note are children of this slot; display:contents
+    (app.css) puts the chip in the control cluster and gives the note its own
+    wrapped row, so nothing is ever covered. -->
+  <div id="i18n-badge-slot" class="i18n-badge-slot"></div>
   <a id="ext-sign-badge" href="#/login" aria-label="Signing route"><img class="nav-icon icon-state" src="assets/icons/shield-bad.png" alt="" aria-hidden="true" width="24" height="24"></a>
   <a id="lock-toggle" href="#/login" aria-label="Unlock"><img class="nav-icon icon-state" src="assets/icons/lock-closed.png" alt="" aria-hidden="true" width="24" height="24"></a>
   <button id="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
@@ -95,6 +103,7 @@
 <script src="js/forms/field.js?v=1410954"></script>
 <script src="js/utils/event.js?v=1410954"></script>
 <script src="js/ui/risk-text.js?v=1410954"></script>
+<script src="js/ui/i18n-badge.js?v=1410954"></script>
 <script src="js/ui/confirm.js?v=1410954"></script>
 <script src="js/ui/overlay.js?v=1410954"></script>
 <script src="js/ui/unlock-confirm.js?v=1410954"></script>
