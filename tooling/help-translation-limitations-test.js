@@ -364,8 +364,16 @@ dicts.forEach(function (f) {
   KEYS.forEach(function (k) {
     ok(typeof flatDict[k] === "string" && flatDict[k].length > 0,
       f + " carries " + k);
-    ok(flatDict[k] === enFlat[k],
-      f + " keeps " + k + " an honest English stub until a human verifies it");
+    /* Only en.json must equal the English source. Under the v2 model a
+     * locale MAY machine-fill these (that is the whole point of the
+     * three-state model), and the honesty strings in particular MUST be
+     * translatable: a reader who only understands the target language
+     * cannot be warned in a language they do not read. What must never
+     * happen is the string being ABSENT or blank, which the check above
+     * covers. Before v2 this asserted == en for all 12 dicts, which made
+     * the widget's own warning permanently untranslatable. */
+    if (f !== "en.json") return;
+    ok(flatDict[k] === enFlat[k], "en.json is the source for " + k);
   });
 });
 
