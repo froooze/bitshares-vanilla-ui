@@ -33,6 +33,20 @@ Verifies:
      Not reimplemented per call site: this is the one gate for the whole
      tree, and tooling/i18n-key-gate-test.js proves it fails on a wrong
      key and on a missing key.
+  8. _meta VERSION 2 (gate 8, see check_meta_v2). v1's `translated` field
+     conflated a coverage claim with a trust claim, which is how 8,098
+     false translation claims accumulated silently. A {version:2} dict
+     declares `provenance` (machine|human), `coverage` (== the en key
+     set), `verified` (human sign-offs) and `high_risk` (dual-line
+     signing strings), and is validated by those instead — WITHOUT
+     weakening the v1 path, which stays fatal for the lie it could
+     actually refute. The deliberate change: an identical-to-en value
+     that is NOT verified is a counted review NOTE (loanwords are
+     legitimate in machine text), not a failure; one that IS verified is
+     fatal. tooling/i18n-v2-meta-test.js proves both halves, plus
+     `provenance: "human"` with an empty `verified` (the cheapest way to
+     silence the machine-translated warning, so also fatal) and the
+     --fix-meta round trip in validate_translations.py.
 
 Usage: python3 tooling/check_i18n.py  (exit 0 green, 1 with problems)
 """
@@ -315,8 +329,104 @@ def flatten(d, prefix=""):
     return out
 
 
+def check_meta_v2(code, meta, flat, en_flat, en_keys, notes):
+    """Gate 8 — a `_meta` version-2 provenance dict. Returns problem lines.
+
+    v1 conflated a COVERAGE claim ("this dict has a value for every key")
+    with a TRUST claim ("a human translated these") inside one field,
+    `_meta.translated`. Only the first was checkable, which is how 8,098
+    false translation claims accumulated in silence. v2 splits them apart:
+
+      coverage    COVERAGE — "a value for every key". Checkable here.
+      provenance  TRUST — "machine" (unreviewed) or "human".
+      verified    the keys a human signed off.
+      high_risk   keys that must render with an English reference beside them.
+
+    So the identical-value rule splits with the claim. A value equal to en
+    that is in `verified` is FATAL: a human signed it off, so an English
+    value means the claim itself is wrong, and the bytes refute it. A value
+    equal to en that is merely covered is a REVIEW NOTE: a machine string may
+    legitimately coincide with English (loanwords — DEX, HTLC, a brand), and
+    no gate can tell a loanword from a machine that copied English. It can
+    only queue the question, which is what the note counts do.
+
+    `IDENTIFIERS` (not a value-shape regex) is the "must equal en by design"
+    set here because that is this file's own established set — the v1
+    allowlist rules above already exclude exactly these keys, so using any
+    other set would let the two halves of THIS gate disagree.
+    """
+    problems = []
+
+    def key_list(name):
+        """meta[name] as a list of strings, or None after reporting why not.
+        A missing/wrongly-typed list is a shape failure, never a silent empty
+        one: "coverage is absent" and "coverage is empty" both mean the dict
+        claims nothing, which is the case the model exists to surface."""
+        value = meta.get(name)
+        if not isinstance(value, list) or any(not isinstance(v, str) for v in value):
+            problems.append("%s _meta.%s must be a list of strings" % (code, name))
+            return None
+        return value
+
+    provenance = meta.get("provenance")
+    if provenance not in ("machine", "human"):
+        problems.append('%s _meta.provenance must be machine or human, got %r'
+                        % (code, provenance))
+
+    coverage = key_list("coverage")
+    verified = key_list("verified")
+    high_risk = key_list("high_risk")
+
+    if coverage is not None and set(coverage) != en_keys:
+        miss = sorted(en_keys - set(coverage))
+        over = sorted(set(coverage) - en_keys)
+        problems.append("%s _meta.coverage drift (%d keys listed, en has %d: "
+                        "extra %s, missing %s)"
+                        % (code, len(coverage), len(en_keys), over[:5], miss[:5]))
+
+    # Subset rules are tested against the en key set, which `coverage` is
+    # separately required to equal — the two cannot disagree, and when
+    # coverage is itself broken the drift message above is the accurate
+    # diagnosis, so it is not repeated once per bad key.
+    for name, keys in (("verified", verified), ("high_risk", high_risk)):
+        if keys is None:
+            continue
+        unknown = sorted(set(keys) - en_keys)
+        if unknown:
+            problems.append("%s _meta.%s lists %d key(s) that are not in en.json, "
+                            "and so not in coverage either: %s"
+                            % (code, name, len(unknown), unknown[:5]))
+
+    if verified is not None:
+        bad_ident = sorted(set(verified) & IDENTIFIERS)
+        if bad_ident:
+            problems.append("%s _meta.verified must not claim identifiers "
+                            "(their values are identical by design, not "
+                            "untranslated): %s" % (code, bad_ident[:5]))
+        for k in sorted(set(verified) - IDENTIFIERS):
+            if flat.get(k) == en_flat.get(k):
+                problems.append("%s _meta.verified %s is identical to en — a human "
+                                "signed it off, so an English value means the "
+                                "claim is wrong" % (code, k))
+                break
+        if provenance == "human" and not verified:
+            problems.append('%s _meta.provenance says human but verified is empty '
+                            "— a human review that signed off nothing is a "
+                            "contradiction; the dict is machine-filled, so it "
+                            'must say machine' % code)
+
+    if coverage is not None and set(coverage) == en_keys:
+        same = sum(1 for k in en_keys
+                   if k not in IDENTIFIERS and flat.get(k) == en_flat.get(k))
+        if same:
+            notes.append("%s: %d machine value(s) equal en (review candidates)"
+                         % (code, same))
+    return problems
+
+
 def main():
     problems = []
+    notes = []
     try:
         en = json.load(open(os.path.join(LOCALES, "en.json"), encoding="utf-8"))
     except (OSError, ValueError) as e:
@@ -344,6 +454,16 @@ def main():
             miss = sorted(en_keys - set(flat))
             problems.append("%s key drift (extra=%s missing=%s)" % (code, only[:5], miss[:5]))
         m = d.get("_meta") or {}
+        if m.get("version") == 2:
+            # Gate 8. A v2 dict is not a v1 dict: `translated` under v1 is a
+            # translation claim, while `coverage` under v2 is only a
+            # completeness claim. Falling through to the v1 rules would read
+            # "this dict has every key" as "these keys are translated" and
+            # fail every honest machine dict — the inverse error of the one
+            # the model fixes. So the v2 dict leaves here, and the v1 rules
+            # below stay exactly as they were.
+            problems.extend(check_meta_v2(code, m, flat, en_flat, en_keys, notes))
+            continue
         if m.get("version") != 1:
             problems.append("%s _meta.version != 1" % code)
         allow = m.get("translated") or []
@@ -422,11 +542,15 @@ def main():
     if problems:
         print("FAIL (%d call sites scanned):" % calls)
         print("\n".join(problems))
+        for line in notes:
+            print("note: " + line)
         return 1
     print("OK: 12 dicts key-complete (%d keys); allowlists exact; "
           "stubs honest; %d t() call sites drift-free; %d keyed dialog titles / "
           "fee terms and %d confirm-row term keys all name the string they label."
           % (len(en_keys), calls, title_like, row_slots))
+    for line in notes:
+        print("note: " + line)
     return 0
 
 
