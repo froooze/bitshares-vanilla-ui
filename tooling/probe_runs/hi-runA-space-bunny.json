@@ -1,0 +1,28 @@
+{
+  "_model": "space-bunny-free (session model)",
+  "_lang": "hi",
+  "_register": "formal (आप) — matches the Hindi convention used for financial software",
+  "_run": "A",
+  "answers": {
+    "T01_unlock_password": "अपना वॉलेट पासवर्ड दर्ज करें।",
+    "T02_unlock_sign": "हस्ताक्षर करने के लिए अनलॉक करें",
+    "T03_password_label": "पासवर्ड",
+    "T04_htlc_algo_row": "हैश एल्गोरिदम",
+    "T05_vesting_always_free": "0 (बैलेंस दावे हमेशा मुफ़्त होते हैं)",
+    "T06_credit_borrowers": "स्वीकार्य उधारदाता (खाता + अधिकतम)",
+    "T07_credit_autodisable_future": "ऑटो-डिसेबल समय भविष्य में होना चाहिए।",
+    "T08_credit_prepare_create": "क्रिएट तैयार नहीं किया जा सका।",
+    "T09_transfer_amount_positive": "राशि शून्य से अधिक होनी चाहिए।",
+    "T10_approval_broadcast": "स्वीकृत किया गया और प्रसारित किया गया।",
+    "T11_account_multisig_shared": "साझा खाता — सक्रिय %(ath)s/%(an)s · स्वामी %(oth)s/%(on)s।",
+    "T12_annual_member": "वार्षिक सदस्य (%(date)s को समाप्त होता है)",
+    "T13_about_showing": "%(shown)s / %(total)s दिखाए जा रहे हैं",
+    "T14_bad_link": "अमान्य एक्सचेंज नंबर। मान्य सीमा: 1–%(total)s।",
+    "T15_createworker_serializer": "प्रसारण अनुपलब्ध: यह बंडल में op-34 सीरियलाइज़र लोड नहीं है (tx.js/tx-send.js)।",
+    "T16_help_feed_body": "# कीमत फ़ीड प्रकाशित करना\nबाज़ार-आधारित संपत्ति का निपटान मूल्य [इश्यू डेस्क](#/assets/feed) से प्रकाशित करें।",
+    "T17_credit_collateral_legs": "स्वीकार्य संपार्श (संपत्ति + मूल्य पैर)",
+    "T18_debit_auth_row": "प्राधिकृत",
+    "T19_risk_show_english": "इस पंक्ति का अंग्रेज़ी संदर्भ दिखाएँ",
+    "T20_badge_body": "ये अनुवाद एक मशीन ने लिखे हैं और किसी इंसान ने इनकी जाँच नहीं की है। * से चिह्नित किसी भी पंक्ति पर अंग्रेज़ी पाठ हमेशा एक टैप दूर है।"
+  }
+}

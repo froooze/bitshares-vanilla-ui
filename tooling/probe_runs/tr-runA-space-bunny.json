@@ -1,0 +1,28 @@
+{
+  "_model": "space-bunny-free (session model)",
+  "_lang": "tr",
+  "_register": "formal (siz) — standard for Turkish financial UIs",
+  "_run": "A",
+  "answers": {
+    "T01_unlock_password": "Cüzdan parolanızı girin.",
+    "T02_unlock_sign": "İmzalamak için kilidi açın",
+    "T03_password_label": "Parola",
+    "T04_htlc_algo_row": "Hash algoritması",
+    "T05_vesting_always_free": "0 (bakiye talepleri her zaman ücretsizdir)",
+    "T06_credit_borrowers": "Kabul edilebilir borç alanlar (hesap + maks.)",
+    "T07_credit_autodisable_future": "Otomatik devre dışı bırakma zamanı gelecekte olmalıdır.",
+    "T08_credit_prepare_create": "Oluşturma hazırlanamadı.",
+    "T09_transfer_amount_positive": "Tutar sıfırdan büyük olmalıdır.",
+    "T10_approval_broadcast": "Onaylandı ve yayınlandı.",
+    "T11_account_multisig_shared": "Paylaşımlı hesap — etkin %(ath)s/%(an)s · sahip %(oth)s/%(on)s.",
+    "T12_annual_member": "Yıllık üyelik (%(date)s tarihinde sona erer)",
+    "T13_about_showing": "%(shown)s / %(total)s gösteriliyor",
+    "T14_bad_link": "Geçersiz borsa numarası. Geçerli aralık: 1–%(total)s.",
+    "T15_createworker_serializer": "Yayınlama kullanılamıyor: op-34 serileştiricisi bu pakette yüklü değil (tx.js/tx-send.js).",
+    "T16_help_feed_body": "# Fiyat akışları yayımlama\nPiyasaya bağlı bir varlığın uzlaşma fiyatını [İhrac masası](#/assets/feed) üzerinden yayımlayın.",
+    "T17_credit_collateral_legs": "Kabul edilebilir teminat (varlık + fiyat kolları)",
+    "T18_debit_auth_row": "Yetkilendirildi",
+    "T19_risk_show_english": "Bu satırın İngilizcesini göster",
+    "T20_badge_body": "Bu çeviriler bir makine tarafından yazıldı ve bir insan tarafından kontrol edilmedi. * ile işaretli her satırda İngilizce metin her zaman bir dokunuş uzakta."
+  }
+}

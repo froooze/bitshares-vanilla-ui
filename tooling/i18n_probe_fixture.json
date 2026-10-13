@@ -1,0 +1,146 @@
+{
+  "_README": [
+    "i18n probe fixture — a fixed, model-agnostic test set for hi and tr.",
+    "Both runs receive this EXACT input so the comparison is apples-to-apples.",
+    "Validate any run's answer with:  python3 tooling/i18n_probe_validate.py <lang> <answers.json>",
+    "The validator checks STRUCTURE only (what can be checked mechanically):",
+    "  - placeholders: every %(name)s multiset must equal the English source",
+    "  - ids / urls / pinned keys: must survive byte-verbatim",
+    "  - line count: multi-line values keep their line count",
+    "  - script contamination: hi output must contain no Latin/Cyrillic/CJK runs",
+    "                      tr output must contain no Devanagari/Cyrillic/CJK runs",
+    "  - loanwords: declared allowlist, so every Latin token is a visible decision",
+    "Structure passing does NOT mean the translation is good. Meaning, register and",
+    "morphology are for a human or a stronger model to judge — that is the point of",
+    "the side-by-side. The `why` field names the specific failure each item probes."
+  ],
+  "_targets": ["hi", "tr"],
+
+  "items": [
+    {
+      "id": "T01_unlock_password",
+      "en": "Enter your wallet password.",
+      "why": "Hindi: postposition + verb agreement; dropping 'your' loses the security subject. Turkish: dative case on the wallet, imperative register.",
+      "probes": ["case-marking", "register"]
+    },
+    {
+      "id": "T02_unlock_sign",
+      "en": "Unlock to sign",
+      "why": "Hindi: infinitive 'to sign' plus purposive clause. Turkish: 'sign' is a loanword; the verb is the hard part.",
+      "probes": ["loanword-verb", "purposive-clause"]
+    },
+    {
+      "id": "T03_password_label",
+      "en": "Password",
+      "why": "Bare label. Hindi often borrows 'पासवर्ड'; Turkish commonly does too. A wrong choice here reads as untrustworthy.",
+      "probes": ["loanword-choice"]
+    },
+    {
+      "id": "T04_htlc_algo_row",
+      "en": "Hash algorithm",
+      "why": "Technical noun phrase with an English loanword component. Both languages typically keep 'algorithm' or transliterate it.",
+      "probes": ["technical-term", "noun-phrase"]
+    },
+    {
+      "id": "T05_vesting_always_free",
+      "en": "0 (balance claims are always free)",
+      "why": "Parenthetical with a clause. The numeric prefix must stay a numeric prefix and not be reordered into prose.",
+      "probes": ["parenthetical", "numeric-prefix"]
+    },
+    {
+      "id": "T06_credit_borrowers",
+      "en": "Acceptable borrowers (account + max)",
+      "why": "Two-parenthetical technical label; '+' is a structural symbol and must survive. Hindi: stacked postpositions in the parenthetical.",
+      "probes": ["multi-parenthetical", "symbol-preservation"]
+    },
+    {
+      "id": "T07_credit_autodisable_future",
+      "en": "auto-disable time must be in the future.",
+      "why": "Modal obligation + temporal condition. Turkish stacks case and copula; Hindi needs correct postposition order (में after the noun phrase).",
+      "probes": ["modal-obligation", "temporal-condition"]
+    },
+    {
+      "id": "T08_credit_prepare_create",
+      "en": "Could not prepare the create.",
+      "why": "Short technical error with a modal verb. Error strings are where fluency looks best and meaning is most easily lost.",
+      "probes": ["modal-error", "terse-technical"]
+    },
+    {
+      "id": "T09_transfer_amount_positive",
+      "en": "Amount must be greater than zero.",
+      "why": "Validation rule. If the comparison direction is inverted the user is told the opposite of the truth.",
+      "probes": ["validation-rule", "comparison-direction"]
+    },
+    {
+      "id": "T10_approval_broadcast",
+      "en": "Approved and broadcast.",
+      "why": "Past participle + 'and' + technical verb. 'broadcast' is a domain term; a mistranslation here implies the tx did not go out.",
+      "probes": ["past-participle", "domain-verb"]
+    },
+    {
+      "id": "T11_account_multisig_shared",
+      "en": "Shared account — active %(ath)s/%(an)s · owner %(oth)s/%(on)s.",
+      "why": "Four placeholders, an em dash and a middle dot. Structural checker must prove all four survive and the separators are not reordered.",
+      "probes": ["placeholders-x4", "separator-preservation"]
+    },
+    {
+      "id": "T12_annual_member",
+      "en": "Annual member (expires %(date)s).",
+      "why": "Placeholder inside a parenthetical with a trailing period outside it. Punctuation placement must survive the case stack.",
+      "probes": ["placeholder-in-parenthetical", "punctuation-placement"]
+    },
+    {
+      "id": "T13_about_showing",
+      "en": "Showing %(shown)s / %(total)s",
+      "why": "Bare 'X / Y' count display. The slash and spacing are load-bearing; over-translating this is a common failure.",
+      "probes": ["bare-count-display", "over-translation"]
+    },
+    {
+      "id": "T14_bad_link",
+      "en": "Invalid exchange number. Valid range: 1–%(total)s.",
+      "why": "En-dash range + placeholder + two sentences. The en dash must not become a hyphen or a word.",
+      "probes": ["dash-range", "placeholder"]
+    },
+    {
+      "id": "T15_createworker_serializer",
+      "en": "Broadcast unavailable: the op-34 serializer is not loaded in this bundle (tx.js/tx-send.js).",
+      "why": "Contains op number 34 AND file paths that MUST stay byte-verbatim. A model that 'translates' tx.js breaks a real reference.",
+      "probes": ["file-paths-verbatim", "op-number", "long-sentence"]
+    },
+    {
+      "id": "T16_help_feed_body",
+      "en": "# Publishing price feeds\nPublish the settlement price for a market-pegged asset from the [Issue desk](#/assets/feed).",
+      "why": "Markdown: heading line, body line, and a link whose hash MUST survive while its label is translated. Line count is 2.",
+      "probes": ["markdown-heading", "link-hash-verbatim", "multiline"]
+    },
+    {
+      "id": "T17_credit_collateral_legs",
+      "en": "Acceptable collateral (asset + price legs)",
+      "why": "'legs' is domain jargon (price feed legs). Both languages borrow it; over-literal translation loses the domain meaning.",
+      "probes": ["domain-jargon", "multi-parenthetical"]
+    },
+    {
+      "id": "T18_debit_auth_row",
+      "en": "Authorized",
+      "why": "Bare past participle used as a status value. Hindi/Turkish both have distinct perfective forms; the wrong aspect reads as 'is authorizing'.",
+      "probes": ["aspect-perfective", "bare-status"]
+    },
+    {
+      "id": "T19_risk_show_english",
+      "en": "Show the English reference for this line",
+      "why": "An aria-label read ALOUD at every signing line. Must be short enough to speak and must not lose 'English'.",
+      "probes": ["aria-label", "brevity", "honesty-surface"]
+    },
+    {
+      "id": "T20_badge_body",
+      "en": "These translations were written by a machine and have not been checked by a human. The English text is always one tap away on any line marked with *.",
+      "why": "THE honesty string. If this is unclear, a reader cannot know their translation is unverified. Longest and most important item here.",
+      "probes": ["honesty-surface", "long-paragraph", "negation"]
+    }
+  ],
+
+  "loanwords_allowed": {
+    "hi": ["DEX", "HTLC", "BitShares", "BTS", "API", "Memo", "Proxy", "Swap", "Smartcoin", "Pool", "Brainkey", "tx.js", "tx-send.js"],
+    "tr": ["DEX", "HTLC", "BitShares", "BTS", "API", "Memo", "Proxy", "Swap", "Smartcoin", "Pool", "Brainkey", "tx.js", "tx-send.js"]
+  }
+}
