@@ -134,18 +134,16 @@ LINK_HASH = re.compile(r"\]\((#[^)]*)\)")
 # NOT pinned and are filled below. This is reported to the reviewer as an
 # instruction conflict, not silently resolved.
 HELD_ENGLISH = (
-    "i18n.risk_show_english",
-    "i18n.risk_about_translations",
-    "help.topic_translation-limitations_title",
-    "help.topic_translation-limitations_text",
-    "help.topic_translation-limitations_body",
-    "help.translation_confidence_heading",
-    "help.confidence_language",
-    "help.confidence_level",
-    "help.confidence_high",
-    "help.confidence_good",
-    "help.confidence_moderate",
-    "help.report_translation_link",
+    # INTENTIONALLY EMPTY since commit efa7e4a. This list used to name the
+    # honesty-surface keys (i18n.risk_*, help.confidence_*, the
+    # translation-limitations article) so the script would write the English
+    # bytes back on --apply. That was correct while a v1-era test pinned those
+    # keys to English; it is wrong now. A reader who only understands Spanish
+    # cannot be warned, in English, that their Spanish is unreviewed -- the
+    # honesty strings are the bootstrap of the whole feature and MUST be
+    # translatable. Keeping them here would revert real work on any rerun.
+    # The revert loop below is also now non-destructive: it never overwrites a
+    # value that differs from English.
 )
 
 ES = {
