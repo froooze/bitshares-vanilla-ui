@@ -866,15 +866,23 @@ var HelpUI = (function () {
      * article; the per-language confidence table is NOT written here — it is
      * generated from CONFIDENCE (see paintConfidence), because a per-language
      * fact typed into prose would be a second copy for every translator to
-     * keep in step. */
+     * keep in step.
+     *
+     * Every factual claim below is pinned by
+     * tooling/help-translation-limitations-test.js, which re-derives the *
+     * rule from vanilla/js/i18n/risk-keys.js and the shipped en.json rather
+     * than trusting this prose. An honesty article that asserts something
+     * false about the app is the worst bug it can ship, so a reword here
+     * that no longer matches the code must fail that test, not be allowed
+     * through on a reader's good faith. */
     "translation-limitations": [
-      "A translation marked machine-filled was written by a machine. Nobody has read it to check that it says what the English says — which is why the language you are reading now carries the marker chip in this wallet's header.",
+      "A translation marked machine-filled was written by a machine. Nobody has read it to check that it says what the English says — which is why every language except English carries the marker chip in this wallet's header. English is the text the others were translated from, so it carries no marker.",
       "# What the * on a line means",
       "A * on a signing line means two things at once: the wording was filled by a machine, and the original English is one tap away. Tap the * and the English appears under the line exactly as this wallet's English master stores it — the same text every other language was translated from, not a paraphrase of it.",
-      "Amounts, object ids, asset symbols and prices never carry a *. They are chain data rather than sentences, so there is no English wording behind them to compare against. A * therefore always marks a sentence a person should read before signing.",
+      "The marker follows the line, not the words inside it. A * marks one whole translated line, and the wallet picks those lines by a fixed rule: every line on a signing, irreversible-action or recovery screen — up to a length cap, since a long paragraph is covered by this article instead — plus any line anywhere whose English carries danger wording. So a line that only names an id or an amount still carries one (the To field on a transfer, for one), and a long paragraph that mentions an id does not. A bare chain value — an amount in a cell, an id in a column, an asset symbol — is not a translated line at all, so it never carries one: there is no English wording behind it to compare against.",
       "# What the confidence levels mean",
       "Every language this wallet ships carries one rating, listed in the table below. High means the wording tracks the English closely and reads naturally. Good means it is usable, though a phrase may still read awkwardly. Moderate means read it as a draft and check the English before you rely on it.",
-      "A rating describes what has been checked so far, for the language as a whole rather than line by line. English itself is the reference: it is written by hand, and every other language is translated from it.",
+      "Every rating below is the machine that wrote the strings grading its own work; nobody independent has audited them. A rating describes what has been checked so far, for the language as a whole rather than line by line. English itself is the reference: it is written by hand, and every other language is translated from it.",
       "# How to correct a string",
       "Corrections start with a report. Say which language the line was in, give the key that line discloses, paste the English it was supposed to say, and suggest the wording you would use instead.",
       "- One report per line keeps a fix easy to apply.",
@@ -1286,12 +1294,17 @@ var HelpUI = (function () {
    * Content-level [label](url) spans cannot do this: splitLinks() deliberately
    * renders external URLs as literal text so translated content can never
    * smuggle an off-app link, which leaves code-owned links as the only honest
-   * way to make the destination tappable. */
+   * way to make the destination tappable.
+   * touchable() puts the 44px floor on it (AGENTS.md §3.6): this is the
+   * article's primary action, the one link a reader is actually asked to
+   * press, so it may not be the one they miss with a thumb. Guarded exactly
+   * like ui/confirm.js — a page loaded without touchable.js still renders. */
   function paintReport(doc, wrap) {
     var p = DOM.el(doc, "p", null, "muted"), a = doc.createElement("a");
     try { a.setAttribute("href", ISSUES); } catch (e) { return; }
     a.textContent = t("help.report_translation_link", "Report a translation problem on GitHub");
     try { a.target = "_blank"; a.rel = "noopener noreferrer"; } catch (e2) { /* same-tab fallback */ }
+    if (typeof touchable === "function") { try { touchable(a); } catch (e3) { /* floor is best-effort */ } }
     p.appendChild(a);
     wrap.appendChild(p);
   }

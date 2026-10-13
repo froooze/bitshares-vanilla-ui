@@ -1,15 +1,30 @@
 #!/usr/bin/env python3
-"""i18n_add_keys.py — one-shot batch key inserter (Phase 3 precedent, reusable).
+"""i18n_add_keys.py — the shared batch-insert helper (Phase 3 precedent).
 
-Adds NEW settings-namespace keys with English values to all 10
+Adds NEW namespace keys with English values to all 12
 vanilla/locales/*.json (non-en dicts keep English = honest stubs, never
 machine-translated) + en.json _meta.translated inventory (kept sorted, as
-check_i18n expects). Stdlib only. Usage: python3 tooling/i18n_add_keys.py.
+check_i18n expects). Stdlib only. Run from the REPO ROOT:
+    python3 tooling/i18n_add_keys.py
 Fails non-zero if any dict lacks the anchor or check_i18n would go red.
+
+STILL HERE, NOT RECOMMENDED (2026-10-13): its own docstring used to say
+"deleting this script is the other correct answer", and that remains true for
+its BATCHES — every key in them is in en.json, so the batch list can only ever
+re-write shipped keys, and the locales are machine-filled now, so a re-run
+destroys translations. It survives because two one-shot scripts
+(add_discrete_i18n.py, add_pool_ux_i18n.py) import apply_batch()/LOCALES from
+it, and those are outside this task's file set. Delete all three together when
+retiring them. For NEW keys use tooling/add_translation_limitations_i18n.py
+(insert-only, refuses to rewrite a translated value) — that is the safe
+inserter, and this file is now only its ancestor.
 """
 import io
 import json
+import os
 import sys
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOCALES = ["en", "de", "es", "fr", "it", "ja", "ko", "ru", "tr", "zh", "hi", "pt"]
 
@@ -227,12 +242,28 @@ def clobber_check():
     This batch inserter writes ENGLISH values into every dict. That was
     harmless while every locale was an honest English stub, but the
     locales are now machine-filled (task i18n-machine-translation), and a
-    rerun here silently reverts ~290 translated lines per dict back to
-    English. So: before touching anything, check whether any locale holds
-    values this script does not know about, and abort if so.
+    rerun here silently reverts translated lines per dict back to
+    English. So: before touching anything, work out exactly which values
+    apply_batch() would rewrite, and abort if there are any.
 
-    Deleting this script is the other correct answer; the guard exists so
-    a stray rerun fails loudly instead of destroying work.
+    Two things this used to get wrong, both of which made the report
+    useless to the person deciding whether to run it:
+
+    * it counted EVERY translated value in every dict (34,345) rather than
+      the ~137 per dict that apply_batch() actually rewrites, so the number
+      said "catastrophe" when the real blast radius was small enough to
+      read off;
+    * it exempted a key with `k in en`, which silently skipped any BATCHES
+      key that is not in the English master (apilab.connecting is the one
+      today) — a key the script DOES write, and so IS at risk.
+
+    Both are fixed below: the count is the real rewrite set, and a BATCHES
+    key missing from en.json is checked against the batch's own recorded
+    value instead of being waved through.
+
+    Deleting this script is still the other correct answer; the guard exists
+    so a stray rerun fails loudly instead of destroying work, and so the
+    abort message can name the keys actually at risk.
     """
     known = {}
     for _ns, _anchor, new_keys in BATCHES:
@@ -250,26 +281,54 @@ def clobber_check():
                 out[p + k] = v
         return out
 
-    en_path = "vanilla/locales/en.json"
+    en_path = os.path.join(REPO, "vanilla", "locales", "en.json")
     with io.open(en_path, encoding="utf-8") as f:
         en = flat(json.load(f))
 
     at_risk = []
+    not_in_master = sorted(k for k in known if k not in en)
     for code in LOCALES:
         if code == "en":
             continue
-        with io.open("vanilla/locales/%s.json" % code, encoding="utf-8") as f:
+        path = os.path.join(REPO, "vanilla", "locales", "%s.json" % code)
+        with io.open(path, encoding="utf-8") as f:
             loc = flat(json.load(f))
         for k, v in loc.items():
             if k in known and v == en.get(k) and known[k] != en.get(k):
                 continue  # this batch owns it; a rewrite is expected
+            if k in known and k not in en:
+                # absent from the English master: apply_batch would still
+                # write known[k] over whatever the dict holds.
+                if v != known[k]:
+                    at_risk.append("%s:%s" % (code, k))
+                continue
             if v != en.get(k) and k in en:
                 at_risk.append("%s:%s" % (code, k))
 
+    # The blast radius a rerun would actually have: values this script's own
+    # BATCHES would write over a translated one (what apply_batch does).
+    rewrites = 0
+    for code in LOCALES:
+        if code == "en":
+            continue
+        path = os.path.join(REPO, "vanilla", "locales", "%s.json" % code)
+        with io.open(path, encoding="utf-8") as f:
+            loc = flat(json.load(f))
+        for k, v in known.items():
+            if k in loc and loc[k] != v:
+                rewrites += 1
+
     if at_risk:
-        print("ABORT: %d translated value(s) would be reverted to English."
-              % len(at_risk))
+        print("ABORT: %d translated value(s) differ from what this inserter would"
+              " write." % len(at_risk))
+        print("  apply_batch would rewrite ~%d value(s) across %d locales (%.0f"
+              " per dict); the count above is the wider translated-value delta."
+              % (rewrites, len(LOCALES) - 1, float(rewrites) / (len(LOCALES) - 1)))
         print("  e.g. %s" % ", ".join(at_risk[:5]))
+        if not_in_master:
+            print("  note: %d BATCHES key(s) are absent from en.json (%s) and are"
+                  " checked against the batch's own value, not exempted."
+                  % (len(not_in_master), ", ".join(not_in_master)))
         print("  This inserter writes English into every dict; the locales are")
         print("  now machine-filled, so a rerun destroys real work. Use the")
         print("  insert-only sibling instead, or delete this script.")
@@ -282,7 +341,7 @@ def main():
     if rc:
         return rc
     for code in LOCALES:
-        path = "vanilla/locales/%s.json" % code
+        path = os.path.join(REPO, "vanilla", "locales", "%s.json" % code)
         with io.open(path, encoding="utf-8") as f:
             data = json.load(f)
         for ns, anchor, new_keys in BATCHES:

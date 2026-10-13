@@ -160,6 +160,98 @@ ok(/english/i.test(body), "and that the English reference is reachable");
 var headings = String(body).split(/\n(?=# )/).map(function (h) { return h.split("\n")[0]; });
 ok(headings.length >= 4, "the article is sectioned (" + headings.length + " sections)");
 
+/* --- 1b. the FOUR promises, each pinned to content, not to a heading count --
+ * The first version of this file only checked that /machine/i, the *, /english/i
+ * and four headings were present. Deleting the whole "Corrections are the only
+ * path to human reviewed" section — from help-ui.js AND from all 12 dicts,
+ * consistently, so even check_i18n stays green — left every gate passing: an
+ * article that promised nothing about how to fix a line, and told the reader
+ * that no promise existed. These assertions read the SENTENCES, so each
+ * removal of one of the four promises turns one of them red.
+ */
+function sectionBody(name) {
+  var at = String(body).indexOf(name);
+  if (at === -1) return "";
+  return String(body).slice(at).split(/\n(?=# )/)[0];
+}
+/* (a) what "machine-filled" means — nobody has read it. */
+ok(/nobody|no person|has not been|no human/i.test(String(body).split(/\n(?=# )/)[0]),
+  "the opening paragraph, not just some paragraph, says no human has checked it");
+/* (b) what the * means, and that the English is one tap away. */
+var starSection = sectionBody("# What the * on a line means");
+ok(starSection.length > 0, "the * has its own section");
+ok(/english/i.test(starSection), "the * section says the English is reachable");
+/* (c) how to correct a string — the section must survive as CONTENT, not as a
+ * heading: a bare "# How to correct a string" with its instructions deleted is
+ * exactly the regression this pins. */
+var fixSection = sectionBody("# How to correct a string");
+ok(fixSection.length > 0, "the article still has a 'How to correct a string' section");
+ok(/report/i.test(fixSection), "that section tells the reader corrections start with a report");
+ok(/\bkey\b/i.test(fixSection), "and to give the key the line discloses");
+ok(/one report per line|per line/i.test(fixSection), "and how to shape the report");
+ok(/link/i.test(fixSection), "and points at the pre-labelled link it renders below");
+/* (d) corrections are the ONLY route to human reviewed — the promise that was
+ * ungated. Both the heading and the sentence it carries are required: the
+ * heading alone is what the old gate was reading. */
+var humanSection = sectionBody("# Corrections are the only path to human reviewed");
+ok(humanSection.length > 0, "the article still says corrections are the only path to human reviewed");
+ok(/nothing else|only way|only path/i.test(humanSection),
+  "and says so in words, not only in a heading");
+ok(/person|human/i.test(humanSection), "and names a person reading the string as what flips it");
+
+/* --- 1c. the * claim is re-derived from the shipped rule, not believed ------
+ * The first version asserted something FALSE about the marker: "Amounts, object
+ * ids, asset symbols and prices never carry a *". The shipped rule (i18n/
+ * risk-keys.js) keys off SECTION and English wording, so starred lines embed
+ * ids and amounts all over the dictionary. A false claim in the honesty
+ * article is the worst bug it can ship, so the claim is checked against the
+ * rule and the shipped en.json here, and each fact the prose leans on is
+ * proved from the data. */
+var RiskKeys = require("../vanilla/js/i18n/risk-keys.js");
+var enFlat = flat(enDict);
+var starred = RiskKeys.listFor(enFlat, enFlat);
+var ID_RE = /\b1\.[0-9]+\.[0-9]+/;
+var highRiskSections = Object.keys(RiskKeys.HIGH_RISK_SECTIONS);
+/* Fact 1: starred lines DO carry ids and amounts — the old claim was wrong. */
+var starredWithId = starred.filter(function (k) { return ID_RE.test(enFlat[k]); });
+ok(starredWithId.length > 0,
+  "the shipped rule stars lines that embed an object id (" + starredWithId.length + " do, e.g. " +
+  starredWithId[0] + ") — so the article may not claim ids never carry a *");
+var starredWithAmount = starred.filter(function (k) {
+  return /\b\d[\d,]*\.\d+\b|\b\d+\s*(?:BTS|[A-Z]{3,10})\b/.test(enFlat[k]);
+});
+ok(starredWithAmount.length > 0,
+  "and lines that embed an amount (" + starredWithAmount.length + " do, e.g. " +
+  starredWithAmount[0] + ")");
+/* Fact 2: "every line in a high-risk section" is also false on its own — the
+ * rule carries a length cap, so a long high-risk line is deliberately not
+ * starred. The article must therefore say "up to a length cap". */
+var cappedOut = Object.keys(enFlat).filter(function (k) {
+  return highRiskSections.indexOf(k.split(".")[0]) !== -1 &&
+    enFlat[k].length > RiskKeys.MAX_RISK_LEN && !RiskKeys.isHighRisk(k, enFlat[k]);
+});
+ok(cappedOut.length > 0,
+  "high-risk lines over the length cap are deliberately not starred (" + cappedOut.length + "), " +
+  "so the article must not claim every high-risk line carries a *");
+/* Fact 3: the one part of the old claim that IS true — a bare chain value is
+ * not a translated line at all, so it cannot be starred. Proved by there being
+ * no locale key that is nothing but digits and separators. */
+var bareValues = Object.keys(enFlat).filter(function (k) {
+  return /^[\s\d.,:%+-]*$/.test(String(enFlat[k])) && String(enFlat[k]).trim() !== "";
+});
+eq(bareValues.length, 0,
+  "no locale string is a bare number — amounts and ids in cells are chain data, not lines");
+/* Now the prose: the false prohibition is gone, and the three true statements
+ * it leans on are present. */
+ok(!/never carry a\s*\*/i.test(String(body)),
+  "the article no longer claims ids/amounts never carry a *");
+ok(/follows the line, not the words inside it|marker follows the line/i.test(String(body)),
+  "it states the marker follows the line, not the content");
+ok(/length cap/i.test(String(body)),
+  "it states the length cap, because the rule has one");
+ok(!/never carry a \*|Amounts, object ids, asset symbols and prices never/i.test(String(body)),
+  "the old false sentence is gone from the article");
+
 /* --- 2. the confidence data is the approved rating set, in ONE place ----- */
 var CONFIDENCE = HelpUI._test.CONFIDENCE;
 var SPEC = {
