@@ -5072,9 +5072,9 @@
     "explorer": "Explorador",
     "voting": "Votación",
     "settings": "Configuración",
-    "credit": "Credit",
-    "margin": "Margin",
-    "markets": "Markets",
+    "credit": "Crédito",
+    "margin": "Margen",
+    "markets": "Mercados",
     "pools": "Pools"
   },
   "settings": {
@@ -5578,7 +5578,7 @@
     "account": "Cuenta",
     "adjust_broadcast": "Ajuste transmitido.",
     "adjust_needs_1_change": "el ajuste necesita ≥1 cambio.",
-    "adjust_position_op_3": "Adjust position (op %(op)s)",
+    "adjust_position_op_3": "Ajustar posición (op %(op)s)",
     "after_a_bitasset_globally_settles_anyone_can": "Tras una liquidación global de un bitasset, cualquiera puede pujar colateral para asumir parte de la deuda y del fondo de liquidación (BSIP-0018). Introduce el activo liquidado: el fondo y las pujas existentes siempre se leen; el formulario de puja solo aparece mientras exista un fondo de liquidación.",
     "back": "Atrás",
     "bid_broadcast": "Puja transmitida.",
@@ -5626,7 +5626,7 @@
     "how_borrowing_works": "Cómo funciona el préstamo",
     "load_positions": "Cargar posiciones",
     "loading_positions": "Cargando posiciones…",
-    "margin_positions_borrow_a_bitasset_against_co": "Margin positions borrow a bitasset against collateral. Topping up collateral or repaying debt adjusts op %(op)s (call_order_update) on your call order.",
+    "margin_positions_borrow_a_bitasset_against_co": "Las posiciones de margen piden prestado un bitasset contra colateral. Añadir colateral o devolver deuda ajusta la op %(op)s (call_order_update) en tu orden call.",
     "market": "Mercado",
     "network": "Red",
     "order": "Orden",
@@ -5638,7 +5638,7 @@
     "review_adjust": "Revisar ajuste",
     "review_bid": "Revisar puja",
     "settled_asset_symbol_or_1_3_x": "Activo liquidado (símbolo o 1.3.x)",
-    "settlement_bids_op_45": "Settlement bids (op %(op)s)",
+    "settlement_bids_op_45": "Pujas de liquidación (op %(op)s)",
     "target_ratio": "Ratio objetivo",
     "target_ratio_blank_unchanged": "Ratio objetivo % (vacío = sin cambios)",
     "unexpected_asset_data_from_the_node_stopped_i": "Datos de activo inesperados del nodo; detenido en lugar de adivinar.",
@@ -5657,7 +5657,7 @@
     "amount_to_borrow_debt_units": "Cantidad a pedir (unidades de deuda)",
     "could_not_prepare_the_borrow": "No se pudo preparar el préstamo.",
     "is_not_the_backing_asset": " no es el activo de respaldo; ",
-    "open_a_new_position_op_3": "Open a new position (op %(op)s)",
+    "open_a_new_position_op_3": "Abrir una posición nueva (op %(op)s)",
     "enter_both_amounts_first": "Introduce primero ambas cantidades.",
     "observed_at_head_block": "Observado en el bloque cabecera #",
     "use_adjust_above": " — usa Ajustar arriba)",
@@ -5683,7 +5683,7 @@
     "repay_full": "Reembolsar todo",
     "close_position": "Cerrar posición",
     "bids_no_cancel": "Las pujas no se pueden cancelar una vez colocadas — se ejecutan o expiran.",
-    "uc_title": "Unlock to sign"
+    "uc_title": "Desbloquea para firmar"
   },
   "credit_detail": {
     "title": "Oferta de crédito"
@@ -5838,7 +5838,7 @@
     "owned_hint": " Cree una en el formulario Crear oferta de abajo — las ofertas propias aparecen aquí.",
     "my_deals_borrower": "Mis acuerdos (prestatario)",
     "no_borrower_deals": "Sin acuerdos de prestatario aún — aparecen después de pedir prestado contra una oferta.",
-    "uc_title": "Unlock to sign"
+    "uc_title": "Desbloquea para firmar"
   },
   "debit": {
     "title": "Débito directo",
@@ -5915,8 +5915,8 @@
     "verify_fills_suffix": "; comprueba las ejecuciones en #/market).",
     "failed_prefix": "falló: ",
     "retry_suffix": " — comprueba el estado antes de reintentar.",
-    "uc_title": "Unlock to sign",
-    "uc_order": "Order"
+    "uc_title": "Desbloquea para firmar",
+    "uc_order": "Orden"
   },
   "explorer_assets": {
     "title": "Activo",
@@ -6226,7 +6226,7 @@
     "gdex_manual_a": "Solo depósito / retiro manual (según el propio estado de la pasarela en la UI de referencia). ",
     "gdex_manual_b": "La búsqueda automática sigue apagada hasta que un sondeo responda.",
     "get_address": "Obtener dirección de depósito",
-    "health_ok": "ok ",
+    "health_ok": "correcto ",
     "health_unknown": "salud desconocida",
     "intro_a": "Envía monedas externas a la dirección mostrada. Esta página no envía nada. ",
     "intro_b": "Los retiros terminan en Transferencia con vista previa de la comisión en vivo.",
@@ -6245,7 +6245,7 @@
     "no_qr_b": "sin reemplazo sin dependencias en disco — copia el texto de abajo.",
     "pays_to": "Paga a (según pasarela)",
     "prefill_failed": "No se pudo preparar el prerrelleno del retiro.",
-    "raw_prefix": "raw: ",
+    "raw_prefix": "en bruto: ",
     "recheck": "Recomprobar",
     "refused_prefix": "Pasarela rechazó: ",
     "reported_an": " reportó un ",
@@ -6352,7 +6352,7 @@
     "to": "Para",
     "create_hint": " Crea uno desde el formulario Nuevo HTLC de abajo — los contratos enviados y recibidos se listan aquí.",
     "hash_match_prefix": "Hash coincide ✓ (",
-    "uc_title": "Unlock to sign"
+    "uc_title": "Desbloquea para firmar"
   },
   "market_book": {
     "title": "Mercado",
@@ -6746,7 +6746,7 @@
   },
   "pools": {
     "title": "Pools de liquidez",
-    "selector_title": "Pool Selector"
+    "selector_title": "Selector de pool"
   },
   "proposals_misc": {
     "title": "Propuesta"
@@ -6944,14 +6944,14 @@
     "locked_encrypted_hint": "Los memos cifrados necesitan las claves de la billetera — desbloquea primero o cambia el memo a simple.",
     "preview_title": "Vista previa de transferencia (bloqueada)",
     "unknown_asset_prefix": "Activo desconocido: ",
-    "unlock_sign": "Unlock & review",
+    "unlock_sign": "Desbloquea y revisa",
     "viewing_as_committee": "Viendo como committee-account (1.2.0) — datos públicos visibles mientras está bloqueado; la contraseña se pide solo al firmar.",
     "confirm_settles_the_fee_in": " — Confirmar liquida la comisión en ",
     "no_scam_list_is_loaded_here_double_che": "Aquí no hay lista de estafas cargada — verifica el nombre del destinatario antes de revisar.",
-    "confirm_proposal_title": "Confirm proposal (op %(op)s)",
+    "confirm_proposal_title": "Confirmar propuesta (op %(op)s)",
     "could_not_build_proposal": "No se pudo construir la propuesta.",
     "enclosed_fee_mid": " incluido; comisión ",
-    "enclosed_op_note": "Enclosed op: transfer (op %(op)s) — executes only after approvals.",
+    "enclosed_op_note": "Operación incluida: transferencia (op %(op)s) — se ejecuta solo después de las aprobaciones.",
     "expiration_label": "Vencimiento",
     "memo_encrypted": "Cifrado",
     "memo_none": "(ninguno)",
@@ -6966,7 +6966,7 @@
     "proposal_observed_prefix": "Propuesta ",
     "proposal_sent_title": "Propuesta enviada",
     "propose_notice_fee": "La comisión de propuesta se cotiza en vivo en el activo núcleo al revisar.",
-    "propose_notice_locked": "Proposer defaults to %(name)s (%(id)s) while locked — unlock to act as yourself.",
+    "propose_notice_locked": "Mientras está bloqueada, el proponente es %(name)s (%(id)s) — desbloquea para actuar como tú mismo.",
     "propose_preview_title": "Vista previa de propuesta (bloqueada)",
     "proposer_label": "Proponente",
     "proposer_mismatch_prefix": "El proponente debe coincidir con la cuenta desbloqueada de la billetera (el pagador firma) — obtenido ",
@@ -6978,11 +6978,11 @@
     "review_period_none": "ninguno",
     "review_proposal": "Revisar propuesta",
     "sender_recipient_different": "Remitente y destinatario deben ser distintos.",
-    "share_needs_to_amount": "A shareable link needs a recipient and an amount.",
+    "share_needs_to_amount": "Un enlace compartible necesita un destinatario y una cantidad.",
     "unlocked_rebuilt_prefix": "Desbloqueado — propuesta reconstruida contigo (",
     "unlocked_rebuilt_suffix": ") como proponente.",
     "view_proposals": "Ver propuestas",
-    "uc_title": "Unlock to continue"
+    "uc_title": "Desbloquea para continuar"
   },
   "vesting": {
     "title": "Consolidación",
@@ -7182,13 +7182,13 @@
     "recommended": "Recomendado",
     "security_high": "Seguridad: Alta",
     "security_medium": "Seguridad: Media",
-    "multisig_title": "Shared / multisig accounts",
-    "multisig_body": "This wallet holds one key. Shared accounts need proposals + co-owner approvals, coordinated by proposal id (1.10.N). Browsing is public; only signing needs the password.",
-    "multisig_step_propose": "Propose the operation (Transfer has Send/Propose; assets, barter and borrowing link to proposals).",
-    "multisig_step_share": "Share the 1.10.N proposal id with co-owners.",
-    "multisig_step_approve": "Co-owners approve (op 23) on the proposal page, or co-sign via the transaction builder.",
-    "multisig_open_proposals": "View proposals",
-    "multisig_open_txbuilder": "Open transaction builder"
+    "multisig_title": "Cuentas compartidas / multisig",
+    "multisig_body": "Esta billetera contiene una sola clave. Las cuentas compartidas necesitan propuestas + aprobaciones de copropietarios, coordinadas por el id de propuesta (1.10.N). Navegar es público; solo firmar necesita la contraseña.",
+    "multisig_step_propose": "Propón la operación (Transferencia tiene Enviar/Proponer; los activos, el trueque y el préstamo enlazan con propuestas).",
+    "multisig_step_share": "Comparte el id de propuesta 1.10.N con los copropietarios.",
+    "multisig_step_approve": "Los copropietarios aprueban (op 23) en la página de propuestas, o co-firman con el constructor de transacciones.",
+    "multisig_open_proposals": "Ver propuestas",
+    "multisig_open_txbuilder": "Abrir el constructor de transacciones"
   },
   "confirm": {
     "amount": "Cantidad",
@@ -7239,9 +7239,9 @@
     "memo_key": "Clave memo",
     "network": "Red",
     "none": "ninguno",
-    "step_name": "Name",
+    "step_name": "Nombre",
     "step_brainkey": "Brainkey",
-    "step_register": "Register",
+    "step_register": "Registrar",
     "owner_key": "Clave owner",
     "password": "Contraseña ",
     "password_required_enter_a_non_empty_password": "Contraseña obligatoria: escribe una contraseña no vacía.",
@@ -7262,12 +7262,12 @@
     "back": "Atrás",
     "broadcast_unavailable_the_op_34_serializer_is": "Transmisión no disponible: el serializador op-34 no está cargado en este paquete (tx.js/tx-send.js). La vista previa de arriba es exacta — recarga los archivos de la app e inténtalo de nuevo. Nada fue transmitido.",
     "building_transaction": "Construyendo transacción…",
-    "confirm_worker_op_34": "Confirm worker (op %(op)s)",
+    "confirm_worker_op_34": "Confirmar trabajador (op %(op)s)",
     "could_not_preview_the_worker": "No se pudo ver el worker.",
     "create_worker": "Crear trabajador",
     "daily_pay": "Paga diaria",
     "daily_pay_tpl": "Paga diaria (%(sym)s) ",
-    "draft_a_worker_op_34_preview_is_live_review_q": "Draft a worker (op %(op)s). Preview is live; review quotes the live fee, then Sign & Send broadcasts op %(op)s directly — workers are created by direct op, not by proposal.",
+    "draft_a_worker_op_34_preview_is_live_review_q": "Redacta un trabajador (op %(op)s). La vista previa está en vivo; la revisión cita la comisión en vivo, y luego Firmar y enviar transmite la op %(op)s directamente — los trabajadores se crean con una op directa, no con una propuesta.",
     "enter_a_worker_name": "Introduce un nombre de worker.",
     "enter_the_owner_account_name": "Introduce el nombre de la cuenta propietaria.",
     "estimating_fee": "Estimando comisión…",
@@ -7302,7 +7302,7 @@
     "worker_backend_missing_js_account_js_or_js_fo": "Falta el módulo de worker: no se pudo cargar js/account.js o js/format.js.",
     "worker_backend_missing_js_asset_ops_js_failed": "Falta el módulo de worker: no se pudo cargar js/asset-ops.js.",
     "worker_name": "Nombre del worker ",
-    "worker_preview_op_34": "Worker preview (op %(op)s)",
+    "worker_preview_op_34": "Vista previa del trabajador (op %(op)s)",
     "daily_pay_in_core_asset_bts_precision": "Paga diaria en el activo núcleo (BTS, precisión 5), mayor que cero y por debajo del máximo de la cadena.",
     "end_date_must_be_after_the_start_dat": "La fecha de fin debe ser posterior a la de inicio; la paga solo se devenga dentro de este intervalo.",
     "link_to_the_full_proposal_text_under_1": "Enlace al texto completo de la propuesta, menos de 127 bytes.",
@@ -7639,7 +7639,7 @@
     "trade_backend_missing_js_tx_js_js_market_js_j": "Backend de intercambio no disponible: js/tx.js, js/market.js, js/account.js, js/wallet.js o js/format.js no se pudieron cargar.",
     "unknown_market_asset": "Activo de mercado desconocido.",
     "unlock_your_wallet_to_trade": "Desbloquea tu billetera para operar.",
-    "preview_balances_note": "Previewing as %(name)s (%(id)s) — balances not checked. Unlock to validate yours before signing.",
+    "preview_balances_note": "Previsualizando como %(name)s (%(id)s) — saldos sin comprobar. Desbloquea para validar los tuyos antes de firmar.",
     "viewing_as": "Viendo como committee-account (1.2.0) — desbloquea para operar como tu cuenta.",
     "best_bid": " · Mejor compra: ",
     "best_ask": " · Mejor venta: ",
@@ -7663,8 +7663,8 @@
     "walkthrough_bids_mid": " — el recorrido usa compras (vendiendo ",
     "walkthrough_paying_mid": " toca compras que pagan ",
     "walkthrough_trade_prefix": "Opera ",
-    "uc_title": "Unlock to sign",
-    "unlock_sign": "Unlock & sign",
+    "uc_title": "Desbloquea para firmar",
+    "unlock_sign": "Desbloquea y firma",
     "unlocked_repreview_note": "Desbloqueado — pulsa Atrás y revisa de nuevo para que la orden use tu cuenta."
   },
   "news": {
@@ -7818,7 +7818,7 @@
     "org_unit": " organización",
     "scan_bound_suffix": " (límite de análisis alcanzado — la búsqueda encuentra el resto).",
     "desk_suffix": " escritorio",
-    "uc_title": "Unlock to sign"
+    "uc_title": "Desbloquea para firmar"
   },
   "proposal": {
     "account": "Cuenta",
@@ -8486,9 +8486,9 @@
     "vwap_unavailable": "VWAP no disponible (falta matemática de cubos o precisiones).",
     "candle_count": "Velas",
     "count_range": "Introduce 1–5000 velas.",
-    "count_note": "%(count)s × %(bucket)s candles",
-    "count_partial": "%(actual)s of %(requested)s × %(bucket)s candles",
-    "count_capped": "window truncated"
+    "count_note": "%(count)s × %(bucket)s velas",
+    "count_partial": "%(actual)s de %(requested)s × %(bucket)s velas",
+    "count_capped": "ventana truncada"
   },
   "txbuilder": {
     "title": "Constructor de transacciones",
@@ -8526,7 +8526,7 @@
     "add_vote": "Añadir voto a TxBuilder",
     "add_deposit": "Añadir depósito a TxBuilder",
     "unlock_memo_hint": "Desbloquea para incluir el memo cifrado",
-    "link_proposals": "Proposals"
+    "link_proposals": "Propuestas"
   },
   "ops": {
     "no_ops_hint": "Sin operaciones en los bloques muestreados — amplía la muestra o reintenta en la punta.",
@@ -8555,7 +8555,7 @@
   },
   "compat": {
     "msg": "Algunas funciones necesitan un navegador moderno (WebSocket, WebCrypto, BigInt, almacenamiento local). Falta aquí: %(missing)s. Explorar sigue funcionando — la firma quizá no.",
-    "insecure_hint": "This address is not a secure context, so the browser withholds WebCrypto. The browser is current — serve over https or localhost, or open the file directly.",
+    "insecure_hint": "Esta dirección no es un contexto seguro, así que el navegador no entrega WebCrypto. El navegador está al día — sirve por https o localhost, o abre el archivo directamente.",
     "dismiss": "Descartar"
   },
   "topops": {
@@ -8719,7 +8719,7 @@
     "disabled_notice": "El historial comunitario está apagado — actívalo en Ajustes para usar consultas de índice.",
     "filter": "Filtrar plantillas…",
     "hint_agg": "Conteos del intervalo; las partes son porcentajes exactos con matemática entera.",
-    "hint_donors": "Counts over the window; totals are raw integers — divide by the asset precision.",
+    "hint_donors": "Conteos del intervalo; los totales son enteros brutos — divide por la precisión del activo.",
     "hint_generic": "JSON del índice en bruto, intacto. Los saldos son enteros brutos — divide por la precisión del activo; los porcentajes son centésimas de punto (2000 = 20%).",
     "hint_holders": "Los saldos son enteros brutos — divide por la precisión del activo.",
     "hint_ops": "Las horas son horas de bloque (UTC); los ids de tipo se asignan vía la tabla de operaciones.",
@@ -8943,8 +8943,8 @@
     "status_connecting": "Conectando a la red…",
     "sign_send": "Firmar y enviar",
     "unknown_account": "Cuenta desconocida.",
-    "unknown_asset": "Unknown asset.",
-    "page_n": "Page %(n)s",
+    "unknown_asset": "Activo desconocido.",
+    "page_n": "Página %(n)s",
     "fee_live": "Comisión (en vivo)",
     "network_unavailable_short": "Red no disponible.",
     "account_name": "Nombre de cuenta ",
@@ -8978,12 +8978,12 @@
     "desc_help": "Ayuda de la billetera BitShares — guías de cuentas, operaciones, votación y recuperación. Empieza aquí si te atascas.",
     "title_login": "Iniciar sesión — BitShares Wallet",
     "desc_login": "Desbloquea tu billetera BitShares local — contraseña, brainkey o claves importadas. Las claves nunca salen de este dispositivo.",
-    "title_markets": "Markets — BitShares Wallet",
-    "desc_markets": "Browse BitShares order-book markets by 24h volume and open any pair's trading desk. No login needed.",
-    "title_account_net": "Account Network — BitShares Wallet",
-    "desc_account_net": "Map who an account sends to, lends to and borrows from — read from the community index. No login needed.",
-    "title_xrates": "Cross Rates — BitShares Wallet",
-    "desc_xrates": "Every pool asset priced in BTS and more at last swap prices. No login needed."
+    "title_markets": "Mercados — BitShares Wallet",
+    "desc_markets": "Explora los mercados del libro de órdenes de BitShares por volumen de 24 h y abre el escritorio de cualquier par. Sin registro.",
+    "title_account_net": "Red de cuentas — BitShares Wallet",
+    "desc_account_net": "Mapea a quién envía, a quién presta y de quién pide prestado una cuenta — leído del índice comunitario. Sin registro.",
+    "title_xrates": "Tipos de cambio cruzados — BitShares Wallet",
+    "desc_xrates": "Cada activo de pool con precio en BTS y más, al del último swap. Sin registro."
   },
   "pool_net": {
     "title": "Red de pools",
@@ -9059,11 +9059,11 @@
     "verdict_web": "Mercados alcanzables desde %(s)s: %(n)s"
   },
   "unlockconfirm": {
-    "password": "Password",
-    "empty_password": "Enter your wallet password.",
-    "unlock_failed": "Unlock failed.",
-    "cancel": "Back",
-    "unlock_post": "Unlock & post"
+    "password": "Contraseña",
+    "empty_password": "Introduce la contraseña de tu billetera.",
+    "unlock_failed": "Desbloqueo fallido.",
+    "cancel": "Atrás",
+    "unlock_post": "Desbloquea y publica"
   },
   "account_net": {
     "title": "Red de cuentas",
@@ -9153,10 +9153,10 @@
   },
   "i18n": {
     "badge_chip": "i18n",
-    "badge_label": "Translation status: machine translated, not human verified",
-    "badge_body": "These translations were written by a machine and have not been checked by a human. Lines marked * on the signing screens also show the original English.",
-    "badge_details": "What this means",
-    "badge_improve": "Help improve this translation",
+    "badge_label": "Estado de la traducción: traducida por máquina, sin revisión humana",
+    "badge_body": "Estas traducciones las escribió una máquina y no las ha revisado ninguna persona. Las líneas marcadas con * en las pantallas de firma muestran además el inglés original.",
+    "badge_details": "Qué significa esto",
+    "badge_improve": "Ayuda a mejorar esta traducción",
     "risk_show_english": "Show the English reference for this line",
     "risk_about_translations": "About these translations"
   }
