@@ -357,10 +357,19 @@ withEs(function () {
 });
 
 /* ---- 13. --fix-meta on a v1 dict still writes v1 ------------------------ */
+/* The v1 shape is BUILT here, not borrowed from the shipped file: the shipped
+ * es.json is v2 (task 8) and stays v2, so a case that reached into its
+ * `_meta.translated` would be testing a file state that no longer exists and
+ * would crash rather than fail. The claim list is the ten genuinely-translated
+ * keys, i.e. a stale/partial list — the same condition the case is about. */
 withEs(function () {
   var real = JSON.parse(fs.readFileSync(REAL_ES, "utf8"));
-  real._meta.translated = real._meta.translated.slice(0, 10);   /* a stale list */
-  return real;
+  var stale = leafKeys(real, "").filter(function (k) {
+    return getPath(real, k) !== getPath(enDict, k);
+  }).slice(0, 10);
+  var values = { _meta: { version: 1, untranslated: false, translated: stale } };
+  Object.keys(real).forEach(function (k) { if (k !== "_meta") values[k] = real[k]; });
+  return values;
 }, function (dir, esPath) {
   var before = JSON.parse(fs.readFileSync(esPath, "utf8"))._meta;
   var fixed = py(dir, "validate_translations.py", ["--fix-meta", "es"]);

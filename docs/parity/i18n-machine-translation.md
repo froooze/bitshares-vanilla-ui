@@ -177,7 +177,90 @@ python3 tooling/check_rot.py         # anti-rot gate (§4.5)
 bash tooling/check_types.sh          # tsc --checkJs, zero emit
 ```
 
-## 7. Open items / what a reviewer should press on
+And for the v2 conversion (§7):
+
+```
+node tooling/convert_locale_meta_v2.js es   # rewrites _meta, proves values unchanged
+python3 tooling/i18n_translation_census.py  # the differing/identical record, per locale
+python3 tooling/validate_translations.py es # pre-merge gate, version-aware
+node tooling/i18n-v2-meta-test.js           # 57 vectors: both _meta shapes enforced
+```
+
+## 7. `_meta` v2 — `es.json` converted, and what happened to its 3,233-key `translated` list
+
+`es.json` is now `_meta` version 2. `provenance: "machine"`, `verified: []`,
+`coverage` = all 3,938 `en.json` keys, `high_risk` = 1,118 keys enumerated from
+`vanilla/js/i18n/risk-keys.js` (`RiskKeys.listFor` against the shipped `es.json`
+and `en.json`) by `tooling/convert_locale_meta_v2.js`. No value changed: the
+non-`_meta` payload hashes to `6f86daca…1be53` before and after.
+
+### The `translated` list, and why it is not in the file any more
+
+v1's `_meta.translated` held **3,233** keys for `es`: the keys whose Spanish
+value differs from English. v2 has no such field, and nothing was lost:
+
+- **It is exactly recomputable, and the recomputation is proven equal.** v1's
+  own rule required a listed key to differ from English (`check_i18n.py`:
+  "translated %s identical to en"), so
+  `{k : es[k] ≠ en[k]}` IS the `translated` set — 3,233 entries, `== differs`
+  came back `True` for `es` and for all nine other v1 locales on the day of
+  conversion. `tooling/i18n_translation_census.py` prints the set
+  (`--keys es`), its size, and a payload hash; `check_i18n.py` prints the
+  complement (705 identical values) as a review note on every run.
+- **A second stored copy would be rot, not a record.** The list can only
+  disagree with the values it describes, and nothing but the bytes can settle
+  that — which is the whole reason v2 exists.
+- **The name cannot come back under v2 without reintroducing the lie.**
+  `i18n.js`'s `allowlisted()` reads `coverage` on a v2 dict and `translated` on
+  a v1 one (`vanilla/js/i18n.js:62`). One field name meaning "translated" in
+  one shape and "covered" in the other, in the same file, is the ambiguity gate
+  8 was written to remove. It would also be destroyed by
+  `validate_translations.py --fix-meta`, which rewrites a v2 `_meta` as exactly
+  the five v2 fields.
+- **What it was honest evidence OF is now stated more honestly.** The list said
+  "a human translated these 3,233". `provenance: "machine"` with `verified: []`
+  says the thing that is actually true of all 3,938: nobody has read any of
+  them. A list of 3,233 claims and a dict-wide "machine" are not the same
+  claim, and only the second one is defensible.
+
+The 3,233/705 split is therefore a **measurement, not a stored claim** — dated
+here, recomputable on demand, and never able to rot:
+
+```
+python3 tooling/i18n_translation_census.py            # every locale, both counts
+python3 tooling/i18n_translation_census.py --keys es  # the 3,233 differing keys
+python3 tooling/i18n_translation_census.py --hash es  # payload sha256
+```
+
+The other ten non-English dicts stay v1 for now; when they convert, the same
+rule applies to each, and the census tool prints their `translated`-equals-
+`differs` proof at the moment of conversion.
+
+### What the conversion changes in the running app
+
+Nothing renders differently. For the 3,233 translated keys `allowlisted()` was
+already true; for the 705 that equal English it was false and `t()` fell
+through to the en master, which returns the same string. What changes is the
+chip: `I18n.provenance("es")` is now `"machine"` and `isMachineLocale("es")`
+true, so the honesty chip appears in the header and the signing lines dual-line
+their English. Both surfaces key off that single condition
+(`vanilla/js/ui/i18n-badge.js:98`, `vanilla/js/ui/risk-text.js:64`). Pinned in
+`tooling/i18n-provenance-test.js` against the real twelve shipped dictionaries.
+
+### One consequence to press on
+
+`validate_translations.py es` no longer fails. It failed before conversion only
+because v1's `translated` list was a coverage claim that was 705 keys short; v2's
+`coverage` claim is honest (a value exists for all 3,938 keys), and v2
+deliberately downgrades "value equals English" from a failure to a counted review
+note, because no gate can tell a loanword (DEX, HTLC, a brand) from a machine
+that copied English. The remaining translation gap in Spanish is therefore
+tracked by the census tool and the gate's note — **not** by an exit code. Phase C
+progress must be read from `i18n_translation_census.py`, not from a red gate.
+
+---
+
+## 8. Open items / what a reviewer should press on
 
 - **`paintConfirmSingle` / `paintConfirmScaled` remain unkeyed** (§3). They
   are the trade desk's own confirm and do not use `ConfirmDialog`. The honest

@@ -165,6 +165,53 @@ assert.strictEqual(I18n.provenance("v2h"), "human");
 assert.strictEqual(I18n.isMachineLocale("v2h"), false);
 
 /* ------------------------------------------------------------------
+ * The SHIPPED dictionaries, seeded from disk — the honesty surfaces are
+ * only as honest as the `_meta` the files actually carry, so this pins
+ * the real state of all twelve rather than fixtures shaped like them.
+ *
+ * es is v2 / machine, which is what lights the badge and dual-lines the
+ * signing dialog (task 8 converted it; it was v1, and a v1 dict reports
+ * "none", before this). The other ten non-English dicts are still v1 and
+ * must keep reporting "none" — a v1 dict carries no provenance claim, and
+ * inventing one is exactly the false warning this function exists not to
+ * emit. Both directions are asserted together because either alone is a
+ * test that passes for the wrong reason: "es is machine" alone would still
+ * pass if provenance() returned "machine" for everything, and "the others
+ * are none" alone would still pass if nothing were ever machine-labelled.
+ * ------------------------------------------------------------------ */
+var SHIPPED = ["en", "de", "es", "fr", "hi", "it", "ja", "ko", "pt", "ru", "tr", "zh"];
+var shippedMeta = {};
+SHIPPED.forEach(function (code) {
+  var dict = JSON.parse(fs.readFileSync(path.join(ROOT, "vanilla/locales", code + ".json"), "utf8"));
+  shippedMeta[code] = dict._meta || {};
+  I18n._seed(code, dict);
+});
+
+assert.strictEqual(I18n.provenance("en"), "none", "en is the reference, never machine");
+assert.strictEqual(I18n.isMachineLocale("en"), false, "en never lights the chip");
+assert.strictEqual(shippedMeta.en.version, 1, "en.json is still the v1 master");
+
+assert.strictEqual(I18n.provenance("es"), "machine", "the shipped es dict is machine-filled");
+assert.strictEqual(I18n.isMachineLocale("es"), true, "…so the honesty chip lights for es");
+assert.strictEqual(shippedMeta.es.version, 2, "es.json declares the v2 shape");
+assert.strictEqual(shippedMeta.es.provenance, "machine",
+  "es.json says machine: no human has signed any of its strings");
+assert.deepStrictEqual(shippedMeta.es.verified, [],
+  "es.json claims no human sign-off, and 'human' with an empty verified is fatal to the gate");
+
+SHIPPED.filter(function (code) { return code !== "en" && code !== "es"; }).forEach(function (code) {
+  assert.strictEqual(I18n.provenance(code), "none",
+    code + " is still v1, and a v1 dict carries no provenance claim");
+  assert.strictEqual(I18n.isMachineLocale(code), false,
+    code + " must not be machine-labelled before its _meta says so");
+  assert.strictEqual(shippedMeta[code].version, 1, code + ".json is still the v1 shape");
+});
+
+/* A locale nothing has ever loaded must not warn either — "none" is the
+ * answer for unknown codes, so a missing dict can never fake a warning. */
+assert.strictEqual(I18n.provenance("zz"), "none");
+
+/* ------------------------------------------------------------------
  * Boot with the en master MISSING — the gap this fix closes, exercised
  * through the real boot path rather than the _seed seam.
  *
@@ -212,8 +259,15 @@ offline.loadCached().then(function (res) {
   /* …and the English reference the badge promises is there to consult. */
   assert.strictEqual(offline.enFor(k), enDict.menu.p_dashboard,
     "enFor falls back to the default t() was given (en master missing)");
-  assert.strictEqual(offline.provenance("es"), "none",
-    "the shipped v1 es dict is not machine-labelled (nothing to warn about yet)");
+  /* The badge is LIVE for es: the shipped dict is v2 / machine, so this
+   * scenario — the real boot path serving the real file — lights the chip
+   * over Spanish text no human has signed off. (It read "none" while
+   * es.json was v1; task 8 made the file declare what the strings have
+   * always been.) */
+  assert.strictEqual(offline.provenance("es"), "machine",
+    "the shipped es dict is machine-labelled, so the badge lights");
+  assert.strictEqual(offline.isMachineLocale("es"), true,
+    "…the one condition the badge and the dual-line check agree on");
 
   /* A key nobody rendered yet has no reference: the fallback is what t()
    * was told, so it can only speak for keys a view has already asked
