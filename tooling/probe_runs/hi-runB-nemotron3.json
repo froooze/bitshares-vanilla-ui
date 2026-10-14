@@ -1,0 +1,28 @@
+{
+  "_model": "nemotron-3-ultra-free (run B — independent sample)",
+  "_lang": "hi",
+  "_register": "formal (आप) — same financial register",
+  "_run": "B",
+  "answers": {
+    "T01_unlock_password": "अपना वॉलेट पासवर्ड डालें।",
+    "T02_unlock_sign": "हस्ताक्षर हेतु अनलॉक करें",
+    "T03_password_label": "पासवर्ड",
+    "T04_htlc_algo_row": "हैश एल्गोरिदम",
+    "T05_vesting_always_free": "0 (बैलेंस दावे सदा निःशुल्क)",
+    "T06_credit_borrowers": "स्वीकार्य उधारकर्ता (खाता + अधिकतम)",
+    "T07_credit_autodisable_future": "ऑटो-डिसेबल समय भविष्य में होना चाहिए।",
+    "T08_credit_prepare_create": "क्रिएट तैयार नहीं हो सका।",
+    "T09_transfer_amount_positive": "राशि शून्य से ऊपर होनी चाहिए।",
+    "T10_approval_broadcast": "स्वीकृत और प्रसारित।",
+    "T11_account_multisig_shared": "साझा खाता — सक्रिय %(ath)s/%(an)s · स्वामी %(oth)s/%(on)s।",
+    "T12_annual_member": "वार्षिक सदस्य (समाप्ति %(date)s)।",
+    "T13_about_showing": "%(shown)s / %(total)s दर्शाए जा रहे हैं",
+    "T14_bad_link": "अमान्य एक्सचेंज नंबर। मान्य रेंज: 1–%(total)s।",
+    "T15_createworker_serializer": "प्रसारण अनुपलब्ध: op-34 सीरियलाइज़र इस बंडल में लोड नहीं (tx.js/tx-send.js)।",
+    "T16_help_feed_body": "# कीमत फ़ीड प्रकाशित करना\nबाज़ार-पेग्ड संपत्ति का निपटान मूल्य [इश्यू डेस्क](#/assets/feed) से प्रकाशित करें।",
+    "T17_credit_collateral_legs": "स्वीकार्य संपार्श (संपत्ति + मूल्य पैर)",
+    "T18_debit_auth_row": "प्राधिकृत",
+    "T19_risk_show_english": "इस पंक्ति का अंग्रेज़ी संदर्भ दिखाएँ",
+    "T20_badge_body": "ये अनुवाद एक मशीन ने लिखे हैं और किसी मानव ने जाँच नहीं की। * से चिह्नित हर पंक्ति पर अंग्रेज़ी एक टैप दूर।"
+  }
+}
