@@ -134,7 +134,7 @@ var MenuUI = (function () {
       titleKey: "menu.section_personal", titleDefault: "Personal",
       blurbKey: "menu.blurb_personal", blurbDefault: "Chat, alerts, and your setup.",
       links: [
-        { href: "#/trollbox", icon: "text", titleKey: "menu.p_trollbox", titleDefault: "Trollbox", blurbKey: "menu.d_trollbox", blurbDefault: "On-chain public chat channels." },
+        { href: "#/trollbox", icon: "text", titleKey: "menu.p_trollbox", titleDefault: "Chat", blurbKey: "menu.d_trollbox", blurbDefault: "On-chain public chat channels." },
         { href: "#/favourites", icon: "fi-star", titleKey: "menu.p_favourites", titleDefault: "Favourites", blurbKey: "menu.d_favourites", blurbDefault: "Pinned markets, assets, and accounts." },
         { href: "#/alerts", icon: "alarm", titleKey: "menu.p_alerts", titleDefault: "Price Alerts", blurbKey: "menu.d_alerts", blurbDefault: "Get notified when a market crosses your price." },
         { href: "#/help", icon: "question-circle", titleKey: "menu.p_help", titleDefault: "Help", blurbKey: "menu.d_help", blurbDefault: "Guides for every part of the wallet." },

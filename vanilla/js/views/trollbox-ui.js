@@ -102,7 +102,7 @@ var TrollboxUI = (function () {
     var T = (typeof Trollbox !== "undefined") ? Trollbox : null;
     var wrap = doc.createElement("div"); wrap.className = "wrap trollbox-wrap"; root.appendChild(wrap);
 
-    wrap.appendChild(DOM.pageHead(doc, t("trollbox.title", "Trollbox"), "text"));
+    wrap.appendChild(DOM.pageHead(doc, t("trollbox.title", "Chat"), "text"));
     wrap.appendChild(        DOM.el(doc, "p", t("trollbox.intro", "Messages are posted on-chain from your account and visible to everyone. The sender pays a small network fee per message."), "muted"));
 
     if (!T) {

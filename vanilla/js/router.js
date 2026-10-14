@@ -281,7 +281,7 @@ var Router = (function () {
       placeholder("Markets")(root);
     } },
     { path: "/alerts", title: "Price Alerts", render: function (root) { NotifyUI.render(root); } },
-    { path: "/trollbox", title: "Trollbox", render: function (root) { TrollboxUI.renderTrollbox(root); } },
+    { path: "/trollbox", title: "Chat", render: function (root) { TrollboxUI.renderTrollbox(root); } },
     { path: "/assets", title: "Assets", render: function (root) { AssetUI.renderAssets(root); } },
     { path: "/assets/create", title: "Create Asset", render: function (root) { AssetUI.renderCreate(root); } },
     { path: "/assets/update/:symbol", title: "Update Asset", render: function (root, params) { AssetManageUI.renderUpdate(root, params && params.symbol); } },
