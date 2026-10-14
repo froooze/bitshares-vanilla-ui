@@ -8456,7 +8456,7 @@
     "map_touch_aria": "Mapa de pools. Nenhuma pool envolve estes ativos — escolha um par com pool ou crie uma em #/pools.",
     "map_core_aria": "Mapa de pools. Pressione Enter para abrir o ativo principal.",
     "zero_supply_hint": " Crie um pelo formulário Stake desta mesa — ele precisa de um ativo de cota com oferta zero de #/assets/create primeiro.",
-    "owned_hint": " Aplique ambas as pernas em qualquer pool acima — as pools próprias aparecem aqui.",
+    "owned_hint": " Faça stake em ambos os lados em qualquer pool acima - as pools próprias aparecem aqui.",
     "map_a_ok": "{s} conecta-se ao BTS",
     "map_a_hops": "{s} a {n} saltos do BTS",
     "map_a_orphan": "AVISO: {s} está isolado!",

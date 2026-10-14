@@ -1,0 +1,102 @@
+{
+  "es": {
+    "proposal.no_touched_account_is_in_your_local_con": {
+      "original": "Ninguna cuenta implicada está en sus contactos locales ni en sus cuentas favoritas. ",
+      "replacement": "Ninguna cuenta implicada está en tus contactos locales ni en tus cuentas favoritas. "
+    },
+    "instant.effective_suffix_dash": {
+      "original": " (efectivo): —",
+      "replacement": " (efectivo): -"
+    },
+    "pool.owned_hint": {
+      "original": " Participa ambas patas en cualquier pool de arriba — tus pools propios aparecen aquí.",
+      "replacement": " Aporta a ambos lados en cualquier pool de arriba - tus pools propios aparecen aquí."
+    }
+  },
+  "ru": {
+    "transfer.proposer_mismatch_prefix": {
+      "original": "Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — получено ",
+      "replacement": "Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — фактически "
+    },
+    "pool.owned_hint": {
+      "original": " Застейкайте обе стороны в любом пуле выше — собственные пулы перечислены здесь.",
+      "replacement": " Застейкайте обе стороны в любом пуле выше - собственные пулы перечислены здесь."
+    }
+  },
+  "tr": {
+    "transfer.proposer_mismatch_prefix": {
+      "original": "Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — alınan ",
+      "replacement": "Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — gerçekte "
+    },
+    "market.fills_hint": {
+      "original": " Emirler eşleşince dolumlar görünür — Alış/Satış panellerinden bir emir girin.",
+      "replacement": " Emirler eşleşince dolumlar görünür - Alış/Satış panellerinden bir emir girin."
+    }
+  },
+  "de": {
+    "instant.effective_suffix_dash": {
+      "original": " (effektiv): —",
+      "replacement": " (effektiv): -"
+    },
+    "instant.walk_suffix": {
+      "original": " walken",
+      "replacement": " Walk"
+    },
+    "shell.clear_search_hint": {
+      "original": " Suche löschen, um alle Seiten zu sehen.",
+      "replacement": " Suche leeren, um alle Seiten zu sehen."
+    },
+    "instant.walkthrough_bids_mid": {
+      "original": " — Walkthrough nutzt Bids (Verkauf von ",
+      "replacement": " - Walkthrough nutzt Bids (Verkauf von "
+    }
+  },
+  "fr": {
+    "pool.owned_hint": {
+      "original": " Stakez les deux jambes dans un pool ci-dessus — les pools détenus s'affichent ici.",
+      "replacement": " Stakez les deux côtés dans un pool ci-dessus - les pools détenus s'affichent ici."
+    },
+    "proposal.err_blind_disabled": {
+      "original": "Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle vendored (consultation en lecture seule uniquement).",
+      "replacement": "Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle intégrée (consultation en lecture seule uniquement)."
+    }
+  },
+  "hi": {
+    "instant.effective_suffix_dash": {
+      "original": " (प्रभावी): —",
+      "replacement": " (प्रभावी): -"
+    },
+    "vote.proxy_follows": {
+      "original": " — आपकी स्टेक इस खाते का अनुसरण करती है; नीचे दी गई वोट स्लेट केवल-पठन है।",
+      "replacement": " - आपकी स्टेक इस खाते का अनुसरण करती है; नीचे दी गई वोट स्लेट केवल-पठन है।"
+    },
+    "instant.walkthrough_bids_mid": {
+      "original": " — वॉकथ्रू बिड का उपयोग करता है (बेचा जा रहा ",
+      "replacement": " - वॉकथ्रू बिड का उपयोग करता है (बेचा जा रहा "
+    }
+  },
+  "it": {
+    "pool.owned_hint": {
+      "original": " Metta in stake entrambe le gambe in una pool qui sopra — le pool possedute saranno elencate qui.",
+      "replacement": " Metta in stake entrambi i lati in una pool qui sopra - le pool possedute saranno elencate qui."
+    }
+  },
+  "ja": {
+    "topops.skipped": {
+      "original": " — %(n)s ブロック読み取り不可、スキップ。",
+      "replacement": " - %(n)s ブロック読み取り不可、スキップ。"
+    }
+  },
+  "ko": {
+    "topops.skipped": {
+      "original": " — %(n)s개 블록을 읽을 수 없어 건너뜀.",
+      "replacement": " - %(n)s개 블록을 읽을 수 없어 건너뜀."
+    }
+  },
+  "pt": {
+    "pool.owned_hint": {
+      "original": " Aplique ambas as pernas em qualquer pool acima — as pools próprias aparecem aqui.",
+      "replacement": " Faça stake em ambos os lados em qualquer pool acima - as pools próprias aparecem aqui."
+    }
+  }
+}

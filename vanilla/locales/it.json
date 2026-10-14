@@ -8456,7 +8456,7 @@
     "map_touch_aria": "Mappa pool. Nessuna pool tocca questi asset — scelga una coppia con una pool oppure ne crei una in #/pools.",
     "map_core_aria": "Mappa pool. Prema Invio per aprire l'asset core.",
     "zero_supply_hint": " Ne crei uno dal modulo Stake di questo desk — serve prima un asset quota a supply zero da #/assets/create.",
-    "owned_hint": " Metta in stake entrambe le gambe in una pool qui sopra — le pool possedute saranno elencate qui.",
+    "owned_hint": " Metta in stake entrambi i lati in una pool qui sopra - le pool possedute saranno elencate qui.",
     "map_a_ok": "{s} collegato a BTS",
     "map_a_hops": "{s} {n} hop verso BTS",
     "map_a_orphan": "ATTENZIONE: {s} è orfano!",
