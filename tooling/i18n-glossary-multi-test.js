@@ -72,7 +72,7 @@ var SPEC = {
   ko: {
     word: "korean",
     COUNTS: {
-      "wallet": [["지갑",189]], "account": [["계정",298]], "asset": [["자산",290]],
+      "wallet": [["지갑",189]], "account": [["계정",298]], "asset": [["자산",287]],
       "balance": [["잔액",76]], "claim": [["청구",14]],
       "smartcoin": [["스마트코인",22]], "collateral": [["담보",46]],
       "precision": [["정밀도",17]], "share": [["지분",20]],

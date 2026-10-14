@@ -89,7 +89,7 @@ assert.deepStrictEqual(badProof,[],"every evidence citation shows the agreed Ita
  * limite", not "order"), so the mapping lives here where a reviewer sees it. */
 var COUNTS = {
   "wallet": ["wallet",190], "account": ["account",300], "balance": ["saldo",35],
-  "asset": ["asset",274], "smartcoin": ["smartcoin",21], "collateral": ["collaterale",41],
+  "asset": ["asset",272], "smartcoin": ["smartcoin",21], "collateral": ["collaterale",41],
   "precision": ["precisione",18], "share": ["quote",35], "pool share": ["quote LP",3],
   "stake": ["stake",23], "market": ["mercato",116], "exchange": ["exchange",23],
   "desk": ["sezione",39], "swap": ["swap",41], "orderbook": ["book",30],
@@ -98,7 +98,7 @@ var COUNTS = {
   "memo": ["memo",48], "brainkey": ["brainkey",41], "witness": ["witness",35],
   "committee": ["comitato",24], "worker": ["worker",36], "proxy": ["proxy",21],
   "slate": ["slate",7], "vesting": ["vesting",44], "proposal": ["proposta",65],
-  "ticket": ["ticket",31], "HTLC": ["HTLC",25], "liquidity pool": ["pool",121],
+  "ticket": ["ticket",31], "HTLC": ["HTLC",25], "liquidity pool": ["pool",120],
   "credit offer": ["offerta di credito",11], "deal": ["deal",28], "gateway": ["gateway",29],
   "node": ["nodo",49], "chain": ["chain",130], "authority": ["autorit",22],
   "issuer": ["erogatore",17], "producer": ["produttor",20], "publisher": ["publisher",8],
