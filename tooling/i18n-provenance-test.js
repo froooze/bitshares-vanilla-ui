@@ -181,9 +181,11 @@ assert.strictEqual(I18n.isMachineLocale("v2h"), false);
  * ------------------------------------------------------------------ */
 var SHIPPED = ["en", "de", "es", "fr", "hi", "it", "ja", "ko", "pt", "ru", "tr", "zh"];
 var shippedMeta = {};
+var shippedDicts = {};
 SHIPPED.forEach(function (code) {
   var dict = JSON.parse(fs.readFileSync(path.join(ROOT, "vanilla/locales", code + ".json"), "utf8"));
   shippedMeta[code] = dict._meta || {};
+  shippedDicts[code] = dict;
   I18n._seed(code, dict);
 });
 
@@ -199,13 +201,37 @@ assert.strictEqual(shippedMeta.es.provenance, "machine",
 assert.deepStrictEqual(shippedMeta.es.verified, [],
   "es.json claims no human sign-off, and 'human' with an empty verified is fatal to the gate");
 
-SHIPPED.filter(function (code) { return code !== "en" && code !== "es"; }).forEach(function (code) {
-  assert.strictEqual(I18n.provenance(code), "none",
-    code + " is still v1, and a v1 dict carries no provenance claim");
-  assert.strictEqual(I18n.isMachineLocale(code), false,
-    code + " must not be machine-labelled before its _meta says so");
-  assert.strictEqual(shippedMeta[code].version, 1, code + ".json is still the v1 shape");
+/* Every shipped non-English dict is now _meta v2 and machine-filled, so
+ * every one of them lights the honesty chip. This used to assert the
+ * opposite (that they were still v1 and reported "none"); the assertion
+ * was correct when only es had been migrated, and became a lie when the
+ * other ten were. The property it was really protecting — a dict must not
+ * be machine-labelled unless its own _meta says so — is checked twice
+ * below: once against the synthetic v1 dict, once against the unknown code. */
+SHIPPED.filter(function (code) { return code !== "en"; }).forEach(function (code) {
+  assert.strictEqual(shippedMeta[code].version, 2, code + ".json declares the v2 shape");
+  assert.strictEqual(shippedMeta[code].provenance, "machine",
+    code + ".json says machine: no human has signed any of its strings");
+  assert.deepStrictEqual(shippedMeta[code].verified, [],
+    code + ".json claims no human sign-off");
+  assert.strictEqual(I18n.provenance(code), "machine",
+    code + " is machine-filled, so the honesty chip must light for it");
+  assert.strictEqual(I18n.isMachineLocale(code), true,
+    code + " must light its chip — this is the whole point of the v2 migration");
 });
+
+/* The v1 branch must still report "none": a dict that has NOT declared a
+ * provenance claim must never be machine-labelled. Proven with a synthetic
+ * v1 dict, since no shipped dict exercises that path any more. */
+(function () {
+  var v1 = JSON.parse(JSON.stringify(shippedDicts.es));
+  v1._meta = { version: 1, untranslated: false, translated: [] };
+  I18n._seed("v1probe", v1);
+  assert.strictEqual(I18n.provenance("v1probe"), "none",
+    "a v1 dict carries no provenance claim and must never light the chip");
+  assert.strictEqual(I18n.isMachineLocale("v1probe"), false,
+    "a v1 dict must not be machine-labelled before its _meta says so");
+})();
 
 /* A locale nothing has ever loaded must not warn either — "none" is the
  * answer for unknown codes, so a missing dict can never fake a warning. */
