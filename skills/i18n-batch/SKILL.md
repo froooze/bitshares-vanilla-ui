@@ -25,9 +25,23 @@ verify English-identical rendering.
    byte-verbatim — a translation that breaks a placeholder is a bug.
 3. **Dicts.** Entries + English values in ALL 12 `vanilla/locales/*.json`
    (en,de,es,fr,hi,it,ja,ko,pt,ru,tr,zh) + `en.json` inventory array
-   (`_meta.translated`). Non-en dicts keep English outside allowlists
-   (stubs honest — never machine-translate into "verified"). `tooling/apply_i18n_batch<N>.py`
+   (`_meta.translated` on v1 dicts, `_meta.coverage` on v2 dicts). Non-en
+   dicts keep English in one of exactly two honest states, never a third:
+   (a) an unclaimed stub (v1: outside `translated`; v2: absent from
+   `verified`), honestly English; or (b) a machine-filled value in a
+   `provenance: "machine"` dict, which the app labels in-app via the header
+   chip, dual-line signing text, and the limitations article. Never mark a
+   machine string `verified` — no unverified string may ever read as
+   human-checked, and `check_i18n.py` rejects `provenance: "human"` with an
+   empty `verified` as a contradiction. `tooling/apply_i18n_batch<N>.py`
    converter scripts are committable reuse (`batch3`/`batch4` precedent).
+   NEVER run `tooling/i18n_add_keys.py`: it writes English into every dict
+   and has silently reverted thousands of translated lines before — it now
+   refuses by default, and deleting it with its two importers is the durable
+   fix (see the Task 6 review). Glossaries live in `docs/i18n-glossary/`
+   (one per locale) and every mandated term must be the form that locale's
+   dict actually uses, with counter-examples enumerated — a glossary that
+   contradicts its dict sends an auditor to "fix" correct strings.
 4. **Copy-voice (RAW5 precedent — every human-audit wave re-fixed these).**
    Sentence-case defaults ("My account", not "My Account"); shared-glossary
    BitShares terms per language (witness, committee, worker, proxy, brainkey,
@@ -46,5 +60,4 @@ verify English-identical rendering.
 - New `t()` key without all 12 dict entries (gate goes red).
 - Wrapping dynamic concats whole (breaks translators + drift check).
 - Minting a key whose default duplicates an existing one.
-- Translating non-en dicts by machine (stubs stay English outside allowlists).
-- Title-case default that breaks sentence-case voice; per-language glossary improvisation.
+- Machine-filling a non-en dict WITHOUT marking it `provenance: "machine"` and emitting the in-app honesty surfaces. A machine string that reads as verified — in `_meta.verified`, in an allowlist claim, or unlabeled in the UI — is the original rot this skill exists to prevent, and both gates reject it.- Title-case default that breaks sentence-case voice; per-language glossary improvisation.
