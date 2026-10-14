@@ -202,7 +202,7 @@ var VoteSlate = (function () {
     var tabs = [
       ["witness", t("vote.tab_witnesses", "Witnesses (") + setSize(st.draft.witness) + ")"],
       ["committee", t("vote.tab_committee", "Committee (") + setSize(st.draft.committee) + ")"],
-      ["worker", t("vote.tab_workers", "Workers (") + setSize(st.draft.worker) + ")"]
+      ["worker", t("vote.tab_workers", "Grant proposals (") + setSize(st.draft.worker) + ")"]
     ];
     tabs.forEach(function (t) {
       var b = touchable(el(doc, "button", t[1], st.tab === t[0] ? "vote-tab active" : "vote-tab"));
@@ -285,8 +285,8 @@ var VoteSlate = (function () {
       if (entries.length === 0) {
         rowsBox.appendChild(el(doc, "p",
           st.tab === "worker"
-            ? t("vote.no_workers", "No workers found. Testnets often have none — this is valid, not an error.")
-            : t("vote.empty_tab", "Nothing in this list.") + t("vote.empty_hint", " Entries appear when the chain carries them — workers are proposed from #/create-worker."), "muted"));
+            ? t("vote.no_workers", "No grant proposals found. Testnets often have none — this is valid, not an error.")
+            : t("vote.empty_tab", "Nothing in this list.") + t("vote.empty_hint", " Entries appear when the chain carries them — grant proposals come from #/create-worker."), "muted"));
         return;
       }
       if (shown.length === 0) {

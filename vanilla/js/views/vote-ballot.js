@@ -292,7 +292,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
      * counts/shares below are labeled live chain reads, never estimates.
      * Static text, no chain data; sits directly under the h1 so screen
      * readers meet context before the account strip. */
-    wrap.appendChild(el(doc, "p", t("vote.ballot_intro", "Your stake elects witnesses and committee and funds workers — all counts and shares below are live chain reads."), "muted"));
+    wrap.appendChild(el(doc, "p", t("vote.ballot_intro", "Your stake elects witnesses and committee and funds grant proposals — all counts and shares below are live chain reads."), "muted"));
     var meLine = el(doc, "p", null, "muted");
     meLine.textContent = t("vote.voting_as", "Voting as: ") + me.name + " (" + me.id + ")";
     wrap.appendChild(meLine);
@@ -327,7 +327,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
     govRow.appendChild(joinCBtn);
     govRow.appendChild(lockLink);
     wrap.appendChild(govRow);
-    var budgetLine = el(doc, "p", t("vote.worker_budget_loading", "Worker budget: loading…"), "muted");
+    var budgetLine = el(doc, "p", t("vote.worker_budget_loading", "Grant budget: loading…"), "muted");
     budgetLine.setAttribute("aria-live", "polite");
     wrap.appendChild(budgetLine);
     /* Punchlist MED: hide-legacy-proposals toggle (Workers.jsx:129,153
@@ -343,8 +343,8 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
       box.setAttribute("aria-disabled", "true");
       touchable(box);
       lab.appendChild(box);
-      lab.appendChild(doc.createTextNode(t("vote.hide_legacy_label", " Hide legacy proposals (always on — expired workers are excluded at fetch)")));
-      lab.title = t("vote.hide_legacy_title", "Worker lists come from get_all_workers(false); expired rows never arrive.");
+      lab.appendChild(doc.createTextNode(t("vote.hide_legacy_label", " Hide legacy proposals (always on — expired grant proposals are excluded at fetch)")));
+      lab.title = t("vote.hide_legacy_title", "Grant lists come from get_all_grant proposals(false); expired rows never arrive.");
       wrap.appendChild(lab);
     })();
     var joinBox = el(doc, "div", null, "vote-join");

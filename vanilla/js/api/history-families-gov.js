@@ -96,7 +96,7 @@ HistorySummary.SUMMARIZERS = HistorySummary.SUMMARIZERS || {};
   /* Tag 34 worker_create (worker.hpp:79-95): name is inline, no join. */
   function sumWorkerCreate(p) {
     if (!p || typeof p.name !== "string" || !p.name) return null;
-    return t("account.sum_worker_create", "Created worker \"%(name)s\"", { name: p.name });
+    return t("account.sum_worker_create", "Created grant proposal \"%(name)s\"", { name: p.name });
   }
   /* Tag 22 proposal_create (proposal.hpp:70-92): COUNT of proposed_ops only,
    * never recursed (op_wrappers carry full nested ops). */

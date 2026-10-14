@@ -78,7 +78,7 @@ var NewsUI = (function () {
     [["#/market/BTS_USD", t("news.exchange_trade_on_the_dex", "Exchange — trade on the DEX")],
      ["#/account/me", t("news.account_overview_balances_and_history", "Account overview — balances and history")],
      ["#/transfer", t("news.transfer_send_assets", "Transfer — send assets")],
-     ["#/voting", t("news.voting_witnesses_committee_workers", "Voting — witnesses, committee, workers")],
+     ["#/voting", t("news.voting_witnesses_committee_workers", "Voting — witnesses, committee, grant proposals")],
       ["#/explorer", t("news.explorer_blocks_and_transactions", "Explore the chain")],
      ["#/help", t("news.help_how_each_part_works", "Help — how each part works")],
      ["#/settings", t("news.settings_nodes_and_themes", "Settings — nodes and themes")]].forEach(function (pr) {

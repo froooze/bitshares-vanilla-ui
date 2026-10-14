@@ -276,7 +276,7 @@ HS.enrich(asAlice, "1.2.1").then(function (out) {
   eq(out[1]._summary, "Updated witness bob", "tag 21 witness update");
   eq(out[2]._summary, "Became committee member: carol", "tag 29 committee create");
   eq(out[3]._summary, "Updated committee member carol", "tag 30 committee update");
-  eq(out[4]._summary, 'Created worker "my-worker"', "tag 34 worker create");
+  eq(out[4]._summary, 'Created grant proposal "my-worker"', "tag 34 worker create");
   eq(out[5]._summary, "Proposed 2 operations", "tag 22 proposal create");
   eq(out[6]._summary, "Approved proposal 1.10.5", "tag 23 proposal update");
   eq(out[7]._summary, "Deleted proposal 1.10.5", "tag 24 proposal delete");

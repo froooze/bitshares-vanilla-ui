@@ -119,7 +119,7 @@ VoteUI._gov = VoteUI._gov || {};
    * Params: doc, line (mutated in place), myGen (generation guard). */
   function fillBudget(doc, line, myGen) {
     if (typeof Chain === "undefined" || !Chain || typeof Chain.db !== "function") {
-      line.textContent = t("vote.worker_budget", "Worker budget: —");
+      line.textContent = t("vote.worker_budget", "Grant budget: —");
       return;
     }
     Chain.db().then(function (dbId) {
@@ -137,7 +137,7 @@ VoteUI._gov = VoteUI._gov || {};
         : "Worker budget: —";
     }).catch(function () {
       if (!VoteUI._ballot.isLive(myGen)) return;
-      line.textContent = t("vote.worker_budget", "Worker budget: —");
+      line.textContent = t("vote.worker_budget", "Grant budget: —");
     });
   }
 
@@ -219,7 +219,7 @@ VoteUI._gov = VoteUI._gov || {};
       else box.appendChild(totLine);
     }).catch(function (e) {
       if (!VoteUI._ballot.isLive(myGen)) return;
-      fundP.textContent = t("vote.funding_unavailable_prefix", "Worker funding unavailable (") +
+      fundP.textContent = t("vote.funding_unavailable_prefix", "Grant funding unavailable (") +
         ((e && e.message) || "read failed") + ").";
     });
     /* Top voters + proxy-vote matrix (best-effort bounded join). */

@@ -100,11 +100,11 @@ var CreateWorkerUI = (function () {
     var wrap = makeWrap(doc, root);
     if (typeof Account === "undefined" || !Account ||
         typeof Format === "undefined" || !Format) {
-      showError(doc, wrap, t("createworker.worker_backend_missing_js_account_js_or_js_fo", "Worker backend missing: js/account.js or js/format.js failed to load."));
+      showError(doc, wrap, t("createworker.worker_backend_missing_js_account_js_or_js_fo", "Grant proposal backend missing: js/account.js or js/format.js failed to load."));
       return;
     }
     if (typeof Chain !== "undefined" && Chain && Chain.status().state !== "open") {
-      wrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Worker"), null));
+      wrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Grant Proposal"), null));
       wrap.appendChild(DOM.el(doc, "p", t("common.status_connecting", "Connecting to network…"), "muted"));
       var hashAtEntry = (typeof location !== "undefined" && location.hash) || "", settled = false;
       var off = Store.subscribe("connection", function (st) {
@@ -120,7 +120,7 @@ var CreateWorkerUI = (function () {
         if (typeof location !== "undefined" && location.hash !== hashAtEntry) return;
         DOM.clear(root);
         var failWrap = makeWrap(doc, root);
-        failWrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Worker"), null));
+        failWrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Grant Proposal"), null));
         showError(doc, failWrap, new Error("not connected"), t("common.network_unavailable_short", "Network unavailable."));
         var cwstat = DOM.el(doc, "p", "", "muted");
         try { cwstat.setAttribute("aria-live", "polite"); } catch (e) { /* text stands */ }
@@ -161,16 +161,16 @@ var CreateWorkerUI = (function () {
     if (myGen !== gen) return;
     DOM.clear(root);
     var wrap = makeWrap(doc, root);
-    wrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Worker"), null));
-    wrap.appendChild(DOM.el(doc, "p", t("createworker.draft_a_worker_op_34_preview_is_live_review_q", "Draft a worker (op %(op)s). Preview is live; review quotes the live fee, then Sign & Send broadcasts op %(op)s directly — workers are created by direct op, not by proposal.", { op: 34 }), "muted"));
+    wrap.appendChild(DOM.pageHead(doc, t("createworker.create_worker", "Create Grant Proposal"), null));
+    wrap.appendChild(DOM.el(doc, "p", t("createworker.draft_a_worker_op_34_preview_is_live_review_q", "Draft a grant proposal (op %(op)s). Preview is live; review quotes the live fee, then Sign & Send broadcasts op %(op)s directly — grant proposals are created by direct op, not by proposal.", { op: 34 }), "muted"));
     /* LOW punchlist: lifetime-member requirement note + per-field helper
      * texts (CreateWorker concept). Batch-3 i18n: keyed, no new routes. */
-    wrap.appendChild(DOM.el(doc, "p", t("createworker.publishing_a_worker_requires_a_lifeti", "Publishing a worker requires a lifetime-member account — basic accounts cannot pay this fee. The owner below must already be upgraded."), "muted"));
+    wrap.appendChild(DOM.el(doc, "p", t("createworker.publishing_a_worker_requires_a_lifeti", "Publishing a grant proposal requires a lifetime-member account — basic accounts cannot pay this fee. The owner below must already be upgraded."), "muted"));
     var ownerF = Forms.labeledInput(doc, t("createworker.owner_account", "Owner account ") + " ", { id: "cw-owner", value: P.owner, placeholder: "account-name", inputmode: "text" });
     ownerF.err = DOM.el(doc, "div", "", "error");
     ownerF.err.setAttribute("aria-live", "polite"); ownerF.err.style.display = "none"; ownerF.row.appendChild(ownerF.err);
     wrap.appendChild(ownerF.row);
-    wrap.appendChild(DOM.el(doc, "p", t("createworker.owner_pays_the_fee_and_receives_the_", "Owner pays the fee and receives the worker pay — use a lifetime-member account you control."), "muted"));
+    wrap.appendChild(DOM.el(doc, "p", t("createworker.owner_pays_the_fee_and_receives_the_", "Owner pays the fee and receives the grant pay — use a lifetime-member account you control."), "muted"));
     var beginF = Forms.labeledInput(doc, t("createworker.work_begins", "Work begins ") + " ", { id: "cw-begin", value: P.begin, type: "datetime-local" });
     beginF.err = DOM.el(doc, "div", "", "error");
     beginF.err.setAttribute("aria-live", "polite"); beginF.err.style.display = "none"; beginF.row.appendChild(beginF.err);
@@ -186,7 +186,7 @@ var CreateWorkerUI = (function () {
     payF.err.setAttribute("aria-live", "polite"); payF.err.style.display = "none"; payF.row.appendChild(payF.err);
     wrap.appendChild(payF.row);
     wrap.appendChild(DOM.el(doc, "p", t("createworker.daily_pay_in_core_asset_bts_precision", "Daily pay in core asset (BTS, precision 5), greater than zero and below the chain maximum."), "muted"));
-    var nameF = Forms.labeledInput(doc, t("createworker.worker_name", "Worker name ") + " ", { id: "cw-name", value: P.name, placeholder: "2026-maintenance", inputmode: "text" });
+    var nameF = Forms.labeledInput(doc, t("createworker.worker_name", "Grant proposal name ") + " ", { id: "cw-name", value: P.name, placeholder: "2026-maintenance", inputmode: "text" });
     nameF.err = DOM.el(doc, "div", "", "error");
     nameF.err.setAttribute("aria-live", "polite"); nameF.err.style.display = "none"; nameF.row.appendChild(nameF.err);
     wrap.appendChild(nameF.row);
@@ -207,7 +207,7 @@ var CreateWorkerUI = (function () {
     wrap.appendChild(DOM.el(doc, "p", t("createworker.vesting_choice_only_whole_days_0_6553", "Vesting choice only: whole days 0..65535 for the vesting pay destination; hidden otherwise."), "muted"));
     function syncDays() { daysF.row.style.display = (kindSel.value === "vesting") ? "" : t("createworker.none", "none"); }
     kindSel.addEventListener("change", syncDays); syncDays();
-    var previewBtn = touchable(DOM.el(doc, "button", t("createworker.preview_worker", "Preview worker")));
+    var previewBtn = touchable(DOM.el(doc, "button", t("createworker.preview_worker", "Preview grant proposal")));
     previewBtn.id = "cw-preview"; previewBtn.type = "button"; wrap.appendChild(previewBtn);
     var out = DOM.el(doc, "div"); wrap.appendChild(out);
     previewBtn.addEventListener("click", function () {
@@ -223,15 +223,15 @@ var CreateWorkerUI = (function () {
         if (myGen === gen) paintPreview(doc, root, myGen, P, R);
       }).catch(function (e) {
         if (myGen !== gen) return;
-        var msg = (e && e.message) ? e.message : String(e || t("createworker.could_not_preview_the_worker", "Could not preview the worker."));
+        var msg = (e && e.message) ? e.message : String(e || t("createworker.could_not_preview_the_worker", "Could not preview the grant proposal."));
         if (msg === "bad-owner") { msg = t("createworker.enter_the_owner_account_name", "Enter the owner account name."); setFieldError(ownerF, msg); }
         else if (msg === "bad-dates") { msg = t("createworker.work_end_must_be_after_work_begin", "Work end must be after work begin."); setFieldError(endF, msg); }
         else if (msg.indexOf("bad pay") === 0 || msg.indexOf("Pay must be") === 0) setFieldError(payF, msg);
-        else if (msg === "bad-name") { msg = t("createworker.enter_a_worker_name", "Enter a worker name."); setFieldError(nameF, msg); }
+        else if (msg === "bad-name") { msg = t("createworker.enter_a_worker_name", "Enter a grant proposal name."); setFieldError(nameF, msg); }
         else if (msg === "bad-kind") { msg = t("createworker.pick_a_pay_destination_refund_vesting_or_burn", "Pick a pay destination (refund, vesting or burn)."); }
         else if (msg.indexOf("esting period") !== -1) setFieldError(daysF, msg);
         out.removeChild(status); previewBtn.disabled = false;
-        showError(doc, out, msg, t("createworker.could_not_preview_the_worker", "Could not preview the worker."));
+        showError(doc, out, msg, t("createworker.could_not_preview_the_worker", "Could not preview the grant proposal."));
       });
     });
   }
@@ -313,7 +313,7 @@ var CreateWorkerUI = (function () {
     if (myGen !== gen) return;
     DOM.clear(root);
     var wrap = makeWrap(doc, root);
-    wrap.appendChild(DOM.pageHead(doc, t("createworker.worker_preview_op_34", "Worker preview (op %(op)s)", { op: 34 }), null));
+    wrap.appendChild(DOM.pageHead(doc, t("createworker.worker_preview_op_34", "Grant proposal preview (op %(op)s)", { op: 34 }), null));
     var list = DOM.el(doc, "dl", null, "xfer-confirm");
     function row(term, text, title) {
       list.appendChild(DOM.el(doc, "dt", term));
@@ -369,7 +369,7 @@ var CreateWorkerUI = (function () {
    * review button; onSent locks it so a created worker can never be
    * double-signed from a stale confirm. */
   function paintConfirm(doc, box, myGen, P, R, opData, onBack, onSent) {
-    box.appendChild(DOM.el(doc, "h2", t("createworker.confirm_worker_op_34", "Confirm worker (op %(op)s)", { op: 34 })));
+    box.appendChild(DOM.el(doc, "h2", t("createworker.confirm_worker_op_34", "Confirm grant proposal (op %(op)s)", { op: 34 })));
     var list = DOM.el(doc, "dl", null, "xfer-confirm");
     function row(term, text, title) {
       list.appendChild(DOM.el(doc, "dt", term));
@@ -399,7 +399,7 @@ var CreateWorkerUI = (function () {
       Promise.resolve().then(function () {
         if (typeof AssetOps === "undefined" || !AssetOps ||
             typeof AssetOps.sendAndProve !== "function") {
-          throw new Error(t("createworker.worker_backend_missing_js_asset_ops_js_failed", "Worker backend missing: js/asset-ops.js failed to load."));
+          throw new Error(t("createworker.worker_backend_missing_js_asset_ops_js_failed", "Grant proposal backend missing: js/asset-ops.js failed to load."));
         }
         wif = (typeof Wallet !== "undefined" && Wallet && Wallet.keys && Wallet.keys.active)
           ? Wallet.keys.active.wif : null;
@@ -409,7 +409,7 @@ var CreateWorkerUI = (function () {
       }).then(function (u) {
         unsigned = u;
         if (myGen !== gen) throw new Error("stale-view");
-        status.textContent = t("createworker.reading_existing_workers", "Reading existing workers…");
+        status.textContent = t("createworker.reading_existing_workers", "Reading existing grant proposals…");
         return Chain.db();
       }).then(function (dbId) {
         return Chain.call(dbId, "get_workers_by_account", [R.ownerName]);

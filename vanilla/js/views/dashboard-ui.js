@@ -848,7 +848,7 @@ var DashboardUI = (function () {
     ]));
     section.appendChild(linkPara(doc, [
       ["#/explorer", t("news.explorer_blocks_and_transactions", "Explore the chain")],
-      ["#/voting", t("news.voting_witnesses_committee_workers", "Voting — witnesses, committee, workers")],
+      ["#/voting", t("news.voting_witnesses_committee_workers", "Voting — witnesses, committee, grant proposals")],
       ["#/settings", t("news.settings_nodes_and_themes", "Settings — nodes and themes")],
       ["#/help", t("news.help_how_each_part_works", "Help — how each part works")]
     ]));
@@ -1267,7 +1267,7 @@ var DashboardUI = (function () {
       ["#/htlc",
         t("htlc.title", "HTLC"), t("help.topic_htlc_text", "Hash-locked swaps that either pay or refund.")],
       ["#/voting",
-        t("menu.section_govern", "Govern"), t("help.topic_voting_text", "Vote witnesses, committee, workers — or hand it to a proxy.")],
+        t("menu.section_govern", "Govern"), t("help.topic_voting_text", "Vote witnesses, committee, grant proposals — or hand it to a proxy.")],
       ["#/explorer",
         t("splash.card_explore_t", "Explorer"), t("splash.card_explore_d", "Read blocks and account history.")],
       ["#/wallet",
