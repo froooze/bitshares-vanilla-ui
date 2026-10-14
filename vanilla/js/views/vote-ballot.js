@@ -409,7 +409,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
     var hasProxy = st.draft.proxyId !== PROXY_SENTINEL;
     var line = el(doc, "p", null, hasProxy ? "" : "muted");
     line.textContent = hasProxy
-      ? t("vote.proxy_prefix", "Proxy: ") + (st.proxyName || st.draft.proxyId) + t("vote.proxy_follows", " — your stake follows this account; the vote slate below is read-only.")
+      ? t("vote.proxy_prefix", "Proxy: ") + (st.proxyName || st.draft.proxyId) + t("vote.proxy_follows", " — your stake follows this account; the ballot list below is read-only.")
       : t("vote.proxy_none", "Proxy: none — voting directly.");
     box.appendChild(line);
     /* LOW punchlist: proxy help "?" link to /help/voting (AccountVoting
@@ -419,7 +419,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
       var q = doc.createElement("a");
       q.href = "#/help/voting";
       q.textContent = t("vote.what_is_a_proxy", "? What is a proxy?");
-      q.title = t("vote.proxies_follow_another_account_s_slate_re", "Proxies follow another account's vote slate — read how voting works before setting one.");
+      q.title = t("vote.proxies_follow_another_account_s_slate_re", "Proxies follow another account's ballot list — read how voting works before setting one.");
       q.className = "subtle-btn";
       p.appendChild(q);
       box.appendChild(p);
@@ -535,7 +535,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
     bar.appendChild(pub);
     bar.appendChild(reset);
     if (!changed) {
-      bar.appendChild(el(doc, "p", t("vote.in_sync", "Vote slate matches the chain — no changes to publish."), "muted"));
+      bar.appendChild(el(doc, "p", t("vote.in_sync", "Ballot list matches the chain — no changes to publish."), "muted"));
     }
     reset.addEventListener("click", function () {
       st.draft.proxyId = st.published.proxyId;
@@ -803,7 +803,7 @@ var retry = touchable(el(doc, "button", t("vote.retry", "Retry"))); retry.type =
       }
       await sleep(PROVE_INTERVAL_MS);
     }
-    throw new Error(t("vote.sent_prefix", "Sent (") + via + t("vote.sent_middle", ") but the new slate was not observed within ") +
+    throw new Error(t("vote.sent_prefix", "Sent (") + via + t("vote.sent_middle", ") but the new ballot list was not observed within ") +
       (PROVE_TIMEOUT_MS / 1000) + t("vote.sent_suffix", "s; check #/voting before retrying ") +
       t("vote.sent_note", "(do NOT blindly rebroadcast)."));
   }

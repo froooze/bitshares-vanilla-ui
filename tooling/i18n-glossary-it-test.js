@@ -97,7 +97,7 @@ var COUNTS = {
   "fee": ["commissione",133], "transaction": ["transazione",40], "block": ["blocco",43],
   "memo": ["memo",48], "brainkey": ["brainkey",41], "witness": ["witness",35],
   "committee": ["comitato",24], "worker": ["worker",36], "proxy": ["proxy",21],
-  "slate": ["slate",7], "vesting": ["vesting",44], "proposal": ["proposta",65],
+  "slate": ["slate",0], "ballot list": ["scheda",17], "vesting": ["vesting",44], "proposal": ["proposta",65],
   "ticket": ["ticket",31], "HTLC": ["HTLC",25], "liquidity pool": ["pool",120],
   "credit offer": ["offerta di credito",11], "deal": ["deal",28], "gateway": ["gateway",29],
   "node": ["nodo",49], "chain": ["chain",130], "authority": ["autorit",22],
