@@ -218,7 +218,7 @@ var Router = (function () {
     { path: "/credit-offer/:id", title: "Credit Offer", render: function (root, params) { CreditDetailUI.renderOfferDetail(root, params && params.id); } },
     { path: "/deal/:id", title: "Credit Deal", render: function (root, params) { CreditDetailUI.renderDealDetail(root, params && params.id); } },
     { path: "/credit-offer", title: "Credit Offer", render: function (root) { CreditUI.renderOffers(root); } },
-    { path: "/samet", title: "Same-T Funds", render: function (root) { SametUI.renderSamet(root); } },
+    { path: "/samet", title: "Flash loan funds", render: function (root) { SametUI.renderSamet(root); } },
     { path: "/settings/:tab", title: "Settings", render: renderSettings },
     { path: "/settings", title: "Settings", render: renderSettings },
     { path: "/invoice/:data", title: "Invoice", render: function (root, params) { MiscUI.renderInvoice(root, params && params.data); } },

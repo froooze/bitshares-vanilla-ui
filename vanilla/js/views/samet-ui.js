@@ -78,16 +78,16 @@ var SametUI = (function () {
       root.innerHTML = "";
       var d0 = root.ownerDocument || document, w0 = d0.createElement("div");
       w0.className = "wrap"; root.appendChild(w0);
-      w0.appendChild(d0.createTextNode(t("samet.same_t_backend_missing_credit_ui_js_failed_to", "Same-T backend missing: credit-ui.js failed to load.")));
+      w0.appendChild(d0.createTextNode(t("samet.same_t_backend_missing_credit_ui_js_failed_to", "Flash loan funds unavailable: credit-ui.js failed to load.")));
       return;
     }
-    var ctx = ui.routeReady(root, t("samet.same_t_funds", "Same-T Funds"), function () { renderSamet(root); });
+    var ctx = ui.routeReady(root, t("samet.same_t_funds", "Flash loan funds"), function () { renderSamet(root); });
     /* M5 headings-icons: routeReady owns the h1 — retrofit via shared pageHead (same key). */
     try {
       if (typeof DOM !== "undefined" && DOM && typeof DOM.pageHead === "function") {
         var _rd = root.ownerDocument || document;
         var _oh = root.querySelector("h1");
-        if (_oh && _oh.parentNode) _oh.parentNode.replaceChild(DOM.pageHead(_rd, t("samet.same_t_funds", "Same-T Funds"), "settle"), _oh);
+        if (_oh && _oh.parentNode) _oh.parentNode.replaceChild(DOM.pageHead(_rd, t("samet.same_t_funds", "Flash loan funds"), "settle"), _oh);
       }
     } catch (e) { /* heading stands */ }
     if (!ctx) return;
@@ -95,7 +95,7 @@ var SametUI = (function () {
     var lockedS = false;
     try { lockedS = !ui.isUnlockedNow(); } catch (e) { lockedS = false; }
     if (lockedS) ctx.wrap.appendChild(ui.viewingAsNotice(doc));
-    ctx.wrap.appendChild(ui.el(doc, "p", t("samet.same_asset_same_t_funds_borrowing_and_repayin", "Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000."), "muted"));
+    ctx.wrap.appendChild(ui.el(doc, "p", t("samet.same_asset_same_t_funds_borrowing_and_repayin", "Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000."), "muted"));
     var go = ui.touchable(ui.el(doc, "button", t("samet.list_funds", "List funds"))); go.type = "button"; ctx.wrap.appendChild(go);
     var listBox = ui.el(doc, "div"); ctx.wrap.appendChild(listBox);
     ctx.wrap.appendChild(ui.el(doc, "h2", t("samet.my_funds", "My funds")));
@@ -133,7 +133,7 @@ var SametUI = (function () {
       CreditSamet.fundsByOwner(me.id, {}).then(function (rows) {
         if (!live(myGen, uiGen)) return; draw(mineBox, rows, true);
       }).catch(function () {
-        if (live(myGen, uiGen)) { ui.clearBox(mineBox); mineBox.appendChild(ui.el(doc, "p", t("samet.no_owned_funds", "No owned funds.") + t("samet.create_hint", " Create one from the create form below — owned Same-T funds list here."), "muted")); }
+        if (live(myGen, uiGen)) { ui.clearBox(mineBox); mineBox.appendChild(ui.el(doc, "p", t("samet.no_owned_funds", "No owned funds.") + t("samet.create_hint", " Create one from the create form below — owned flash loan funds list here."), "muted")); }
       });
       go.click();
     }).catch(function () { if (live(myGen, uiGen)) go.click(); });

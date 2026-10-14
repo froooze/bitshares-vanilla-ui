@@ -83,7 +83,7 @@ var MenuUI = (function () {
         { href: "#/borrow", icon: "borrow", titleKey: "menu.p_borrow", titleDefault: "Borrow", blurbKey: "menu.d_borrow", blurbDefault: "Borrow smartcoins against BTS collateral." },
         { href: "#/barter", icon: "barter", titleKey: "menu.p_barter", titleDefault: "Barter", blurbKey: "menu.d_barter", blurbDefault: "Propose direct asset-for-asset trades." },
         { href: "#/deposit-withdraw", icon: "deposit", titleKey: "menu.p_gateway", titleDefault: "Deposit / Withdraw", blurbKey: "menu.d_gateway", blurbDefault: "Gateway bridges to outside chains." },
-        { href: "#/samet", icon: "shuffle", titleKey: "menu.p_samet", titleDefault: "Same-T Funds", blurbKey: "menu.d_samet", blurbDefault: "Pooled same-asset funds and draws." },
+        { href: "#/samet", icon: "shuffle", titleKey: "menu.p_samet", titleDefault: "Flash loan funds", blurbKey: "menu.d_samet", blurbDefault: "Pooled flash-loan funds and draws." },
         { href: "#/spotlight", icon: "eye", titleKey: "menu.p_spotlight", titleDefault: "Spotlight", blurbKey: "menu.d_spotlight", blurbDefault: "Recurring spotlight order desk." }
       ] },
     { slug: "earn", icon: "dollar",

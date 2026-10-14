@@ -50,7 +50,7 @@ var CreditUI = (function () {
     if (m.indexOf("not-connected") !== -1) m = t("common.network_unavailable", "Network unavailable. Check Settings → Nodes and retry.");
     else if (m.indexOf("wallet-locked") !== -1) m = t("common.wallet_locked", "Wallet is locked.");
     else if (m.indexOf("unknown-offer") !== -1) m = t("credit.unknown_credit_offer", "Unknown credit offer.");
-    else if (m.indexOf("unknown-fund") !== -1) m = t("credit.unknown_same_t_fund", "Unknown Same-T fund.");
+    else if (m.indexOf("unknown-fund") !== -1) m = t("credit.unknown_same_t_fund", "Unknown flash loan fund.");
     else if (m.indexOf("unknown-deal") !== -1) m = t("credit.unknown_credit_deal", "Unknown credit deal.");
     else if (m.indexOf("unknown-account") !== -1) m = t("common.unknown_account", "Unknown account.");
     else if (m.indexOf("unknown-asset") !== -1) m = t("credit.unknown_asset", "Unknown asset.");
