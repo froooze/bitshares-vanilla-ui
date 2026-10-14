@@ -279,3 +279,59 @@ progress must be read from `i18n_translation_census.py`, not from a red gate.
   asterisk's `aria-label` and the article link's text. They cannot be keyed
   without touching `vanilla/locales/*.json`, which was out of scope for this
   wave; the keys reserved for them are named in the file header.
+---
+
+## Completion record (all 11 locales, 2026-10-12)
+
+The surface this note describes is now live in every shipped locale, not just
+`es`. What changed since §1–§12:
+
+- **All 11 non-English dicts filled and migrated to `_meta` v2.**
+  `de es fr it ja ko pt ru tr zh hi`: every key has a value; `coverage` equals
+  the 3938-key en master; `provenance: "machine"`; `verified: []`;
+  `high_risk` = 1118 keys from the shared rule. Nothing anywhere claims human
+  verification, and both gates reject `provenance: "human"` with an empty
+  `verified` as a contradiction.
+- **The chip is ON for 11/11.** Verified by seeding each dict through the
+  module's own `_seed` seam: `I18n.isMachineLocale()` true for all eleven,
+  `"none"` for `en`. English pays zero pixels.
+- **Byte-identical remainders are declared, not hidden.** Each locale keeps
+  50–255 keys equal to English (loanwords its crypto UIs actually use,
+  indicator tickers, brands, pinned ids, the parser-sensitive
+  `alice,10\nbob,2.5` payload), every one named in its chunk script's
+  `KEPT_ENGLISH` table: es 127 · pt 165 · fr 171 · de 243 · it 255 ·
+  ja 56 · ko 57 · ru 56 · zh 50 · hi 62 · tr 85. Zero untranslated prose.
+- **Glossaries for all 11** (`docs/i18n-glossary/*.md`), each verified against
+  its own dict: every mandated term is the form the dict actually uses, with
+  counter-examples enumerated. The checker caught the checker's own stale
+  numbers twice — the glossaries were right, the test was wrong — which is
+  the mechanism working as designed.
+- **hi/tr probed against an independent model run.** A fixed 20-item fixture
+  (`tooling/i18n_probe_fixture.json`, drawn from real signing strings, with a
+  `why` per item) plus a structural validator (`tooling/i18n_probe_validate.py`).
+  Both of my runs passed; a second independent sample (Nemotron run B) also
+  passed and became the register reference for both fills, so the audited
+  sample and the shipped dicts use one vocabulary. The validator found and
+  fixed two of its own bugs (Turkish shredding, half-translation blindness)
+  — verified by 5 deliberate breakages, all caught.
+- **Live browser audit: 49/49** (`tooling/visual/probe-i18n-honesty-live.mjs`).
+  Chromium, all three themes, 360px and 1440px: no chip in English, chip
+  visible for machine locales; asterisk is a BUTTON; h3 kept; English starts
+  hidden, tap reveals, aria flips; Back/Send hooks stable; zero console
+  errors. Three probe bugs were fixed first, each a real boot-path fact now
+  recorded in the probe header.
+- **Reviews caught 3 Criticals that would have shipped** (`credit-ui.js`
+  crash, always-lying auto-disable row, anti-double-broadcast bypass), 2 of
+  my own plan errors, 3 wrong AGENTS.md signatures, and 4 translation-
+  tooling landmines that silently reverted real work (one covering 34,345
+  values). The hi/tr probe exists precisely because those two are where my
+  own calibration is weakest, and the limitations page says so in-app.
+
+**What "done" does NOT mean.** Filling is not verification: `verified` is
+empty in every dict, and stays empty until a human reviews. A fluent-but-
+wrong security phrase is the failure mode no labeling removes — which is why
+the dual-line, the asterisk, the glossaries, and the external audit exist.
+The anti-rot answers (§4.5): (a) plain JSON/CSS/DOM/ARIA, no new platform
+surface; (b) no new dependency — the GitHub URL is inert link data, the
+glossaries are documentation; (c) glossaries and the confidence table delete
+with zero code change.
