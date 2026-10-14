@@ -299,9 +299,9 @@ HS.enrich(asAlice, "1.2.1").then(function (out) {
   eq(out[24]._summary, "Custom operation by alice", "tag 35 custom");
   eq(out[25]._summary, "Claimed 1.00000 BTS", "tag 37 balance claim");
   eq(out[26]._summary, "Bid 2.00000 BTS for 5.0000 USD", "tag 45 bid");
-  eq(out[27]._summary, "Blind transfer (0 in, 2 out)", "tag 39 to-blind");
-  eq(out[28]._summary, "Blind transfer (1 in, 2 out)", "tag 40 blind");
-  eq(out[29]._summary, "Blind transfer (1 in, 0 out)", "tag 41 from-blind");
+  eq(out[27]._summary, "Private transfer (0 in, 2 out)", "tag 39 to-blind");
+  eq(out[28]._summary, "Private transfer (1 in, 2 out)", "tag 40 blind");
+  eq(out[29]._summary, "Private transfer (1 in, 0 out)", "tag 41 from-blind");
   eq(out[30]._summary, undefined, "tag 31 params label-only");
   eq(out[31]._summary, undefined, "tag 36 assert label-only");
   eq(out[32]._summary, undefined, "tag 44 fba label-only");

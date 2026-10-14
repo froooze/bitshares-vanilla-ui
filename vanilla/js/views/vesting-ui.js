@@ -429,15 +429,15 @@ var VestingUI = (function () {
           [t("vesting.total", "Total"), built.human, built.pair[1].total_claimed.amount], [t("vesting.fee", "Fee"), t("vesting.0_balance_claims_are_always_free", "0 (balance claims are always free)")]];
       },
       ok: function () { return t("vesting.balance_claimed_re_read_confirms_the_object_i", "Balance claimed (re-read confirms the object is gone)."); } });
-    ctx.wrap.appendChild(ui.el(doc, "h2", t("vesting.blinded_balances_read_only", "Blinded balances (read-only)")));
-    ctx.wrap.appendChild(ui.el(doc, "p", t("vesting.blind_transfers_ops_39_40_41_are_disabled_the", "Blind transfers (ops 39/40/41) are disabled: they need vendored Pedersen-commitment and range-proof crypto that no static page ships. Commitment lookup below proves the read path only."), "muted"));
+    ctx.wrap.appendChild(ui.el(doc, "h2", t("vesting.blinded_balances_read_only", "Private balances (read-only)")));
+    ctx.wrap.appendChild(ui.el(doc, "p", t("vesting.blind_transfers_ops_39_40_41_are_disabled_the", "Private transfers (ops 39/40/41) are disabled: they need vendored Pedersen-commitment and range-proof crypto that no static page ships. Commitment lookup below proves the read path only."), "muted"));
     var fBlind = ui.field(doc, t("vesting.commitment_33_byte_hex", "Commitment (33-byte hex)"), { placeholder: "02…" });
     ctx.wrap.appendChild(fBlind.row);
     var bl = ui.touchable(ui.el(doc, "button", t("vesting.look_up_commitment", "Look up commitment"))); bl.type = "button"; ctx.wrap.appendChild(bl);
     var blo = ui.el(doc, "div"); ctx.wrap.appendChild(blo);
-    [t("vesting.blind_op39", "Transfer to blind (op 39)"), t("vesting.blind_op40", "Blind transfer (op 40)"), t("vesting.blind_op41", "Transfer from blind (op 41)")].forEach(function (label) {
+    [t("vesting.blind_op39", "Transfer to private balance (op 39)"), t("vesting.blind_op40", "Private transfer (op 40)"), t("vesting.blind_op41", "Transfer from private balance (op 41)")].forEach(function (label) {
       var d = ui.touchable(ui.el(doc, "button", label)); d.type = "button"; d.disabled = true;
-      d.title = t("vesting.disabled_blind_transfers_need_vendored_commit", "Disabled: blind transfers need vendored commitment/range-proof crypto.");
+      d.title = t("vesting.disabled_blind_transfers_need_vendored_commit", "Disabled: private transfers need vendored commitment/range-proof crypto.");
       d.addEventListener("click", function () { try { Proposal.blindSend(); } catch (e) { ui.showError(doc, blo, e); } });
       ctx.wrap.appendChild(d);
     });

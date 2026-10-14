@@ -64,7 +64,7 @@ var ProposalUI = (function () {
     ["bad-lock-type", "Bad lock type — pick one of the five."], ["no-claimables", "Nothing claimable for this account."],
     ["invoice-unparseable", "This invoice link cannot be parsed."], ["downgrade-unproven", "Ticket downgrades are unproven — pick the current lock or a longer one."],
     ["restrictions-unproven", "Restrictions are unproven — create with zero restrictions until testnet proves them."],
-    ["blind-disabled", "Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only)."],
+    ["blind-disabled", "Private transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only)."],
     ["method-missing", "This node lacks the read method. Try another node."]];
   /* No local el — use DOM.el */
   /* showError: human error line (ERRMAP maps chain codes to dict strings,

@@ -238,7 +238,7 @@ HistorySummary.SUMMARIZERS = HistorySummary.SUMMARIZERS || {};
     var hasIn = Object.prototype.toString.call(p.inputs) === "[object Array]";
     var hasOut = Object.prototype.toString.call(p.outputs) === "[object Array]";
     if (!hasIn && !hasOut) return null;
-    return t("account.sum_blind", "Blind transfer (%(in)s in, %(out)s out)",
+    return t("account.sum_blind", "Private transfer (%(in)s in, %(out)s out)",
       { in: String(hasIn ? p.inputs.length : 0),
         out: String(hasOut ? p.outputs.length : 0) });
   }
