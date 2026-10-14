@@ -6503,7 +6503,7 @@
     "loading_settle": "正在加载结算订单…",
     "fail_settle": "无法加载结算订单。",
     "th_settle_date": "结算日期",
-    "no_settle_market": "该市场无智能币——无结算订单。",
+    "no_settle_market": "该市场无智能币 - 无结算订单。",
     "group_label": "分组",
     "group_off": "精确价格",
     "group_decimals": "小数位",
@@ -8098,7 +8098,7 @@
     "proxy_empty": "该代理未设置投票。",
     "proxy_follows": " — 您的质押跟随该账户；下方的选票名单为只读。",
     "proxy_needed": "输入代理账户名或 ID。",
-    "proxy_none": "代理：无——直接投票。",
+    "proxy_none": "代理：无 - 直接投票。",
     "proxy_ph": "代理账户名或 1.2.N",
     "proxy_prefix": "代理: ",
     "proxy_row": "代理",
@@ -8902,7 +8902,7 @@
     "making_title": "本钱包的构建过程",
     "making_body": "以下是最初的构建记录：创建本钱包的每一次提示，从 2026 年 9 月 26 日的“获取 bitshares-ui”到 10 月 3 日修复第 1 号问题，以及构建者的回复——原样保留，未作删改。其中记录了本钱包赖以成立的决策：在问题 #3583 及其上千小时的陷阱之后放弃再次 React 升级，使本钱包不依赖任何有发布周期的东西；像旧钱包一样在本地签名每一笔交易，而不是外包出去；三套主题，并以经典外观为默认；数字以人类可读的方式呈现，绝不显示链上原始整数；布局从第一个切片起就以手机为先；手续费从实时链上读取，绝不估算。请把它当作历史来读：本钱包就是这样建起来的。",
     "dlg_heading": "完整构建对话框",
-    "dlg_search_ph": "筛选对话…",
+    "dlg_search_ph": "筛选交易所…",
     "dlg_search_clear": "清除",
     "dlg_showing": "显示",
     "dlg_unavailable": "构建对话框归档不可用。",
@@ -9149,7 +9149,7 @@
     "unpriced": "此路径上的某一条分支尚无记录的兑换。",
     "no_route_col": "6 跳资金池路径内没有通往 %(sym)s 的路线。",
     "status": "%(pools)s 个资金池 · 3 跳以内 %(assets)s 个资产 · %(total)s 个资金池中，有 %(done)s 个记录了最近一次兑换",
-    "load_failed": "无法加载交叉汇率："
+    "load_failed": "无法加载交叉汇率： "
   },
   "i18n": {
     "badge_chip": "i18n",

@@ -46,13 +46,13 @@ var SPEC = {
     word: "german",
     COUNTS: {
       "wallet": [["Wallet",190]], "account": [["Konto",247]], "asset": [["Asset",269]],
-      "balance": [["Saldo",21],["Guthaben",13]],
+      "balance": [["Saldo",20],["Guthaben",14]],
       "claim": [["Claim",20],["Balance",7]],
       "smartcoin": [["Smartcoin",21]], "collateral": [["Sicherheiten",34]],
       "precision": [["Präzision",16]], "share": [["Anteil",23]],
       "liquidity pool": [["Liquiditätspool",9],["Pool",108]],
       "pool share": [["LP-Anteil",3]], "stake": [["Stake",23]],
-      "market": [["Markt",115]], "exchange": [["Börse",30]], "desk": [["Desk",47]],
+      "market": [["Markt",115]], "exchange": [["Börse",31]], "desk": [["Desk",47]],
       "swap": [["Swap",39]], "orderbook": [["Orderbuch",15]], "limit order": [["Limit-Order",10]],
       "order": [["Order",117]], "operation": [["Operation",64]], "fee": [["Gebühr",134]],
       "transaction": [["Transaktion",66]], "block": [["Block",58]], "memo": [["Memo",37]],
@@ -64,7 +64,7 @@ var SPEC = {
       "HTLC": [["HTLC",24]], "gateway": [["Gateway",28]], "node": [["Knoten",66]],
       "chain": [["Chain",130]], "authority": [["Authority",15],["Autorität",10]],
       "issuer": [["Emittent",29]], "producer": [["Produzent",18]],
-      "publisher": [["Herausgeber",7]], "settle": [["Settlement",45],["Abwicklung",0],["Rückführung",0]],
+      "publisher": [["Herausgeber",7]], "settle": [["Settlement",46],["Abwicklung",0],["Rückführung",0]],
       "referral": [["Empfehlung",8]], "quote": [["Quote",35]], "lock": [["Lock",8],["Sperre",16]],
       "prediction": [["Prognosemarkt",11]], "borrow": [["Leihen",29]]
     }

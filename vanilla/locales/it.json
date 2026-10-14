@@ -6827,7 +6827,7 @@
     "title": "Ticket"
   },
   "trade": {
-    "title": "Mercato",
+    "title": "Borsa",
     "s2": "Trasmissione annullamento…",
     "back": "Indietro",
     "back_orders": "Torna agli ordini",
@@ -8618,7 +8618,7 @@
     "pulse_witnesses": "Witness",
     "pulse_committee": "Comitato",
     "topvol_loading": "Top mercato vol 24h: …",
-    "topvol_unavailable": "Il volume dei principali mercati è offline — controlli Impostazioni → Nodi.",
+    "topvol_unavailable": "Il volume dei principali mercati è offline - controlli Impostazioni → Nodi.",
     "topvol_prefix": "Top mercato vol 24h (mercato singolo):",
     "cards_title": "Negozi, metti in pool, esplora — cominci da qui",
     "card_dex_t": "Exchange",
@@ -8907,7 +8907,7 @@
     "dlg_showing": "Mostra",
     "dlg_unavailable": "Archivio del dialogo di costruzione non disponibile.",
     "dlg_noscript": "Questo archivio richiede JavaScript; lo stesso testo si trova in docs/vanilla-ui-dialog.md nel repository sorgente.",
-    "dlg_no_reply": "Nessuna risposta registrata — l’invito successivo è arrivato subito dopo.",
+    "dlg_no_reply": "Nessuna risposta registrata - il prompt successivo è arrivato subito dopo.",
     "dlg_no_match": "Nessuno scambio corrispondente. Azzeri la ricerca per vedere tutto.",
     "dlg_bad_link": "Numero di scambio non valido. Intervallo valido: 1–%(total)s.",
     "dlg_heading_c": "Dialogo completo di costruzione (%(total)s)",

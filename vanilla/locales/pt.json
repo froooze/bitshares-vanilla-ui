@@ -8881,7 +8881,7 @@
   },
   "about": {
     "hero_title": "BitShares, no seu navegador. Nada a instalar.",
-    "hero_lede": "Uma carteira para a blockchain BitShares — mercados, contas, governança e exploração — rodando como arquivos web simples. Sem framework, sem instalador, sem conta com a gente. Suas chaves nunca saim deste navegador.",
+    "hero_lede": "Uma carteira para a blockchain BitShares — mercados, contas, governança e exploração — rodando como arquivos web simples. Sem framework, sem instalador, sem conta com a gente. Suas chaves nunca saem deste navegador.",
     "cta_trade": "Abrir o exchange",
     "cta_guides": "Ler os guias",
     "s1_title": "Suas chaves nunca saem deste navegador",
@@ -8907,7 +8907,7 @@
     "dlg_showing": "Mostrando",
     "dlg_unavailable": "Arquivo de diálogos da construção indisponível.",
     "dlg_noscript": "Este arquivo precisa de JavaScript; o mesmo texto está em docs/vanilla-ui-dialog.md no repositório de código.",
-    "dlg_no_reply": "Nenhuma resposta registrada — o prompt seguinte veio logo depois.",
+    "dlg_no_reply": "Nenhuma resposta registrada - o prompt seguinte veio logo depois.",
     "dlg_no_match": "Nenhuma exchange corresponde. Limpe a busca para ver tudo.",
     "dlg_bad_link": "Número de exchange inválido. Intervalo válido: 1–%(total)s.",
     "dlg_heading_c": "Full build dialog (%(total)s)",

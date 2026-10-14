@@ -91,7 +91,7 @@ var COUNTS = {
   "wallet": ["wallet",190], "account": ["account",300], "balance": ["saldo",35],
   "asset": ["asset",274], "smartcoin": ["smartcoin",21], "collateral": ["collaterale",41],
   "precision": ["precisione",18], "share": ["quote",35], "pool share": ["quote LP",3],
-  "stake": ["stake",23], "market": ["mercato",117], "exchange": ["exchange",23],
+  "stake": ["stake",23], "market": ["mercato",116], "exchange": ["exchange",23],
   "desk": ["sezione",39], "swap": ["swap",41], "orderbook": ["book",30],
   "limit order": ["ordine limite",5], "order": ["ordine",55], "operation": ["operazione",45],
   "fee": ["commissione",133], "transaction": ["transazione",40], "block": ["blocco",43],

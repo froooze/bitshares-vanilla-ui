@@ -6827,7 +6827,7 @@
     "title": "Tickets"
   },
   "trade": {
-    "title": "Marché",
+    "title": "Bourse",
     "s2": "Diffusion de l’annulation…",
     "back": "Retour",
     "back_orders": "Retour aux ordres",
@@ -8638,7 +8638,7 @@
     "trust_numbers_d": "Montants à la bonne décimale, pourcentages en pourcentages, chaque frais prévisualisé avant signature.",
     "steps_title": "Commencez en trois étapes",
     "step1_t": "Explorez",
-    "step1_d": "Aucune connexion requise — parcourez d'abord la chaîne.",
+    "step1_d": "Aucune connexion requise - parcourez d'abord la chaîne.",
     "step2_t": "Créez un portefeuille",
     "step2_d": "Un brainkey est généré sur cet appareil. Notez-le sur papier.",
     "step3_t": "Négocier / fournir / voter",
@@ -8907,7 +8907,7 @@
     "dlg_showing": "Affichage de",
     "dlg_unavailable": "Archive des dialogues de construction indisponible.",
     "dlg_noscript": "Cette archive nécessite JavaScript ; le même texte se trouve dans docs/vanilla-ui-dialog.md dans le dépôt source.",
-    "dlg_no_reply": "Aucune réponse enregistrée — l'invite suivante a suivi immédiatement.",
+    "dlg_no_reply": "Aucune réponse enregistrée - l'invite suivante a suivi immédiatement.",
     "dlg_no_match": "Aucun échange correspondant. Effacez la recherche pour tout voir.",
     "dlg_bad_link": "Numéro d'échange invalide. Plage valide : 1–%(total)s.",
     "dlg_heading_c": "Dialogue complet de construction (%(total)s)",
