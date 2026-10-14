@@ -6675,7 +6675,7 @@
     "add_auth_row_unsupported": "Aggiunga riga auth (non supportato)",
     "one_key_auth_row_is_supported_here_key_ab": "Qui è supportata una sola riga key-auth (chiave sopra + soglia). Righe multiple di chiave, account o indirizzo non sono previste in questo modulo.",
     "only_one_key_auth_row_is_supported_extra_": "Solo una riga key-auth è supportata — righe autorità extra richiedono nuovi serializzatori.",
-    "invoice_lines_placeholder": "coffee|1.5\\ncake|2"
+    "invoice_lines_placeholder": "caffè|1.5\ntorta|2"
   },
   "notify": {
     "title": "Avvisi prezzo",
