@@ -5417,7 +5417,7 @@
     "sum_transfer_recv": "%(from)s から %(amount)s を受け取りました",
     "sum_transfer_send": "%(to)s に %(amount)s を送金しました",
     "sum_upgrade": "%(account)s をアップグレードしました",
-    "sum_vesting_create": "%(owner)s の代わりに %(amount)s をベスティングしました",
+    "sum_vesting_create": "%(owner)s に %(amount)s をベスティングしました",
     "sum_vesting_withdraw": "ベスティング %(amount)s を引き出しました",
     "sum_whitelist": "%(account)s をホワイトリストに登録しました",
     "sum_witness_create": "ウィットネスになりました: %(account)s",

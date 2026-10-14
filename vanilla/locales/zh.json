@@ -8916,9 +8916,9 @@
   "approval": {
     "title": "批准签名",
     "wallet_title": "本钱包请求签名",
-    "site_prefix": "站点：",
-    "account": "账户：",
-    "chain": "链：",
+    "site_prefix": "站点： ",
+    "account": "账户： ",
+    "chain": "链： ",
     "remember": "记住此站点所用的账户",
     "locked_note": "会话已锁定 — 请输入钱包密码以批准。",
     "password": "密码",
