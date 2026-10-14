@@ -272,8 +272,8 @@ HS.enrich(asAlice, "1.2.1").then(function (out) {
   eq(out[35]._summary, "Deleted debit permission 1.12.1", "tag 28 debit delete");
   return HS.enrich(t5, "1.2.1");
 }).then(function (out) {
-  eq(out[0]._summary, "Became witness: bob", "tag 20 witness create");
-  eq(out[1]._summary, "Updated witness bob", "tag 21 witness update");
+  eq(out[0]._summary, "Became block validator: bob", "tag 20 witness create");
+  eq(out[1]._summary, "Updated block validator bob", "tag 21 witness update");
   eq(out[2]._summary, "Became committee member: carol", "tag 29 committee create");
   eq(out[3]._summary, "Updated committee member carol", "tag 30 committee update");
   eq(out[4]._summary, 'Created grant proposal "my-worker"', "tag 34 worker create");

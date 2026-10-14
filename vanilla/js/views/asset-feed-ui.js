@@ -206,7 +206,7 @@ var AssetFeedUI = (function () {
       if (g !== gen) return;
       wipe(box);
       var flagNote = "";
-      if (p.witnessFed) flagNote = t("asset.witness_fed_note", "Witness-fed: all active witnesses may publish.");
+      if (p.witnessFed) flagNote = t("asset.witness_fed_note", "Validator-fed: all active block validators may publish.");
       else if (p.committeeFed) flagNote = t("asset.committee_fed_note", "Committee-fed: all active committee members may publish.");
       if (flagNote) box.appendChild(el(d, "p", flagNote, "muted"));
       if (!p.live.length) {
