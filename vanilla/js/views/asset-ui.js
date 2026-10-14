@@ -293,7 +293,7 @@ var AssetUI = (function () {
     function draw() {
       if (g !== gen) return;
       wipe(bar); wipe(body);
-      [["uia", t("asset.tab_uia", "UIA")], ["smart", t("asset.smartcoin_row", "Smartcoin")], ["nft", t("asset.nft_row", "NFT")], ["pma", t("asset.tab_pma", "PMA")]].forEach(function (t) {
+      [["uia", t("asset.tab_uia", "Token")], ["smart", t("asset.smartcoin_row", "Smartcoin")], ["nft", t("asset.nft_row", "NFT")], ["pma", t("asset.tab_pma", "PMA")]].forEach(function (t) {
         var b = touch(el(d, "button", t[1], tab === t[0] ? "vote-tab active" : "vote-tab"));
         b.type = "button"; b.addEventListener("click", function () { tab = t[0]; draw(); }); bar.appendChild(b); });
       var smart = (tab === "smart" || tab === "pma"), nft = (tab === "nft");

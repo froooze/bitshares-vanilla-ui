@@ -941,7 +941,7 @@ var PoolUI = (function () {
   function createBox(doc, box, myGen) { /* op-59 create: a/b/share resolves, human percents, orientation preview */
     var fA = Forms.labeledInput(doc, t("pool.asset_a_field", "Asset A") + " ", { placeholder: "BTS" });
     var fB = Forms.labeledInput(doc, t("pool.asset_b_field", "Asset B") + " ", { placeholder: "CNY" });
-    var fSh = Forms.labeledInput(doc, t("pool.share_asset_field", "Share asset") + " ", { placeholder: t("pool.share_ph", "fresh UIA symbol") });
+    var fSh = Forms.labeledInput(doc, t("pool.share_asset_field", "Share asset") + " ", { placeholder: t("pool.share_ph", "fresh token symbol") });
     var fT = Forms.labeledInput(doc, t("pool.taker_pct_field", "Taker fee %") + " ", { value: "0.5", inputmode: "decimal" });
     var fW = Forms.labeledInput(doc, t("pool.withdrawal_pct_field", "Withdrawal fee %") + " ", { value: "0", inputmode: "decimal" });
     [fA, fB, fSh, fT, fW].forEach(function (f) { box.appendChild(f.row); });
