@@ -296,7 +296,7 @@ var WalletUI = (function () {
     box.appendChild(links);
     var note = doc.createElement("p");
     note.className = "muted";
-    note.textContent = t("wallet.console_single_key_note", "Single-key wallet: .bin backup files and bare private keys (WIF) are not supported — brainkey import only.");
+    note.textContent = t("wallet.console_single_key_note", "Single-key wallet: .bin backup files and bare private keys (WIF) are not supported — recovery phrase import only.");
     box.appendChild(note);
     return box;
   }
@@ -422,7 +422,7 @@ var WalletUI = (function () {
       ["#/help/wallets", "How wallets work"],
       ["#/help/backups", "How backups work"]
     ]));
-    wrap.appendChild(DOM.pageHead(doc, t("wallet.s4", "Create Wallet (Brainkey)"), "wallet"));
+    wrap.appendChild(DOM.pageHead(doc, t("wallet.s4", "Create Wallet (Recovery phrase)"), "wallet"));
 
     if (backendMissing() || typeof Crypto === "undefined") {
       var missing = makeError(doc);
@@ -432,14 +432,14 @@ var WalletUI = (function () {
     }
 
     var hint = doc.createElement("p");
-    hint.textContent = t("wallet.write_down_brainkey_keep_safe", "Write down your brainkey and keep it safe. Anyone with it can spend your funds.");
+    hint.textContent = t("wallet.write_down_brainkey_keep_safe", "Write down your recovery phrase and keep it safe. Anyone with it can spend your funds.");
     wrap.appendChild(hint);
 
     var customMode = false;
     var bkArea = brainkeyField(doc, "create-brainkey", true);
-    bkArea.placeholder = t("createaccount.generating_brainkey", "Generating brainkey…");
+    bkArea.placeholder = t("createaccount.generating_brainkey", "Generating recovery phrase…");
     bkArea.style.width = "100%";
-    wrap.appendChild(Forms.fieldRow(doc, t("wallet.brainkey", "Brainkey") + " ", bkArea));
+    wrap.appendChild(Forms.fieldRow(doc, t("wallet.brainkey", "Recovery phrase") + " ", bkArea));
     var bkHint = doc.createElement("p");
     bkHint.className = "muted";
     bkHint.setAttribute("aria-live", "polite");
@@ -468,11 +468,11 @@ var WalletUI = (function () {
     } catch (e) { /* length-only hint stands */ }
 
     var regenRow = doc.createElement("p");
-    var genBtn = actionButton(doc, "create-regen", t("wallet.generate_new_brainkey", "Generate new brainkey"));
+    var genBtn = actionButton(doc, "create-regen", t("wallet.generate_new_brainkey", "Generate new recovery phrase"));
     genBtn.classList.add("touchable");
     regenRow.appendChild(genBtn);
     regenRow.appendChild(doc.createTextNode(" "));
-    var customBtn = actionButton(doc, "create-custom", t("wallet.use_custom_brainkey_instead", "Use custom brainkey instead"));
+    var customBtn = actionButton(doc, "create-custom", t("wallet.use_custom_brainkey_instead", "Use custom recovery phrase instead"));
     customBtn.classList.add("btn-ghost", "touchable");
     regenRow.appendChild(customBtn);
     wrap.appendChild(regenRow);
@@ -539,7 +539,7 @@ var WalletUI = (function () {
       err.textContent = "";
       customMode = false;
       bkArea.readOnly = true;
-      bkArea.placeholder = t("createaccount.generating_brainkey", "Generating brainkey…");
+      bkArea.placeholder = t("createaccount.generating_brainkey", "Generating recovery phrase…");
       customBtn.style.display = "";
     /* TYPE NOTE: the global Crypto object collides with DOM lib's Crypto
      * interface (constructor type), so suggestBrainkey reads back missing;
@@ -557,7 +557,7 @@ var WalletUI = (function () {
       customMode = true;
       bkArea.readOnly = false;
       bkArea.value = "";
-      bkArea.placeholder = t("wallet.type_your_own_brainkey_words", "type your own brainkey words…");
+      bkArea.placeholder = t("wallet.type_your_own_brainkey_words", "type your own recovery phrase words…");
       customBtn.style.display = "none";
       refreshBkHint();
       bkArea.focus();
@@ -584,11 +584,11 @@ var WalletUI = (function () {
       var pw = pwInput ? pwInput.value : "";
       var confirm = confirmInput ? confirmInput.value : "";
       if (!check.checked) {
-        err.textContent = t("wallet.s6", "Confirm you wrote the brainkey down first.");
+        err.textContent = t("wallet.s6", "Confirm you wrote the recovery phrase down first.");
         return;
       }
       if (customMode && String(bk || "").length < 50) {
-        err.textContent = t("wallet.custom_brainkey_too_short_50_characters_minim", "Custom brainkey too short: 50 characters minimum after trimming.");
+        err.textContent = t("wallet.custom_brainkey_too_short_50_characters_minim", "Custom recovery phrase too short: 50 characters minimum after trimming.");
         return;
       }
       if (!pw) {
@@ -674,12 +674,12 @@ var WalletUI = (function () {
       ways.appendChild(a);
     });
     var self = doc.createElement("span");
-    self.textContent = t("wallet.brainkey_import_this_page_form_below", " · Brainkey import (this page's form below)");
+    self.textContent = t("wallet.brainkey_import_this_page_form_below", " · Recovery phrase import (this page's form below)");
     ways.appendChild(self);
     box.appendChild(ways);
     var honesty = doc.createElement("p");
     honesty.className = "muted";
-    honesty.textContent = t("wallet.have_a_bin_backup_file_or_bare_private_k", "Have a .bin backup file or bare private keys instead? This wallet imports brainkeys only — .bin decrypt and WIF import are not supported. Nothing is uploaded anywhere.");
+    honesty.textContent = t("wallet.have_a_bin_backup_file_or_bare_private_k", "Have a .bin backup file or bare private keys instead? This wallet imports recovery phrases only — .bin decrypt and WIF import are not supported. Nothing is uploaded anywhere.");
     box.appendChild(honesty);
     /* Punchlist MED: ExistingAccountOptions help links (wallet-types /
      * backup-types concept). Plain literals, verified help topics. */
@@ -729,13 +729,13 @@ var WalletUI = (function () {
     }
 
     var hint = doc.createElement("p");
-    hint.textContent = t("wallet.enter_brainkey_checked_chain", "Enter your brainkey. It is checked against the chain before anything is saved.");
+    hint.textContent = t("wallet.enter_brainkey_checked_chain", "Enter your recovery phrase. It is checked against the chain before anything is saved.");
     wrap.appendChild(hint);
 
     wrap.appendChild(existingOptions(doc));
 
     var bkArea = brainkeyField(doc, "import-brainkey", false);
-    bkArea.placeholder = t("wallet.brainkey_words_placeholder", "brainkey words…");
+    bkArea.placeholder = t("wallet.brainkey_words_placeholder", "recovery phrase words…");
     wrap.appendChild(bkArea);
     wrap.appendChild(labeledRow(doc, "Password", passwordField(doc, "import-password")));
     var importBtn = actionButton(doc, "import-do", "Verify and import");
