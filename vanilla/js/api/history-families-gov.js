@@ -162,13 +162,13 @@ HistorySummary.SUMMARIZERS = HistorySummary.SUMMARIZERS || {};
   /* Tag 57 ticket_create (ticket.hpp:47-60): amount leg (NOT p.value). */
   function sumTicketCreate(p, J) {
     if (!p || !p.account || !p.amount) return null;
-    return t("account.sum_ticket_create", "Created ticket %(amount)s",
+    return t("account.sum_ticket_create", "Created voting stake %(amount)s",
       { amount: amount(p.amount, J.assets) });
   }
   /* Tag 58 ticket_update (ticket.hpp:66-80): ticket id stays raw. */
   function sumTicketUpdate(p) {
     if (!p || !p.account || !p.ticket) return null;
-    return t("account.sum_ticket_update", "Updated ticket %(ticket)s",
+    return t("account.sum_ticket_update", "Updated voting stake %(ticket)s",
       { ticket: String(p.ticket) });
   }
   /* Tags 54/55/56 custom authorities (custom_authority.hpp:36-122):

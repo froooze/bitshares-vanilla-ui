@@ -225,7 +225,7 @@ var Router = (function () {
     { path: "/invoice", title: "Invoice", render: function (root) { MiscUI.renderInvoice(root, null); } },
     { path: "/proposals/:id", title: "Proposal", render: function (root, params) { ProposalUI.renderProposalDetail(root, params && params.id); } },
     { path: "/proposals", title: "Proposals", render: function (root) { ProposalUI.renderProposals(root); } },
-    { path: "/tickets", title: "Tickets", render: function (root) { TicketUI.renderTickets(root); } },
+    { path: "/tickets", title: "Voting stakes", render: function (root) { TicketUI.renderTickets(root); } },
     { path: "/vesting", title: "Vesting", render: function (root) { VestingUI.renderVesting(root); } },
     { path: "/authorities", title: "Custom Authorities", render: function (root) { MiscUI.renderAuthorities(root); } },
     { path: "/lists", title: "Account Lists", render: function (root) { MiscUI.renderLists(root); } },

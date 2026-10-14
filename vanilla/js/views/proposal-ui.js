@@ -353,7 +353,7 @@ var ProposalUI = (function () {
       row(t("proposal.account", "Account"), String(data.account || "?"));
       row(t("proposal.lock", "Lock"), lockWord(data.target_type), String(data.target_type));
       row(t("proposal.amount", "Amount"), amt ? amtText(amt.amount, String(amt.asset_id || "?"), join) : t("proposal.unchanged", "unchanged"), amt ? String(amt.amount) : null);
-      if (type === 58) row(t("proposal.ticket", "Ticket"), String(data.ticket || "?"));
+      if (type === 58) row(t("proposal.ticket", "Voting stake"), String(data.ticket || "?"));
     } else if (type === 14) {
       var ia = (data.asset_to_issue && typeof data.asset_to_issue === "object") ? data.asset_to_issue : {};
       row(t("proposal.issuer", "Issuer"), String(data.issuer || "?")); row(t("proposal.recipient", "Recipient"), String(data.issue_to_account || "?"));
@@ -570,7 +570,7 @@ var ProposalUI = (function () {
     }
     var acct = await Account.resolve(v[0]), ainfo = await Asset.describe(v[2]);
     var traw = Format.parseAmount(v[3], ainfo.precision);
-    if (BigInt(traw) <= 0n) throw new Error(t("proposal.inner_ticket_amount_must_be_0", "Inner ticket amount must be > 0."));
+    if (BigInt(traw) <= 0n) throw new Error(t("proposal.inner_ticket_amount_must_be_0", "Inner voting stake amount must be > 0."));
     return ProposalTicket.buildTicketCreate({ accountId: acct.id,
       targetType: ProposalTicket.lockFromHuman(v[1] || "180"), amountRaw: traw, assetId: ainfo.id });
   }

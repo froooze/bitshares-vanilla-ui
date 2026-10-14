@@ -287,8 +287,8 @@ HS.enrich(asAlice, "1.2.1").then(function (out) {
   eq(out[12]._summary, "HTLC 1.16.1 claimed", "tag 51 htlc redeemed");
   eq(out[13]._summary, "Extended HTLC 1.16.1", "tag 52 htlc extend");
   eq(out[14]._summary, "HTLC 1.16.1 refunded", "tag 53 htlc refund");
-  eq(out[15]._summary, "Created ticket 5.0000 USD", "tag 57 ticket create");
-  eq(out[16]._summary, "Updated ticket 1.18.1", "tag 58 ticket update");
+  eq(out[15]._summary, "Created voting stake 5.0000 USD", "tag 57 ticket create");
+  eq(out[16]._summary, "Updated voting stake 1.18.1", "tag 58 ticket update");
   eq(out[17]._summary, "Updated authorities for alice", "tag 54 authority create");
   eq(out[18]._summary, "Updated authorities for alice", "tag 55 authority update");
   eq(out[19]._summary, "Updated authorities for alice", "tag 56 authority delete");

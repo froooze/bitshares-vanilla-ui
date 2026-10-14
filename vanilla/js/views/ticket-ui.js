@@ -104,13 +104,13 @@ var TicketUI = (function () {
               return null;
             } };
         },
-        title: t("ticket.confirm_ticket_update_op_58", "Confirm ticket update (op 58)"),
+        title: t("ticket.confirm_ticket_update_op_58", "Confirm voting stake update (op 58)"),
         rows: function (built, f) {
-          return [[t("ticket.ticket", "Ticket"), tk.id], [t("ticket.account", "Account"), tk.owner],
+          return [[t("ticket.ticket", "Voting stake"), tk.id], [t("ticket.account", "Account"), tk.owner],
             [t("ticket.lock", "Lock"), tk.lock_word + " → " + ProposalTicket.lockLabel(parseInt(sel.value, 10))],
             [t("ticket.amount", "Amount"), (fM.input.value.trim() === "" ? t("ticket.unchanged", "unchanged") : fM.input.value.trim() + " " + tk.sym)], [t("common.fee_live", "Fee (live)"), f]];
         },
-        ok: function () { return t("ticket.ticket_updated_and_re_read_on_chain", "Ticket updated and re-read on chain."); } });
+        ok: function () { return t("ticket.ticket_updated_and_re_read_on_chain", "Voting stake updated and re-read on chain."); } });
     });
   }
   /* Route entry: #/tickets — table + leaderboard + my-tickets + create + row update. */
@@ -118,7 +118,7 @@ var TicketUI = (function () {
     if (!root) return;
     var ui = entry(root, "Ticket");
     if (!ui) return;
-    var ctx = ui.routeReady(root, t("ticket.tickets", "Tickets"), function () { renderTickets(root); },
+    var ctx = ui.routeReady(root, t("ticket.tickets", "Voting stakes"), function () { renderTickets(root); },
       ["Proposal", "ProposalTicket", "Tx", "Account", "Wallet", "Format", "Asset", "Chain", "Store"]);
     /* M5 headings-icons: routeReady owns the h1 — retrofit text-only via shared
      * pageHead (same key; null: ticket icon does not exist yet). */
@@ -126,12 +126,12 @@ var TicketUI = (function () {
       if (typeof DOM !== "undefined" && DOM && typeof DOM.pageHead === "function") {
         var _rd = root.ownerDocument || document;
         var _oh = root.querySelector("h1");
-        if (_oh && _oh.parentNode) _oh.parentNode.replaceChild(DOM.pageHead(_rd, t("ticket.tickets", "Tickets"), null), _oh);
+        if (_oh && _oh.parentNode) _oh.parentNode.replaceChild(DOM.pageHead(_rd, t("ticket.tickets", "Voting stakes"), null), _oh);
       }
     } catch (e) { /* heading stands */ }
     if (!ctx) return;
     var doc = ctx.doc, uiGen = ctx.myGen, myGen = ++gen;
-    ctx.wrap.appendChild(ui.el(doc, "p", t("ticket.tickets_lock_funds_for_vote_weight_there_is_n", "Tickets lock funds for vote weight. There is no delete operation, so every ticket row is permanent."), "muted"));
+    ctx.wrap.appendChild(ui.el(doc, "p", t("ticket.tickets_lock_funds_for_vote_weight_there_is_n", "Voting stakes lock funds for vote weight. There is no delete operation, so every voting stake row is permanent."), "muted"));
     try {
       if (typeof Wallet === "undefined" || !Wallet.isUnlocked()) {
         var _v = (typeof ViewingAs !== "undefined" && ViewingAs && typeof ViewingAs.get === "function") ? ViewingAs.get() : { id: "1.2.0", name: "committee-account" };
@@ -142,9 +142,9 @@ var TicketUI = (function () {
     var boardBox = ui.el(doc, "div"); ctx.wrap.appendChild(boardBox);
     var fM = Forms.labeledInput(doc, t("ticket.my_account", "My account") + " ", { placeholder: t("common.name_or_id_hint", "name or 1.2.N"), value: (typeof ViewingAs !== "undefined" && ViewingAs && typeof ViewingAs.id === "function") ? ViewingAs.id() : "1.2.0" });
     ctx.wrap.appendChild(fM.row);
-    var mine = ui.touchable(ui.el(doc, "button", t("ticket.my_tickets", "My tickets"))); mine.type = "button"; ctx.wrap.appendChild(mine);
+    var mine = ui.touchable(ui.el(doc, "button", t("ticket.my_tickets", "My voting stakes"))); mine.type = "button"; ctx.wrap.appendChild(mine);
     var mineBox = ui.el(doc, "div"); ctx.wrap.appendChild(mineBox);
-    ctx.wrap.appendChild(ui.el(doc, "h2", t("ticket.create_ticket", "Create ticket")));
+    ctx.wrap.appendChild(ui.el(doc, "h2", t("ticket.create_ticket", "Create voting stake")));
     var fA = Forms.labeledInput(doc, t("ticket.account", "Account") + " ", { placeholder: t("common.name_or_id_hint", "name or 1.2.N"), value: (typeof ViewingAs !== "undefined" && ViewingAs && typeof ViewingAs.id === "function") ? ViewingAs.id() : "1.2.0" });
     var fS = Forms.labeledInput(doc, t("ticket.asset", "Asset") + " ", { placeholder: t("common.symbol_or_id_hint", "symbol or 1.3.x"), value: "BTS" });
     var fQ = Forms.labeledInput(doc, t("ticket.amount", "Amount") + " ", { placeholder: "1.5", inputmode: "decimal" });
@@ -156,29 +156,29 @@ var TicketUI = (function () {
       ui.clearBox(box);
       box.appendChild(ui.deskTable(doc, [t("ticket.id", "ID"), t("ticket.owner", "Owner"), t("ticket.amount", "Amount"), t("ticket.lock", "Lock")], rows.map(function (r) { return ticketRow(ui, r); })));
       if (withUpdate && rows.length) {
-        box.appendChild(ui.el(doc, "p", t("ticket.tickets_cannot_be_deleted_no_delete_op_exists", "Tickets cannot be deleted (no delete op exists) — rows above are permanent."), "muted"));
+        box.appendChild(ui.el(doc, "p", t("ticket.tickets_cannot_be_deleted_no_delete_op_exists", "Voting stakes cannot be deleted (no delete op exists) — rows above are permanent."), "muted"));
         rows.forEach(function (t) { updateBox(ui, doc, box, myGen, uiGen, t); });
       }
     }
     go.addEventListener("click", function () {
       if (!live(myGen, uiGen)) return; go.disabled = true; ui.clearBox(boardBox);
-      ui.showStatus(doc, boardBox, t("ticket.loading_tickets", "Loading tickets…"));
+      ui.showStatus(doc, boardBox, t("ticket.loading_tickets", "Loading voting stakes…"));
       ProposalTicket.tickets({}).then(function (rows) {
         if (!live(myGen, uiGen)) return; drawRows(boardBox, rows, false); go.disabled = false;
-      }).catch(function (e) { if (!live(myGen, uiGen)) return; ui.clearBox(boardBox); ui.showError(doc, boardBox, e, t("ticket.could_not_load_tickets", "Could not load tickets.")); go.disabled = false; });
+      }).catch(function (e) { if (!live(myGen, uiGen)) return; ui.clearBox(boardBox); ui.showError(doc, boardBox, e, t("ticket.could_not_load_tickets", "Could not load voting stakes.")); go.disabled = false; });
     });
     mine.addEventListener("click", function () {
       if (!live(myGen, uiGen)) return; mine.disabled = true; ui.clearBox(mineBox);
-      ui.showStatus(doc, mineBox, t("ticket.loading_my_tickets", "Loading my tickets…"));
+      ui.showStatus(doc, mineBox, t("ticket.loading_my_tickets", "Loading my voting stakes…"));
       ProposalTicket.ticketsByAccount(fM.input.value.trim() || ((typeof ViewingAs !== "undefined" && ViewingAs && typeof ViewingAs.id === "function") ? ViewingAs.id() : "1.2.0")).then(function (rows) {
         if (!live(myGen, uiGen)) return; drawRows(mineBox, rows, true); mine.disabled = false;
-      }).catch(function (e) { if (!live(myGen, uiGen)) return; ui.clearBox(mineBox); ui.showError(doc, mineBox, e, t("ticket.could_not_load_tickets", "Could not load tickets.")); mine.disabled = false; });
+      }).catch(function (e) { if (!live(myGen, uiGen)) return; ui.clearBox(mineBox); ui.showError(doc, mineBox, e, t("ticket.could_not_load_tickets", "Could not load voting stakes.")); mine.disabled = false; });
     });
-    ui.reviewSection(doc, cbox, uiGen, t("ticket.review_ticket", "Review ticket"), {
+    ui.reviewSection(doc, cbox, uiGen, t("ticket.review_ticket", "Review voting stake"), {
       build: async function () {
         var acct = await Account.resolve(fA.input.value.trim() || ((typeof ViewingAs !== "undefined" && ViewingAs && typeof ViewingAs.id === "function") ? ViewingAs.id() : "1.2.0")), info = await Asset.describe(fS.input.value.trim() || "BTS");
         var raw = Format.parseAmount(fQ.input.value.trim(), info.precision);
-        if (BigInt(raw) <= 0n) throw new Error(t("ticket.ticket_amount_must_be_0", "Ticket amount must be > 0."));
+        if (BigInt(raw) <= 0n) throw new Error(t("ticket.ticket_amount_must_be_0", "Voting stake amount must be > 0."));
         var before = (await ProposalTicket.ticketsByAccount(acct.name || acct.id, {})).length;
         var pair = ProposalTicket.buildTicketCreate({ accountId: acct.id,
           targetType: parseInt(lock.value, 10), amountRaw: raw, assetId: info.id });
@@ -189,14 +189,14 @@ var TicketUI = (function () {
             return now.length > before ? now[now.length - 1] : null;
           } };
       },
-      title: t("ticket.confirm_ticket_create_op_57", "Confirm ticket create (op 57)"),
+      title: t("ticket.confirm_ticket_create_op_57", "Confirm voting stake create (op 57)"),
       rows: function (built, f) {
         return [["Account", built.pair[1].account],
           [t("ticket.lock", "Lock"), ProposalTicket.lockLabel(built.pair[1].target_type), String(built.pair[1].target_type)],
           [t("ticket.amount", "Amount"), built.human, built.pair[1].amount.amount], [t("common.fee_live", "Fee (live)"), f]];
       },
-      ok: function () { return t("ticket.ticket_created_and_re_read_on_chain", "Ticket created and re-read on chain."); },
-      fail: t("ticket.could_not_build_the_ticket_check_account_asse", "Could not build the ticket (check account, asset and amount).") });
+      ok: function () { return t("ticket.ticket_created_and_re_read_on_chain", "Voting stake created and re-read on chain."); },
+      fail: t("ticket.could_not_build_the_ticket_check_account_asse", "Could not build the voting stake (check account, asset and amount).") });
   }
   /* Parse "account,amount" lines -> [{name, human}] (validation only — ids resolve at emit). */
   function parseAirdropLines(text) {
