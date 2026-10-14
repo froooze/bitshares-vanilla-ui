@@ -97,7 +97,7 @@ var SPEC = {
   hi: {
     word: "hindi",
     COUNTS: {
-      "wallet": [["वॉलेट",189]], "account": [["खाता",228]], "asset": [["एसेट",276]],
+      "wallet": [["वॉलेट",189]], "account": [["खाता",228]], "asset": [["एसेट",274]],
       "balance": [["बैलेंस",75]], "claim": [["दावा",17]],
       "smartcoin": [["स्मार्टकॉइन",23]], "collateral": [["कोलैटरल",45]],
       "precision": [["परिशुद्धता",17]], "share": [["शेयर",20]],
@@ -116,17 +116,17 @@ var SPEC = {
       "issuer": [["जारीकर्ता",29]], "producer": [["उत्पादक",20]],
       "publisher": [["प्रकाशक",9]], "settle": [["सेटल",60]],
       "referral": [["रेफ़रल",8]], "lock": [["लॉक",159]], "prediction": [["प्रेडिक्शन",19]],
-      "borrow": [["उधार",62]], "community": [["कम्युनिटी",15]]
+      "borrow": [["उधार",62]], "community": [["कम्युनिटी",15]], "flash loan": [["फ्लैश लोन",20]]
     }
   },
   tr: {
     word: "turkish",
     COUNTS: {
-      "wallet": [["cüzdan",189]], "account": [["hesap",231]], "asset": [["varlık",223]],
+      "wallet": [["cüzdan",189]], "account": [["hesap",231]], "asset": [["varlık",220]],
       "balance": [["bakiye",75]], "claim": [["talep",21]],
       "smartcoin": [["Akıllı para",23]], "collateral": [["teminat",43]],
       "precision": [["Hassasiyet",10]], "share": [["pay",55]],
-      "liquidity pool": [["Likidite havuz",12],["havuz",124]],
+      "liquidity pool": [["Likidite havuz",12],["havuz",125]],
       "pool share": [["LP pay",3]], "stake": [["stake",19]],
       "market": [["piyasa",179]], "exchange": [["borsa",34]], "desk": [["Masa",45]],
       "swap": [["takas",59]], "orderbook": [["emir defteri",14]], "limit order": [["limit emir",8]],
@@ -141,7 +141,7 @@ var SPEC = {
       "issuer": [["ihraççı",23]], "producer": [["üretici",20]],
       "publisher": [["yayınlayıcı",9]], "settle": [["uzlaşma",50]],
       "referral": [["Yönlendirme",6]], "lock": [["kilit",90]], "prediction": [["Tahmin",50]],
-      "borrow": [["Ödünç",30]], "broadcast": [["yayımlandı",14]], "publish": [["yayınlandı",12]]
+      "borrow": [["Ödünç",30]], "broadcast": [["yayımlandı",14]], "publish": [["yayınlandı",12]], "flash loan": [["flash kredi",20]]
     }
   }
 };
