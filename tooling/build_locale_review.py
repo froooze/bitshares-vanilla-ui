@@ -270,18 +270,120 @@ flagging a doubt over silently accepting it.
 """
 
 
+PROMPT_LOW_RISK = """# REVIEW PROMPT — LOW-RISK SUBSET. Read this first, then review.
+
+## What you are looking at
+
+This file holds ONLY the **low-risk strings** of a BitShares
+cryptocurrency wallet — the ~2,800 keys (of 3,938) that do NOT render
+inside signing confirmation dialogs: labels, headings, help prose,
+explorer tables, menu and settings text, empty states, tooltips. Each
+section holds ONE locale. Every key is shown as a triple: the dotted key,
+the `EN:` English source, and the `<CODE>:` current translation. After the
+triples, a compact `IDENTICAL:` list names the keys deliberately left in
+English.
+
+**Every non-English string in this file was written by a machine and has
+never been reviewed by a human.** A mistake here costs clarity, not money —
+but sloppy low-risk strings are what teach users to distrust the whole
+wallet, including the signing dialogs where trust actually matters.
+
+## What to hunt (in order)
+
+1. **Inconsistency — the main defect in this subset.** One English concept,
+   two spellings in one locale (`swap` vs `canje` in different screens,
+   `proxy` vs `apoderado`, `emir defteri` vs `sipariş defteri`). Where you
+   find a split, prefer the form the file already uses most and name the
+   keys using the minority form. One term, one spelling — that is what makes
+   a future correction propagate instead of fork.
+2. **Register drift.** The locale's stated convention (listed per section)
+   must hold everywhere. A single informal string in a formal locale (or the
+   reverse) reads as a different voice and erodes trust in financial
+   software. Help prose is where drift hides — long paragraphs written in a
+   looser voice than the labels around them.
+3. **Help-prose accuracy.** Long `help`, `about` and `splash` bodies describe
+   what the wallet DOES. A fluent paragraph that misdescribes a flow (wrong
+   desk name, wrong step order, a feature that does not exist) is worse than
+   a clumsy one. Check claims against the English, not just the grammar.
+4. **Placeholders, ids, code and structure MUST survive byte-verbatim.**
+   `%(name)s` placeholders (same multiset, same spelling), object ids like
+   `1.2.x`, URLs, asset symbols, markdown link targets (`#/assets/feed`),
+   and line counts of multi-line values. A translation that breaks any of
+   these is a bug, not a translation — flag it even if the prose is
+   beautiful.
+5. **Some English is deliberate.** The `IDENTICAL:` lists are loanwords the
+   target language's crypto UIs actually use, indicator tickers, brands,
+   pinned ids, and data glue. Do NOT invent a translation for these. If one
+   SHOULD have been translated, say which key and why.
+6. **Do not touch metadata.** There is no `_meta` in this file and there
+   must be none in your answer. You are not marking anything verified;
+   a separate human process does that. Your corrections change string
+   values only.
+
+## How to answer
+
+**Respond in JSON only, no prose, no markdown fences.** Shape:
+
+```json
+{
+  "<lang>": {
+    "<dotted.key>": {
+      "original": "<the exact current string, byte-for-byte>",
+      "replacement": "<your corrected string>"
+    }
+  }
+}
+```
+
+Rules for the answer object:
+
+- Include **only the keys you are correcting**. Do not repeat the keys you
+  approve of. An empty object `{}` for a language means you reviewed it and
+  found nothing — that is a valid and useful answer.
+- `original` must equal the current string **byte-for-byte**, copied exactly
+  (placeholders, punctuation, trailing spaces included). It is how the fix
+  is applied mechanically; a mismatch means the fix is skipped, not guessed.
+- `replacement` must preserve every placeholder, id, URL, symbol, link hash
+  and line break the original's English source requires.
+- `"<lang>"` is the two-letter code from the section header (`hi`, `tr`,
+  ...), never the language name.
+- If you find a key wrongly left English (in an `IDENTICAL:` list but
+  clearly needing translation), include it with the English string as
+  `original` and your translation as `replacement`.
+
+Be strict about consistency, be specific about drift, and prefer flagging a
+doubt over silently accepting it.
+
+---
+"""
+
+
 def main():
     high_risk_only = "--high-risk-only" in sys.argv
-    out_name = "REVIEW_HIGH_RISK.md" if high_risk_only else "REVIEW.md"
+    low_risk_only = "--low-risk-only" in sys.argv
+    if high_risk_only and low_risk_only:
+        print("pick at most one of --high-risk-only / --low-risk-only")
+        return 2
+    out_name = ("REVIEW_HIGH_RISK.md" if high_risk_only
+                else "REVIEW_LOW_RISK.md" if low_risk_only
+                else "REVIEW.md")
     out = os.path.join(LOCALES_DIR, out_name)
     en = flat(load("en"))
     en_keys = sorted(en)
     hr_keys = None
-    if high_risk_only:
+    subset_keys = en_keys
+    if high_risk_only or low_risk_only:
         sections, danger, max_len = load_high_risk_rule()
         hr_keys = sorted(k for k in en_keys
                          if is_high_risk(k, en[k], sections, danger, max_len))
-    prompt = PROMPT if not high_risk_only else PROMPT_HIGH_RISK
+        if low_risk_only:
+            hr_set = set(hr_keys)
+            subset_keys = [k for k in en_keys if k not in hr_set]
+        else:
+            subset_keys = hr_keys
+    prompt = (PROMPT_HIGH_RISK if high_risk_only
+              else PROMPT_LOW_RISK if low_risk_only
+              else PROMPT)
     parts = [prompt]
     parts.append("# Coverage — what is and is not in this file\n")
     if high_risk_only:
@@ -290,14 +392,24 @@ def main():
                      "reference inside signing confirmation dialogs, where a misreading "
                      "can cost a user money. Review these first; they are the dangerous "
                      "subset. The full 42k-key bundle is `REVIEW.md`.\n"
-                     % (len(en_keys), len(hr_keys)))
+                     % (len(en_keys), len(subset_keys)))
+    elif low_risk_only:
+        parts.append("`en.json` is the master (%d keys). **This bundle holds only the "
+                     "%d low-risk keys** — everything NOT in the high-risk set: labels, "
+                     "headings, help prose, explorer chrome, menu and settings text. "
+                     "A mistake here costs clarity, not money — but sloppy low-risk "
+                     "strings are what teach users to distrust the whole wallet, and "
+                     "inconsistency (two spellings for one concept) is the defect to "
+                     "hunt. The dangerous 1,118-key subset is `REVIEW_HIGH_RISK.md`; "
+                     "the full 42k-key bundle is `REVIEW.md`.\n"
+                     % (len(en_keys), len(subset_keys)))
     else:
         parts.append("`en.json` is the master (%d keys). Per locale: translated keys are "
                      "expanded below; identical keys are listed compactly.\n" % len(en_keys))
     for code in ["de", "es", "fr", "it", "ja", "ko", "pt", "ru", "tr", "zh", "hi"]:
         name, register = LANG[code]
         loc = flat(load(code))
-        keys = hr_keys if high_risk_only else en_keys
+        keys = subset_keys
         diff = [(k, en[k], loc[k]) for k in keys if loc.get(k) != en[k]]
         same = [k for k in keys if loc.get(k) == en[k]]
         parts.append("## %s — %s (%d translated, %d deliberately English)\n" % (code, name, len(diff), len(same)))
