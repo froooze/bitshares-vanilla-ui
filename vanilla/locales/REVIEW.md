@@ -96,7 +96,7 @@ accepting it.
 
 `en.json` is the master (3938 keys). Per locale: translated keys are expanded below; identical keys are listed compactly.
 
-## de — German (3695 translated, 243 deliberately English)
+## de — German (3694 translated, 244 deliberately English)
 
 Register: formal Sie, standard for German financial software.
 
@@ -138,7 +138,7 @@ DE: Leeren
 
 ### about.dlg_search_ph
 EN: Filter exchanges…
-DE: Dialoge filtern…
+DE: Börsen filtern…
 
 ### about.dlg_showing
 EN: Showing
@@ -154,7 +154,7 @@ DE: Build-Dialog-Archiv nicht verfügbar.
 
 ### about.hero_lede
 EN: A wallet for the BitShares blockchain — markets, accounts, governance, and exploration — running as plain web files. No framework, no installer, no account with us. Your keys never leave this browser.
-DE: Eine Wallet für die BitShares-Blockchain — Märkte, Konten, Governance und Erkunden — als einfache Web-Dateien. Kein Framework, kein Installateur, kein Konto bei uns. Ihre Schlüssel verlassen diesen Browser nie.
+DE: Eine Wallet für die BitShares-Blockchain — Märkte, Konten, Governance und Erkunden — als einfache Web-Dateien. Kein Framework, kein Installer, kein Konto bei uns. Ihre Schlüssel verlassen diesen Browser nie.
 
 ### about.hero_title
 EN: BitShares, in your browser. Nothing to install.
@@ -234,7 +234,7 @@ DE: ; Kontovorschläge werden angezeigt auf der
 
 ### account.activity_hint
 EN:  Transfers, orders, and fills list here once they happen.
-DE:  Überweisungen, Orders und Fills werden hier gelistet, sobald sie stattfinden.
+DE:  Transfers, Orders und Fills werden hier gelistet, sobald sie stattfinden.
 
 ### account.adjust_or_close_positions_on_the
 EN: Adjust or close positions on the 
@@ -524,10 +524,6 @@ DE: Konto-Transfer
 EN: Account update
 DE: Konto-Update
 
-### account.op_assert_op
-EN: Assert
-DE: Assert-Plan
-
 ### account.op_asset_burn
 EN: Asset burn
 DE: Asset-Burn
@@ -562,7 +558,7 @@ DE: Authority-Update
 
 ### account.op_balance_claim
 EN: Balance claim
-DE: Saldo-Claim
+DE: Guthaben-Claim
 
 ### account.op_blind_from
 EN: Transfer from blind
@@ -761,24 +757,24 @@ EN: Proposal update
 DE: Vorschlags-Update
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-DE: Same-T-Leihen
+EN: Flash loan borrow
+DE: Flash-Loan-Leihen
 
 ### account.op_samet_create
-EN: Same-T fund create
-DE: Same-T-Fonds-Erstellung
+EN: Flash loan fund create
+DE: Flash-Loan-Fonds-Erstellung
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-DE: Same-T-Fonds-Löschung
+EN: Flash loan fund delete
+DE: Flash-Loan-Fonds-Löschung
 
 ### account.op_samet_repay
-EN: Same-T repay
-DE: Same-T-Rückzahlung
+EN: Flash loan repay
+DE: Flash-Loan-Rückzahlung
 
 ### account.op_samet_update
-EN: Same-T fund update
-DE: Same-T-Fonds-Update
+EN: Flash loan fund update
+DE: Flash-Loan-Fonds-Update
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -1066,7 +1062,7 @@ DE: Ausgeführt: %(pays)s bezahlt, %(receives)s erhalten
 
 ### account.sum_global_settle
 EN: Globally settled %(asset)s
-DE: Hat %(asset)s global gesettelt
+DE: Globales Settlement für %(asset)s durchgeführt
 
 ### account.sum_htlc_claimed
 EN: HTLC %(id)s claimed
@@ -1162,11 +1158,11 @@ DE: Hat %(amount)s aus dem Fonds %(fund)s geliehen
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-DE: Hat einen Same-T-Fonds mit %(amount)s erstellt
+DE: Hat einen Flash-Loan-Fonds mit %(amount)s erstellt
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-DE: Hat den Same-T-Fonds %(fund)s gelöscht
+DE: Hat den Flash-Loan-Fonds %(fund)s gelöscht
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -1174,7 +1170,7 @@ DE: Hat %(amount)s an den Fonds %(fund)s zurückgezahlt
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-DE: Hat den Same-T-Fonds %(fund)s aktualisiert
+DE: Hat den Flash-Loan-Fonds %(fund)s aktualisiert
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -1206,7 +1202,7 @@ DE: Hat %(amount)s an %(to)s gesendet
 
 ### account.sum_upgrade
 EN: Upgraded %(account)s
-DE: Hat %(account)s upgegradet
+DE: Upgrade für %(account)s durchgeführt
 
 ### account.sum_vesting_create
 EN: Vested %(amount)s for %(owner)s
@@ -2330,7 +2326,7 @@ DE: Gefunden
 
 ### auth.have_a_bin_backup_file_instead_this_wallet_ke
 EN: Have a .bin backup file instead? This wallet keeps one encrypted 
-DE: Haben Sie stattdessen eine .bin-Sicherungsdatei? Diese Wallet speichert eine verschlüsselt 
+DE: Haben Sie stattdessen eine .bin-Sicherungsdatei? Diese Wallet speichert eine verschlüsselte 
 
 ### auth.import_an_existing_account_brainkey
 EN: Import an existing account (brainkey)
@@ -2398,7 +2394,7 @@ DE: Transaktions-Builder öffnen
 
 ### auth.multisig_step_approve
 EN: Co-owners approve (op 23) on the proposal page, or co-sign via the transaction builder.
-DE: Miteigentümer genehmigen (op 23) auf der Vorschlagsseite oder signieren mit über den Transaktions-Builder.
+DE: Miteigentümer genehmigen (op 23) auf der Vorschlagsseite oder signieren gemeinsam über den Transaktions-Builder.
 
 ### auth.multisig_step_propose
 EN: Propose the operation (Transfer has Send/Propose; assets, barter and borrowing link to proposals).
@@ -3446,7 +3442,7 @@ DE: Jeder punktgetrennte Teil muss 1–63 Zeichen lang sein.
 
 ### createaccount.each_dot_separated_part_must_start_with_a_let
 EN: Each dot-separated part must start with a letter and end with a letter or digit.
-DE: Jeder punktgetrennte Teil muss mit einem Buchstaben beginnen und mit Buchstabe oder Ziffer enden.
+DE: Jeder punktgetrennte Teil muss mit einem Buchstaben beginnen und mit einem Buchstaben oder einer Ziffer enden.
 
 ### createaccount.enter_an_account_name
 EN: Enter an account name.
@@ -3474,7 +3470,7 @@ DE: Stattdessen anmelden
 
 ### createaccount.lowercase_letters_only_starting_with_a_letter
 EN: Lowercase letters only, starting with a letter (digits, dots and dashes allowed).
-DE: Nur Kleinbuchstaben, beginnend mit Buchstabe (Ziffern, Punkte und Bindestriche erlaubt).
+DE: Nur Kleinbuchstaben, beginnend mit einem Buchstaben (Ziffern, Punkte und Bindestriche erlaubt).
 
 ### createaccount.memo_key
 EN: Memo key
@@ -3558,7 +3554,7 @@ DE: Transaktion wird erstellt…
 
 ### createworker.confirm_worker_op_34
 EN: Confirm worker (op %(op)s)
-DE: Worker bestätigen (Op %(op)s)
+DE: Worker bestätigen (op %(op)s)
 
 ### createworker.could_not_preview_the_worker
 EN: Could not preview the worker.
@@ -3742,7 +3738,7 @@ DE: Worker-Name
 
 ### createworker.worker_preview_op_34
 EN: Worker preview (op %(op)s)
-DE: Worker-Vorschau (Op %(op)s)
+DE: Worker-Vorschau (op %(op)s)
 
 ### credit.0_none
 EN: 0 — none
@@ -4154,7 +4150,7 @@ DE: Angebot aktualisiert.
 
 ### credit.offers_hint
 EN:  Offers appear once anyone creates one — draft yours in the Create offer form on this desk.
-DE:  Angebote erscheinen, sobald jemand eines erstellt — entwerfen Sie Ihres im Formular Angebot erstellen auf diesem Desk.
+DE:  Angebote erscheinen, sobald jemand eines erstellt — entwerfen Sie Ihres im Formular „Angebot erstellen“ auf diesem Desk.
 
 ### credit.omit_chain_default
 EN: omit (chain default)
@@ -4166,7 +4162,7 @@ DE: Offen
 
 ### credit.owned_hint
 EN:  Create one in the Create offer form below — owned offers list here.
-DE:  Erstellen Sie eines im Formular Angebot erstellen unten — eigene Angebote erscheinen hier.
+DE:  Erstellen Sie eines im Formular „Angebot erstellen“ unten — eigene Angebote erscheinen hier.
 
 ### credit.owner
 EN: Owner
@@ -4305,8 +4301,8 @@ EN: Unknown offer.
 DE: Unbekanntes Angebot.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-DE: Unbekannter Same-T-Fonds.
+EN: Unknown flash loan fund.
+DE: Unbekannter Flash-Loan-Fonds.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -4314,7 +4310,7 @@ DE: Entsperrt — drücken Sie Zurück und führen Sie Prüfen erneut aus, damit
 
 ### credit.update_delta_tpl
 EN: Delta amount (%(sym)s, signed)
-DE: Delta-Betrag (%(sym)s, signiert)
+DE: Delta-Betrag (%(sym)s, vorzeichenbehaftet)
 
 ### credit.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to act as your account.
@@ -4366,7 +4362,7 @@ DE: BTS mit Schlüsseln handeln, die Sie halten
 
 ### debit.action_title
 EN: Claim / delete
-DE: Beanspruchen / löschen
+DE: Abheben / löschen
 
 ### debit.auth_field
 EN: Authorized account
@@ -4566,7 +4562,7 @@ DE: Die Leiter konnte nicht in der Vorschau angezeigt werden.
 
 ### debit.preview_ladder
 EN: Preview recurring orders
-DE: Wiederkehrende Orders in der Vorschau
+DE: Wiederkehrende Orders in der Vorschau anzeigen
 
 ### debit.recipient_hint
 EN:  Ask the granter to add one from the Direct Debit form.
@@ -4590,7 +4586,7 @@ DE: Berechtigung prüfen
 
 ### debit.s1
 EN: signing…
-DE: signieren…
+DE: wird signiert…
 
 ### debit.s3
 EN: broadcasting…
@@ -7558,19 +7554,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 DE: # Gepoolte Gelder, gleiches Asset rein und raus
-Same-T-Fonds poolen ein Asset vieler Lieferanten. Kreditnehmer ziehen gegen einen Fonds und zahlen mit Zinsen zurück; die Chain setzt Salden und Pläne durch.
+Flash-Loan-Fonds (Same-T) poolen ein Asset vieler Lieferanten. Kreditnehmer ziehen gegen einen Fonds und zahlen mit Zinsen zurück; die Chain setzt Salden und Pläne durch.
 # Stückelungsdisziplin
 Fonds sind in ganzen Einheiten gestückelt (1M-Basis): Erstellen, Ziehen und Zurückzahlen im selben Asset, und beachten Sie die Fondslimits, bevor Sie größere Beträge einsetzen.
 # Gleich-Transaktions-Regel
 Gepaarte Fondsoperationen gehören in eine Transaktion: geteilte Schenkel können halbe Deals stranden. Der Desk baut das Paar gemeinsam — einmal prüfen, einmal signieren.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-DE: Gepoolte Same-Asset-Fonds mit Ziehungen und Rückzahlungen.
+EN: Pooled flash-loan funds with draws and repayments.
+DE: Gepoolte Flash-Loan-Fonds (gleiches Asset) mit Ziehungen und Rückzahlungen.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -7708,7 +7704,7 @@ DE: Jede Seite dieser Wallet, gruppiert so, wie das Burger-Menü sie gruppiert. 
 - [Leihen](#/borrow)
 - [Barter](#/barter)
 - [Einzahlen / Abheben](#/deposit-withdraw)
-- [Same-T-Fonds](#/samet)
+- [Flash-Loan-Fonds](#/samet)
 - [Spotlight](#/spotlight)
 # Verdienen & Schützen
 - [Kreditangebot](#/credit-offer)
@@ -8530,7 +8526,7 @@ DE:  (effektiv):
 
 ### instant.effective_suffix_dash
 EN:  (effective): —
-DE:  (effektiv): —
+DE:  (effektiv): -
 
 ### instant.enter_a_market_like_bts_cny
 EN: Enter a market like BTS_CNY.
@@ -8730,15 +8726,15 @@ DE:  über
 
 ### instant.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to trade as your account.
-DE: Ansicht als committee-account (1.2.0) — entsperren Sie, um als Ihr Konto zu traden.
+DE: Ansicht als committee-account (1.2.0) - entsperren Sie, um als Ihr Konto zu traden.
 
 ### instant.walk_suffix
 EN:  walk
-DE:  walken
+DE:  Walk
 
 ### instant.walkthrough_bids_mid
 EN:  — walkthrough uses bids (selling 
-DE:  — Walkthrough nutzt Bids (Verkauf von 
+DE:  - Walkthrough nutzt Bids (Verkauf von 
 
 ### instant.walkthrough_paying_mid
 EN:  hits bids paying 
@@ -8750,7 +8746,7 @@ DE: Anpassen
 
 ### market.asks
 EN: Asks
-DE: Verkauf
+DE: Angebote
 
 ### market.back_to_live
 EN: Back to live trades
@@ -9833,8 +9829,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 DE: Cloud-, lokale und Brainkey-Registrierungswege.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-DE: Gebündelte Same-Asset-Fonds und Ziehungen.
+EN: Pooled flash-loan funds and draws.
+DE: Gebündelte Flash-Loan-Fonds (gleiches Asset) und Ziehungen.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -10033,8 +10029,8 @@ EN: Registration
 DE: Registrierung
 
 ### menu.p_samet
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### menu.p_settings
 EN: Settings
@@ -12827,8 +12823,8 @@ EN: Create fund
 DE: Fonds erstellen
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-DE:  Erstellen Sie einen über das Erstellungsformular unten — eigene Same-T-Fonds werden hier aufgelistet.
+EN:  Create one from the create form below — owned flash loan funds list here.
+DE:  Erstellen Sie einen über das Erstellungsformular unten — eigene Flash-Loan-Fonds werden hier aufgelistet.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -12840,7 +12836,7 @@ DE: Löschen
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-DE: Delta-Betrag (signiert)
+DE: Delta-Betrag (mit Vorzeichen)
 
 ### samet.fee
 EN: Fee
@@ -12963,20 +12959,20 @@ EN: Review update
 DE: Update prüfen
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-DE: Same-Asset- (Same-T-) Fonds: Leihen und Zurückzahlen erfolgen in EINER Transaktion [67 Leihen + 68 Zurückzahlen] — die Chain lehnt ein einzelnes Leihen ab. Sätze sind Prozent mit Nenner 1.000.000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+DE: Flash-Loans: Leihen und Zurückzahlen im gleichen Asset erfolgen in EINER Transaktion [67 Leihen + 68 Zurückzahlen] — die Chain lehnt ein einzelnes Leihen ab. Sätze sind Prozent mit Nenner 1.000.000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-DE: Same-T-Backend fehlt: credit-ui.js konnte nicht geladen werden.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+DE: Flash-Loan-Fonds nicht verfügbar: credit-ui.js konnte nicht geladen werden.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### samet.title
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### samet.unpaid
 EN: Unpaid
@@ -13396,7 +13392,7 @@ DE: Handelnd als
 
 ### shell.badge_initial
 EN: connecting…
-DE: Wird verbunden…
+DE: Verbinden…
 
 ### shell.chart_aria
 EN: Chart plot. Tabular data follows.
@@ -13404,7 +13400,7 @@ DE: Chart-Diagramm. Tabellarische Daten folgen.
 
 ### shell.clear_search_hint
 EN:  Clear the search to see every page.
-DE:  Suche löschen, um alle Seiten zu sehen.
+DE:  Suche leeren, um alle Seiten zu sehen.
 
 ### shell.follow
 EN: Follow
@@ -13772,7 +13768,7 @@ DE: Ticket aktualisiert und on-chain neu gelesen.
 
 ### ticket.tickets_cannot_be_deleted_no_delete_op_exists
 EN: Tickets cannot be deleted (no delete op exists) — rows above are permanent.
-DE: Tickets können nicht gelöscht werden (keine Lösch-Op existiert) — obige Zeilen sind dauerhaft.
+DE: Tickets können nicht gelöscht werden (kein Lösch-Op existiert) — obige Zeilen sind dauerhaft.
 
 ### ticket.tickets_lock_funds_for_vote_weight_there_is_n
 EN: Tickets lock funds for vote weight. There is no delete operation, so every ticket row is permanent.
@@ -15923,7 +15919,7 @@ EN: A leg on this route has no recorded swap yet.
 DE: Ein Teil dieser Route hat noch keinen aufgezeichneten Swap.
 
 IDENTICAL (deliberately English — loanwords, tickers, brands, pinned ids, data glue; challenge individual keys per the prompt, do not translate the list):
-account.asset_th, account.op_unknown, account.order_th, account.upgrade_row_upgrade, account_net.class_htlc, account_net.class_transfer, account_net.class_vesting, account_net.detail_line, account_net.detail_line_one, account_net.detail_span, account_net.ring1_label, account_net.ring2_label, account_net.seeds_placeholder, account_net.twin_count, account_net.twin_depth, approval.chain, asset.backing_field, asset.bitasset_row, asset.mcr_row, asset.nft_row, asset.offset_row, asset.op_col, asset.smartcoin_row, asset.symbol_field, asset.tab_pma, asset.tab_uia, asset_ops.title, assets.title, assets_feed.s1, barter.barter, barter.paid_by_suffix, barter.title, borrow.hdr_order, borrow.order, borrow.position, confirm.memo, createaccount.step_brainkey, createaccount.step_name, createworker.name, createworker.url, credit.asset, credit.deal, credit.deal_2, credit.delta, debit.spotlight_title, debit.start_row, debit.uc_order, eslab.raw_index, explorer.asset_prefix, explorer.asset_title, explorer.assets_mode_market, explorer.back_to_block_prefix, explorer.block_prefix, explorer.block_title, explorer.confirm_asset, explorer.feed_badge_live, explorer.feed_mcr_mssr, explorer.feed_mcr_mssr_title, explorer.feed_publisher_title, explorer.head_prefix, explorer.id_row, explorer.info_h, explorer.live_prefix, explorer.op_badge_prefix, explorer.op_label, explorer.op_prefix, explorer.pill_transfer, explorer.short, explorer.stat_tps, explorer.state_live, explorer.tab_blocks, explorer.th_feed, explorer.th_mssr, explorer.th_settlement, explorer.th_symbol, explorer.transfer, explorer.tx_prefix, explorer_assets.s1, explorer_assets.title, explorer_blocks.title, gateway.coin_fact, gateway.coin_label, help.code, help.community_title, help.forum, help.topic_airdrop_title, help.topic_barter_title, help.topic_blockchain_title, help.topic_community_title, help.topic_dashboard_title, help.topic_gateways_title, help.topic_spotlight_title, help.topic_wallets_title, htlc.hash_label, htlc.preimage_label, htlc.title, i18n.badge_chip, instant.limit, instant.order_prefix, instant.walkthrough_trade_prefix, market.charts, market.chg_label, market.col_order, market.discrete_tip_block, market.discrete_tip_order, market.log_label, market.map_edge_price, market.ov_bb, market.ov_ema, market.ov_psar, market.ov_sma, market.overlays_group, market.stat_bidask, market.stat_chg, market.stat_empty, market.th_block, market.trades_title, market.vol_label, market.vol_lin, market.vol_log, market_book.spread_prefix, market_net.col_change, market_net.col_spark, market_net.edge_card, market_net.edge_card_price, market_orders.tape_max, menu.p_airdrop, menu.p_assets, menu.p_barter, menu.p_community, menu.p_dashboard, menu.p_htlc, menu.p_spotlight, menu.p_tickets, menu.p_transfer, menu.p_trollbox, menu.p_vesting, menu.p_wallet, menu.section_wallet, misc.asset, misc.authority, misc.blacklist, misc.id, misc.whitelist, nav.dashboard, nav.margin, nav.pools, nav.transfer, notify.quote_label, pool.asset_a_field, pool.asset_b_field, pool.pool_row, pool.slippage_field, pool.slippage_row, pool.spot_row, pool.stake_link, pool.stake_unstake_col, pool.swap_stake_col, pool_net.col_a, pool_net.col_b, pool_net.col_pool, pool_net.edge_card, pool_net.edge_nobal, prediction.asset, prediction.details, prediction.hdr_asset, prediction.hdr_status, prediction.house, prediction.pmo_governance, prediction.pmo_name, prediction.pnl, prediction.portfolio, prediction.settlement, proposal.id, proposal.inner_ticket_2, proposal.inner_transfer_2, proposal.inner_transfer_4, proposal.memo, proposal.ticket, proposals_ticket.title, referrals.referrer, referrals.registrar, samet.asset, samet.delta, seo.title_dashboard, settings.custom_placeholder, settings.dash, settings.network_devnet, settings.network_mainnet, settings.network_testnet, settings.pending, settings.th_chain, settings.th_handshake, settings.th_ping, settings.theme_dark, settings.theme_label, settings.theme_light, settings.theme_original_blue, settings.theme_title, shell.brand, shell.dashboard, shell.footer_brand, shell.footer_brand_vanilla, shell.footer_net_host, splash.card_explore_t, splash.card_pool_t, splash.card_wallet_t, splash.pulse_assets, swap.title, ticket.airdrop, ticket.airdrop_example_ph, ticket.asset, ticket.id, ticket.ticket, ticket.tickets, tickets.title, trade.co_details, trade.uc_orders, transfer.asset_label, transfer.bad_asset_shape, transfer.memo_label, transfer.title, trollbox.bytes_prefix, trollbox.status_live, trollbox.title, txbuilder.badge_tpl, txbuilder.chain_prefix, txbuilder.link_pools, txbuilder.link_transfer, vesting.asset, vesting.filter, vesting.id, vesting.policy, vesting.title, vesting.vesting, vote.fee_core, vote.proxy_prefix, vote.proxy_row, vote.url, wallet.brainkey, wallet.title, xrate.asset_col, xrate.token_placeholder
+account.asset_th, account.op_assert_op, account.op_unknown, account.order_th, account.upgrade_row_upgrade, account_net.class_htlc, account_net.class_transfer, account_net.class_vesting, account_net.detail_line, account_net.detail_line_one, account_net.detail_span, account_net.ring1_label, account_net.ring2_label, account_net.seeds_placeholder, account_net.twin_count, account_net.twin_depth, approval.chain, asset.backing_field, asset.bitasset_row, asset.mcr_row, asset.nft_row, asset.offset_row, asset.op_col, asset.smartcoin_row, asset.symbol_field, asset.tab_pma, asset.tab_uia, asset_ops.title, assets.title, assets_feed.s1, barter.barter, barter.paid_by_suffix, barter.title, borrow.hdr_order, borrow.order, borrow.position, confirm.memo, createaccount.step_brainkey, createaccount.step_name, createworker.name, createworker.url, credit.asset, credit.deal, credit.deal_2, credit.delta, debit.spotlight_title, debit.start_row, debit.uc_order, eslab.raw_index, explorer.asset_prefix, explorer.asset_title, explorer.assets_mode_market, explorer.back_to_block_prefix, explorer.block_prefix, explorer.block_title, explorer.confirm_asset, explorer.feed_badge_live, explorer.feed_mcr_mssr, explorer.feed_mcr_mssr_title, explorer.feed_publisher_title, explorer.head_prefix, explorer.id_row, explorer.info_h, explorer.live_prefix, explorer.op_badge_prefix, explorer.op_label, explorer.op_prefix, explorer.pill_transfer, explorer.short, explorer.stat_tps, explorer.state_live, explorer.tab_blocks, explorer.th_feed, explorer.th_mssr, explorer.th_settlement, explorer.th_symbol, explorer.transfer, explorer.tx_prefix, explorer_assets.s1, explorer_assets.title, explorer_blocks.title, gateway.coin_fact, gateway.coin_label, help.code, help.community_title, help.forum, help.topic_airdrop_title, help.topic_barter_title, help.topic_blockchain_title, help.topic_community_title, help.topic_dashboard_title, help.topic_gateways_title, help.topic_spotlight_title, help.topic_wallets_title, htlc.hash_label, htlc.preimage_label, htlc.title, i18n.badge_chip, instant.limit, instant.order_prefix, instant.walkthrough_trade_prefix, market.charts, market.chg_label, market.col_order, market.discrete_tip_block, market.discrete_tip_order, market.log_label, market.map_edge_price, market.ov_bb, market.ov_ema, market.ov_psar, market.ov_sma, market.overlays_group, market.stat_bidask, market.stat_chg, market.stat_empty, market.th_block, market.trades_title, market.vol_label, market.vol_lin, market.vol_log, market_book.spread_prefix, market_net.col_change, market_net.col_spark, market_net.edge_card, market_net.edge_card_price, market_orders.tape_max, menu.p_airdrop, menu.p_assets, menu.p_barter, menu.p_community, menu.p_dashboard, menu.p_htlc, menu.p_spotlight, menu.p_tickets, menu.p_transfer, menu.p_trollbox, menu.p_vesting, menu.p_wallet, menu.section_wallet, misc.asset, misc.authority, misc.blacklist, misc.id, misc.whitelist, nav.dashboard, nav.margin, nav.pools, nav.transfer, notify.quote_label, pool.asset_a_field, pool.asset_b_field, pool.pool_row, pool.slippage_field, pool.slippage_row, pool.spot_row, pool.stake_link, pool.stake_unstake_col, pool.swap_stake_col, pool_net.col_a, pool_net.col_b, pool_net.col_pool, pool_net.edge_card, pool_net.edge_nobal, prediction.asset, prediction.details, prediction.hdr_asset, prediction.hdr_status, prediction.house, prediction.pmo_governance, prediction.pmo_name, prediction.pnl, prediction.portfolio, prediction.settlement, proposal.id, proposal.inner_ticket_2, proposal.inner_transfer_2, proposal.inner_transfer_4, proposal.memo, proposal.ticket, proposals_ticket.title, referrals.referrer, referrals.registrar, samet.asset, samet.delta, seo.title_dashboard, settings.custom_placeholder, settings.dash, settings.network_devnet, settings.network_mainnet, settings.network_testnet, settings.pending, settings.th_chain, settings.th_handshake, settings.th_ping, settings.theme_dark, settings.theme_label, settings.theme_light, settings.theme_original_blue, settings.theme_title, shell.brand, shell.dashboard, shell.footer_brand, shell.footer_brand_vanilla, shell.footer_net_host, splash.card_explore_t, splash.card_pool_t, splash.card_wallet_t, splash.pulse_assets, swap.title, ticket.airdrop, ticket.airdrop_example_ph, ticket.asset, ticket.id, ticket.ticket, ticket.tickets, tickets.title, trade.co_details, trade.uc_orders, transfer.asset_label, transfer.bad_asset_shape, transfer.memo_label, transfer.title, trollbox.bytes_prefix, trollbox.status_live, trollbox.title, txbuilder.badge_tpl, txbuilder.chain_prefix, txbuilder.link_pools, txbuilder.link_transfer, vesting.asset, vesting.filter, vesting.id, vesting.policy, vesting.title, vesting.vesting, vote.fee_core, vote.proxy_prefix, vote.proxy_row, vote.url, wallet.brainkey, wallet.title, xrate.asset_col, xrate.token_placeholder
 
 ## es — Spanish (3811 translated, 127 deliberately English)
 
@@ -15935,7 +15931,7 @@ ES: Leer las guías
 
 ### about.cta_trade
 EN: Open the exchange
-ES: Abrir el mercado
+ES: Abrir el intercambio
 
 ### about.dlg_bad_link
 EN: Invalid exchange number. Valid range: 1–%(total)s.
@@ -16323,7 +16319,7 @@ ES: Ver propuestas
 
 ### account.no_account_yet
 EN: The wallet is unlocked but its active key controls no on-chain account yet. Register one or import a funded brainkey.
-ES: La billetera está desbloqueada pero su clave activa aún no controla ninguna cuenta en cadena. Registra una o importa una brainkey con fondos.
+ES: La billetera está desbloqueada pero tu clave activa aún no controla ninguna cuenta en cadena. Registra una o importa una brainkey con fondos.
 
 ### account.no_assets_match_this_filter
 EN: No assets match this filter.
@@ -16594,24 +16590,24 @@ EN: Proposal update
 ES: Actualización de propuesta
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-ES: Préstamo Same-T
+EN: Flash loan borrow
+ES: Préstamo flash
 
 ### account.op_samet_create
-EN: Same-T fund create
-ES: Creación de fondo Same-T
+EN: Flash loan fund create
+ES: Creación de fondo de préstamo flash
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-ES: Eliminación de fondo Same-T
+EN: Flash loan fund delete
+ES: Eliminación de fondo de préstamo flash
 
 ### account.op_samet_repay
-EN: Same-T repay
-ES: Devolución Same-T
+EN: Flash loan repay
+ES: Devolución de préstamo flash
 
 ### account.op_samet_update
-EN: Same-T fund update
-ES: Actualización de fondo Same-T
+EN: Flash loan fund update
+ES: Actualización de fondo de préstamo flash
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -16999,11 +16995,11 @@ ES: Tomó prestado %(amount)s del fondo %(fund)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-ES: Creó el fondo Same-T con %(amount)s
+ES: Creó el fondo de préstamo flash con %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-ES: Eliminó el fondo Same-T %(fund)s
+ES: Eliminó el fondo de préstamo flash %(fund)s
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -17011,7 +17007,7 @@ ES: Devolvió %(amount)s al fondo %(fund)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-ES: Actualizó el fondo Same-T %(fund)s
+ES: Actualizó el fondo de préstamo flash %(fund)s
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -19735,11 +19731,11 @@ ES: Desactivación automática (fecha)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-ES: la hora de desactivación automática debe ser futura.
+ES: La hora de desactivación automática debe ser futura.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-ES: la hora de desactivación automática debe fijarse (validez).
+ES: La hora de desactivación automática debe fijarse (validez).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -20214,8 +20210,8 @@ EN: Unknown offer.
 ES: Oferta desconocida.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-ES: Fondo Same-T desconocido.
+EN: Unknown flash loan fund.
+ES: Fondo de préstamo flash desconocido.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -22469,7 +22465,7 @@ Revise propuestas pendientes y apruébelas o rechácelas desde las pantallas de 
 
 ### help.topic_accounts-proposed_text
 EN: Multi-signature proposals: review and approve pending actions.
-ES: Propuestas multifirma: revise y apruebe acciones pendientes.
+ES: Propuestas multifirma: revisa y aprueba acciones pendientes.
 
 ### help.topic_accounts-proposed_title
 EN: Proposed transactions
@@ -22685,7 +22681,7 @@ Vuelve a leer el artículo Permisos y anota toda la configuración de autoridade
 
 ### help.topic_backups_text
 EN: Your brainkey IS the backup — write it down. View it any time in the wallet manager.
-ES: Su brainkey ES el respaldo — anótela. Véala cuando quiera en el gestor de billetera.
+ES: Tu brainkey ES el respaldo — anótala. Consúltala cuando quieras en el gestor de billetera.
 
 ### help.topic_backups_title
 EN: Backups
@@ -22741,7 +22737,7 @@ Por eso los respaldos son solo su trabajo: si pierde la brainkey o la contraseñ
 
 ### help.topic_bitshares_text
 EN: A delegated-proof-of-stake chain with an on-chain exchange. Start at the market desk.
-ES: Una cadena de prueba de participación delegada con intercambio en la cadena. Empiece en el escritorio de mercado.
+ES: Una cadena de prueba de participación delegada con intercambio en la cadena. Empieza en el escritorio de mercado.
 
 ### help.topic_bitshares_title
 EN: What is BitShares
@@ -23049,7 +23045,7 @@ Las tablas se muestran aun bloqueadas (viendo como committee-account); la contra
 
 ### help.topic_direct-debit_text
 EN: Authorize recurring withdrawals; claim and manage them.
-ES: Autorice retiros recurrentes; reclámelos y gestiónelos.
+ES: Autoriza retiros recurrentes; reclámalos y gestiónalos.
 
 ### help.topic_direct-debit_title
 EN: Direct Debit
@@ -23249,7 +23245,7 @@ Los retiros salen como transferencias normales con el formato de memo de la pasa
 
 ### help.topic_gateways_text
 EN: Move coins across chains via gateway bridges (deposit / withdraw desks).
-ES: Mueva monedas entre cadenas vía puentes de pasarela (escritorios de depósito / retiro).
+ES: Mueve monedas entre cadenas vía puentes de pasarela (escritorios de depósito / retiro).
 
 ### help.topic_gateways_title
 EN: Gateways
@@ -23595,19 +23591,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 ES: # Fondos mancomunados, mismo activo dentro y fuera
-Los fondos Same-T mancomunan un activo de muchos proveedores. Los prestatarios disponen contra un fondo y reembolsan con interés; la cadena aplica saldos y calendarios.
+Los fondos de préstamos flash (Same-T) mancomunan un activo de muchos proveedores. Los prestatarios disponen contra un fondo y reembolsan con interés; la cadena aplica saldos y calendarios.
 # Disciplina de denominación
 Los fondos denominan en unidades enteras (base 1M): cree, disponga y reembolse en el mismo activo, y mire los límites del fondo antes de comprometer tamaño.
 # Regla de misma transacción
 Las operaciones pareadas de fondos van en una transacción: dividir partes puede varar media operación. El escritorio arma el par junto — revise una vez, firme una vez.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-ES: Fondos mancomunados del mismo activo con disposiciones y reembolsos.
+EN: Pooled flash-loan funds with draws and repayments.
+ES: Fondos agrupados de préstamos flash con disposiciones y devoluciones.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -23745,7 +23741,7 @@ ES: Cada página de esta billetera, agrupada como las agrupa el menú de hamburg
 - [Pedir prestado](#/borrow)
 - [Trueque](#/barter)
 - [Depositar / Retirar](#/deposit-withdraw)
-- [Fondos Same-T](#/samet)
+- [Fondos de préstamos flash](#/samet)
 - [Destacados](#/spotlight)
 # Gana y protege
 - [Oferta de crédito](#/credit-offer)
@@ -23913,7 +23909,7 @@ Cada transferencia paga la comisión de la cadena del programa de comisiones. El
 
 ### help.topic_transfer_text
 EN: Send any asset to any account, with optional encrypted memos.
-ES: Envíe cualquier activo a cualquier cuenta, con memos cifrados opcionales.
+ES: Envía cualquier activo a cualquier cuenta, con memos cifrados opcionales.
 
 ### help.topic_transfer_title
 EN: Sending assets
@@ -24017,7 +24013,7 @@ Envuelva cualquier paquete como propuesta multifirma en vez de enviarlo: propone
 
 ### help.topic_txbuilder_text
 EN: Compose several operations into one transaction and sign once.
-ES: Combine varias operaciones en una transacción y firme una vez.
+ES: Combina varias operaciones en una transacción y firma una vez.
 
 ### help.topic_txbuilder_title
 EN: Transaction builder
@@ -24123,7 +24119,7 @@ Cambiar la contraseña recifra todo — verifica primero la actual y luego confi
 
 ### help.topic_wallets_text
 EN: A wallet holds your brainkey and derives owner, active and memo keys. Managed under Wallet.
-ES: Una billetera guarda su brainkey y deriva claves de propietario, activas y de memo. Gestionadas en Billetera.
+ES: Una billetera guarda tu brainkey y deriva claves de propietario, activas y de memo. Gestionadas en Billetera.
 
 ### help.topic_wallets_title
 EN: Wallets
@@ -24579,7 +24575,7 @@ ES:  (efectivo):
 
 ### instant.effective_suffix_dash
 EN:  (effective): —
-ES:  (efectivo): —
+ES:  (efectivo): -
 
 ### instant.enter_a_market_like_bts_cny
 EN: Enter a market like BTS_CNY.
@@ -24779,7 +24775,7 @@ ES:  vía
 
 ### instant.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to trade as your account.
-ES: Viendo como committee-account (1.2.0) — desbloquea para operar como tu cuenta.
+ES: Viendo como committee-account (1.2.0) - desbloquea para operar como tu cuenta.
 
 ### instant.walk_suffix
 EN:  walk
@@ -25918,8 +25914,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 ES: Vías de registro en la nube, local y con brainkey.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-ES: Fondos agrupados del mismo activo y disposiciones.
+EN: Pooled flash-loan funds and draws.
+ES: Fondos agrupados de préstamos flash y disposiciones.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -26134,8 +26130,8 @@ EN: Registration
 ES: Registro
 
 ### menu.p_samet
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### menu.p_settings
 EN: Settings
@@ -27293,7 +27289,7 @@ ES: Orientación
 
 ### pool.owned_hint
 EN:  Stake both legs in any pool above — owned pools list here.
-ES:  Participa ambas patas en cualquier pool de arriba — tus pools propios aparecen aquí.
+ES:  Aporta a ambos lados en cualquier pool de arriba - tus pools propios aparecen aquí.
 
 ### pool.paid_col
 EN: Paid
@@ -27493,7 +27489,7 @@ ES: Hora (UTC)
 
 ### pool.touch_hint
 EN: No pools touch these assets — pick a pair with a pool, or create one at #/pools.
-ES: Ningún pool toca estos activos — elige un par con pool, o crea uno en #/pools.
+ES: Ningún pool toca estos activos - elige un par con pool, o crea uno en #/pools.
 
 ### pool.uc_action
 EN: Action
@@ -28181,7 +28177,7 @@ ES: coste cero (sin fills)
 
 ### proposal.a_touched_account_is_in_your_local_cont
 EN: A touched account is in your local contacts or favourite accounts.
-ES: Una cuenta implicada está en sus contactos locales o cuentas favoritas.
+ES: Una cuenta implicada está en tus contactos locales o cuentas favoritas.
 
 ### proposal.account
 EN: Account
@@ -28261,7 +28257,7 @@ ES: vacío = ninguno
 
 ### proposal.check_the_id_proposals_look_like_1_10_n
 EN: Check the id — proposals look like 1.10.N.
-ES: Compruebe el id — las propuestas tienen el formato 1.10.N.
+ES: Comprueba el id — las propuestas tienen el formato 1.10.N.
 
 ### proposal.confirm_proposal_create_op_22
 EN: Confirm proposal create (op %(op)s)
@@ -28273,7 +28269,7 @@ ES: Confirmar eliminación de propuesta (op %(op)s)
 
 ### proposal.could_not_build_the_proposal_check_accounts_a
 EN: Could not build the proposal (check accounts, assets and amounts).
-ES: No se pudo construir la propuesta (compruebe cuentas, activos y montos).
+ES: No se pudo construir la propuesta (comprueba cuentas, activos y montos).
 
 ### proposal.could_not_join_asset_symbols
 EN: Could not join asset symbols.
@@ -28309,7 +28305,7 @@ ES: vacía
 
 ### proposal.empty_hint
 EN:  The proposal carries nothing to approve — unusual but valid; check the id (proposals look like 1.10.N).
-ES:  La propuesta no contiene nada que aprobar — inusual pero válido; compruebe el id (las propuestas tienen el formato 1.10.N).
+ES:  La propuesta no contiene nada que aprobar — inusual pero válido; comprueba el id (las propuestas tienen el formato 1.10.N).
 
 ### proposal.empty_proposal_no_touched_accounts_to_
 EN: Empty proposal — no touched accounts to check. 
@@ -28409,7 +28405,7 @@ ES: Pagador de la comisión (proponente)
 
 ### proposal.fill_every_required_inner_op_field_first
 EN: Fill every required inner-op field first.
-ES: Rellene primero todos los campos obligatorios de la operación interna.
+ES: Rellena primero todos los campos obligatorios de la operación interna.
 
 ### proposal.flagged_by_the_local_scam_registry_as_a
 EN: Flagged by the local scam registry as a known scammer.
@@ -28421,7 +28417,7 @@ ES: De
 
 ### proposal.inner_memo_needs_both_accounts_to_have_a_memo
 EN: Inner memo needs both accounts to have a memo key; clear the memo to continue.
-ES: El memo interno requiere que ambas cuentas tengan clave de memo; borre el memo para continuar.
+ES: El memo interno requiere que ambas cuentas tengan clave de memo; borra el memo para continuar.
 
 ### proposal.inner_op_prefix
 EN: Inner op: 
@@ -28525,7 +28521,7 @@ ES: tipo de bloqueo %(n)s
 
 ### proposal.locked_sign_note
 EN: Wallet is locked — browsing is public; unlock to sign.
-ES: La billetera está bloqueada — la consulta es pública; desbloquee para firmar.
+ES: La billetera está bloqueada — la consulta es pública; desbloquea para firmar.
 
 ### proposal.multisig_story
 EN: Shared account? One co-owner proposes, shares the 1.10.N id, the rest approve below. Multi-operation or multi-device work continues in the transaction builder.
@@ -28549,7 +28545,7 @@ ES: Vanilla no incorpora ningún registro de estafas — esto es una marca de fu
 
 ### proposal.no_touched_account_is_in_your_local_con
 EN: No touched account is in your local contacts or favourite accounts. 
-ES: Ninguna cuenta implicada está en sus contactos locales ni en sus cuentas favoritas. 
+ES: Ninguna cuenta implicada está en tus contactos locales ni en tus cuentas favoritas. 
 
 ### proposal.none
 EN: none
@@ -29056,8 +29052,8 @@ EN: Create fund
 ES: Crear fondo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-ES:  Crea uno desde el formulario de creación de abajo — tus fondos Same-T aparecen aquí.
+EN:  Create one from the create form below — owned flash loan funds list here.
+ES:  Crea uno desde el formulario de creación de abajo — tus fondos de préstamos flash aparecen aquí.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -29192,20 +29188,20 @@ EN: Review update
 ES: Revisar actualización
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-ES: Fondos del mismo activo (Same-T): el préstamo y la devolución ocurren en UNA transacción [67 préstamo + 68 devolución] — la cadena rechaza un préstamo aislado. Las tasas son porcentajes con denom 1.000.000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+ES: Préstamos flash: el préstamo y la devolución ocurren en UNA transacción [67 préstamo + 68 devolución] — la cadena rechaza un préstamo aislado. Las tasas son porcentajes con denom 1.000.000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-ES: Falta el módulo Same-T: no se pudo cargar credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+ES: Fondos de préstamos flash no disponibles: no se pudo cargar credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### samet.title
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -32248,7 +32244,7 @@ FR: Aucun échange correspondant. Effacez la recherche pour tout voir.
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-FR: Aucune réponse enregistrée — l'invite suivante a suivi immédiatement.
+FR: Aucune réponse enregistrée - l'invite suivante a suivi immédiatement.
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -32887,24 +32883,24 @@ EN: Proposal update
 FR: Mise à jour de proposition
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-FR: Emprunt Same-T
+EN: Flash loan borrow
+FR: Emprunt flash
 
 ### account.op_samet_create
-EN: Same-T fund create
-FR: Création de fonds Same-T
+EN: Flash loan fund create
+FR: Création de fonds de prêt flash
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-FR: Suppression de fonds Same-T
+EN: Flash loan fund delete
+FR: Suppression de fonds de prêt flash
 
 ### account.op_samet_repay
-EN: Same-T repay
-FR: Remboursement Same-T
+EN: Flash loan repay
+FR: Remboursement de prêt flash
 
 ### account.op_samet_update
-EN: Same-T fund update
-FR: Mise à jour de fonds Same-T
+EN: Flash loan fund update
+FR: Mise à jour de fonds de prêt flash
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -33296,11 +33292,11 @@ FR: %(amount)s empruntés au fonds %(fund)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-FR: Fonds SameT créé avec %(amount)s
+FR: Fonds de prêt flash créé avec %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-FR: Fonds SameT %(fund)s supprimé
+FR: Fonds de prêt flash %(fund)s supprimé
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -33308,7 +33304,7 @@ FR: %(amount)s remboursés au fonds %(fund)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-FR: Fonds SameT %(fund)s mis à jour
+FR: Fonds de prêt flash %(fund)s mis à jour
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -36012,11 +36008,11 @@ FR: Désactivation auto (date)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-FR: la date de désactivation auto doit être dans le futur.
+FR: La date de désactivation auto doit être dans le futur.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-FR: la date de désactivation auto doit être définie (validité).
+FR: La date de désactivation auto doit être définie (validité).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -36479,8 +36475,8 @@ EN: Unknown offer.
 FR: Offre inconnue.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-FR: Fonds Same-T inconnu.
+EN: Unknown flash loan fund.
+FR: Fonds de prêt flash inconnu.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -38188,7 +38184,7 @@ FR: état inconnu
 
 ### gateway.intro_a
 EN: Send outside coins to the address shown. This page sends nothing. 
-FR: Envoyez les monnaies externes à l’adresse affichée. Cette page n’envoie rien.
+FR: Envoyez les monnaies externes à l’adresse affichée. Cette page n’envoie rien. 
 
 ### gateway.intro_b
 EN: Withdraws finish in Transfer with a live fee preview.
@@ -39784,19 +39780,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 FR: # Fonds poolés, même actif dedans et dehors
-Les fonds Same-T regroupent un actif depuis beaucoup de fournisseurs. Les emprunteurs tirent contre un fonds et remboursent avec intérêts ; la chaîne applique soldes et échéanciers.
+Les fonds de prêts flash (Same-T) regroupent un actif depuis beaucoup de fournisseurs. Les emprunteurs tirent contre un fonds et remboursent avec intérêts ; la chaîne applique soldes et échéanciers.
 # Discipline de dénomination
 Les fonds se libellent en unités entières (base 1M) : créez, tirez et remboursez dans le même actif, et tenez compte des limites du fonds avant d’engager des fonds.
 # Règle de même-transaction
 Les opérations de fonds appariées vont dans une transaction : des jambes séparées peuvent bloquer la moitié d’un deal. Le bureau construit la paire ensemble — vérifiez une fois, signez une fois.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-FR: Fonds poolés en même-actif avec tirages et remboursements.
+EN: Pooled flash-loan funds with draws and repayments.
+FR: Fonds mutualisés de prêts flash avec tirages et remboursements.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -39934,7 +39930,7 @@ FR: Chaque page de ce portefeuille, regroupée comme le menu hamburger les regro
 - [Emprunter](#/borrow)
 - [Troc](#/barter)
 - [Dépôt / Retrait](#/deposit-withdraw)
-- [Fonds Same-T](#/samet)
+- [Fonds de prêts flash](#/samet)
 - [Spotlight](#/spotlight)
 # Gagner & Protéger
 - [Offre de crédit](#/credit-offer)
@@ -42099,8 +42095,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 FR: Parcours d'inscription cloud, local et brainkey.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-FR: Fonds mutualisés même-actif et tirages.
+EN: Pooled flash-loan funds and draws.
+FR: Fonds mutualisés de prêts flash et tirages.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -42315,8 +42311,8 @@ EN: Registration
 FR: Inscription
 
 ### menu.p_samet
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### menu.p_settings
 EN: Settings
@@ -43458,7 +43454,7 @@ FR: Aucun swap pour l'instant.
 
 ### pool.owned_hint
 EN:  Stake both legs in any pool above — owned pools list here.
-FR:  Stakez les deux jambes dans un pool ci-dessus — les pools détenus s'affichent ici.
+FR:  Stakez les deux côtés dans un pool ci-dessus - les pools détenus s'affichent ici.
 
 ### pool.paid_col
 EN: Paid
@@ -44474,7 +44470,7 @@ FR: Type de verrouillage invalide — choisissez l’un des cinq.
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-FR: Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle vendored (consultation en lecture seule uniquement).
+FR: Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle intégrée (consultation en lecture seule uniquement).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -44622,7 +44618,7 @@ FR: Compte à lister
 
 ### proposal.inner_whitelist_2
 EN: Listing (white / black)
-FR: Listage (blanche / noire)
+FR: Inscription (blanche / noire)
 
 ### proposal.issuer
 EN: Issuer
@@ -44782,7 +44778,7 @@ FR: mise à jour de compte
 
 ### proposal.op_7
 EN: whitelist
-FR: listage
+FR: liste blanche
 
 ### proposal.op_unknown
 EN: operation type %(n)s
@@ -45193,8 +45189,8 @@ EN: Create fund
 FR: Créer un fonds
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-FR:  Créez-en un depuis le formulaire de création ci-dessous — vos fonds Same-T s'affichent ici.
+EN:  Create one from the create form below — owned flash loan funds list here.
+FR:  Créez-en un depuis le formulaire de création ci-dessous — vos fonds de prêts flash s'affichent ici.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -45329,20 +45325,20 @@ EN: Review update
 FR: Vérifier la mise à jour
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-FR: Fonds mono-actif (Same-T) : emprunt et remboursement ont lieu en UNE transaction [67 emprunt + 68 remboursement] — la chaîne rejette un emprunt isolé. Les taux sont des pourcents au dénominateur 1,000,000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+FR: Prêts flash : emprunt et remboursement ont lieu en UNE transaction [67 emprunt + 68 remboursement] — la chaîne rejette un emprunt isolé. Les taux sont des pourcents au dénominateur 1,000,000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-FR: Backend Same-T manquant : credit-ui.js n'a pas pu être chargé.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+FR: Fonds de prêts flash indisponibles : credit-ui.js n'a pas pu être chargé.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### samet.title
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -45962,7 +45958,7 @@ FR: Témoins
 
 ### splash.step1_d
 EN: No login needed — browse the chain first.
-FR: Aucune connexion requise — parcourez d'abord la chaîne.
+FR: Aucune connexion requise - parcourez d'abord la chaîne.
 
 ### splash.step1_t
 EN: Look around
@@ -46574,7 +46570,7 @@ FR: Unique
 
 ### trade.title
 EN: Exchange
-FR: Marché
+FR: Bourse
 
 ### trade.uc_amount
 EN: Amount
@@ -48365,7 +48361,7 @@ IT: Nessuno scambio corrispondente. Azzeri la ricerca per vedere tutto.
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-IT: Nessuna risposta registrata — l’invito successivo è arrivato subito dopo.
+IT: Nessuna risposta registrata - il prompt successivo è arrivato subito dopo.
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -48984,24 +48980,24 @@ EN: Proposal update
 IT: Aggiornamento proposta
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-IT: Prestito Same-T
+EN: Flash loan borrow
+IT: Prestito flash
 
 ### account.op_samet_create
-EN: Same-T fund create
-IT: Creazione fondo Same-T
+EN: Flash loan fund create
+IT: Creazione fondo di prestito flash
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-IT: Eliminazione fondo Same-T
+EN: Flash loan fund delete
+IT: Eliminazione fondo di prestito flash
 
 ### account.op_samet_repay
-EN: Same-T repay
-IT: Rimborso Same-T
+EN: Flash loan repay
+IT: Rimborso di prestito flash
 
 ### account.op_samet_update
-EN: Same-T fund update
-IT: Aggiornamento fondo Same-T
+EN: Flash loan fund update
+IT: Aggiornamento fondo di prestito flash
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -49389,11 +49385,11 @@ IT: Presi in prestito %(amount)s dal fondo %(fund)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-IT: Fondo SameT creato con %(amount)s
+IT: Fondo di prestito flash creato con %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-IT: Fondo SameT %(fund)s eliminato
+IT: Fondo di prestito flash %(fund)s eliminato
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -49401,7 +49397,7 @@ IT: Rimborsati %(amount)s al fondo %(fund)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-IT: Fondo SameT %(fund)s aggiornato
+IT: Fondo di prestito flash %(fund)s aggiornato
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -49837,7 +49833,7 @@ IT: Approvata e trasmessa.
 
 ### approval.close
 EN: Close
-IT: Chiudi
+IT: Chiuda
 
 ### approval.denied
 EN: Denied.
@@ -52037,11 +52033,11 @@ IT: Disabilitazione automatica (data)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-IT: la data di disabilitazione automatica deve essere futura.
+IT: La data di disabilitazione automatica deve essere futura.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-IT: la data di disabilitazione automatica deve essere impostata (validità).
+IT: La data di disabilitazione automatica deve essere impostata (validità).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -52516,8 +52512,8 @@ EN: Unknown offer.
 IT: Offerta sconosciuta.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-IT: Fondo Same-T sconosciuto.
+EN: Unknown flash loan fund.
+IT: Fondo di prestito flash sconosciuto.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -55789,19 +55785,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 IT: # Fondi comuni, stesso asset dentro e fuori
-I fondi Same-T raccolgono un asset da molti fornitori. I borrower attingono a un fondo e rimborsano con interessi; la chain applica saldi e programmi.
+I fondi di prestiti flash (Same-T) raccolgono un asset da molti fornitori. I borrower attingono a un fondo e rimborsano con interessi; la chain applica saldi e programmi.
 # Disciplina di denominazione
 I fondi denominano in unità intere (base 1M): crei, attinga e rimborsi nello stesso asset, e consideri i limiti del fondo prima di impegnare size.
 # Regola della stessa transazione
 Le operazioni di fondo appaiate appartengono a un'unica transazione: gambe divise possono incagliare mezzo deal. La sezione costruisce la coppia insieme — verifichi una volta, firmi una volta.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-IT: Fondi comuni dello stesso asset con prelievi e rimborsi.
+EN: Pooled flash-loan funds with draws and repayments.
+IT: Fondi comuni di prestiti flash con prelievi e rimborsi.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -55939,7 +55935,7 @@ IT: Ogni pagina di questo wallet, raggruppata come la raggruppa il menu hamburge
 - [Prestito](#/borrow)
 - [Baratto](#/barter)
 - [Deposito / Prelievo](#/deposit-withdraw)
-- [Fondi Same-T](#/samet)
+- [Fondi di prestiti flash](#/samet)
 - [Spotlight](#/spotlight)
 # Guadagni e protegga
 - [Offerta di credito](#/credit-offer)
@@ -58076,8 +58072,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 IT: Percorsi di registrazione cloud, locale e brainkey.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-IT: Fondi pooled dello stesso asset ed estrazioni.
+EN: Pooled flash-loan funds and draws.
+IT: Fondi comuni di prestiti flash ed estrazioni.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -58268,8 +58264,8 @@ EN: Registration
 IT: Registrazione
 
 ### menu.p_samet
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### menu.p_settings
 EN: Settings
@@ -59379,7 +59375,7 @@ IT: Orientamento
 
 ### pool.owned_hint
 EN:  Stake both legs in any pool above — owned pools list here.
-IT:  Metta in stake entrambe le gambe in una pool qui sopra — le pool possedute saranno elencate qui.
+IT:  Metta in stake entrambi i lati in una pool qui sopra - le pool possedute saranno elencate qui.
 
 ### pool.paid_col
 EN: Paid
@@ -61038,8 +61034,8 @@ EN: Create fund
 IT: Crei fondo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-IT:  Ne crei uno dal modulo crea qui sotto — i fondi Same-T posseduti sono elencati qui.
+EN:  Create one from the create form below — owned flash loan funds list here.
+IT:  Ne crei uno dal modulo crea qui sotto — i fondi di prestiti flash posseduti sono elencati qui.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -61051,7 +61047,7 @@ IT: Elimini
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-IT: Importo delta (firmato)
+IT: Importo delta (con segno)
 
 ### samet.fee
 EN: Fee
@@ -61170,20 +61166,20 @@ EN: Review update
 IT: Verifichi aggiornamento
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-IT: Fondi stesso-asset (Same-T): prestito e rimborso avvengono in UNA transazione [67 prestito + 68 rimborso] — la chain rifiuta un prestito isolato. I tassi sono percentuali a denominatore 1.000.000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+IT: Prestiti flash: prestito e rimborso nello stesso asset avvengono in UNA transazione [67 prestito + 68 rimborso] — la chain rifiuta un prestito isolato. I tassi sono percentuali a denominatore 1.000.000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-IT: Backend Same-T mancante: credit-ui.js non caricato.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+IT: Fondi di prestiti flash non disponibili: credit-ui.js non caricato.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### samet.title
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -61803,7 +61799,7 @@ IT: Top mercato vol 24h (mercato singolo):
 
 ### splash.topvol_unavailable
 EN: Top-market volume is offline — check Settings → Nodes.
-IT: Il volume dei principali mercati è offline — controlli Impostazioni → Nodi.
+IT: Il volume dei principali mercati è offline - controlli Impostazioni → Nodi.
 
 ### splash.trust_browse_d
 EN: Reads never ask for login. The password is requested only at signing.
@@ -62383,7 +62379,7 @@ IT: Singolo
 
 ### trade.title
 EN: Exchange
-IT: Mercato
+IT: Borsa
 
 ### trade.uc_amount
 EN: Amount
@@ -62571,7 +62567,7 @@ IT: La scadenza della proposta è obbligatoria.
 
 ### transfer.proposal_observed_mid
 EN:  observed at head block #
-IT:  osservata al blocco head n.
+IT:  osservata al blocco head #
 
 ### transfer.proposal_observed_prefix
 EN: Proposal 
@@ -64226,7 +64222,7 @@ JA: 更新なしで長く動き続けます
 
 ### about.s4_body
 EN: Returning users feel at home instantly — the same pages, panels, and words as the classic wallet — while balances, books, and connection status update live in place. Forgiving search across markets, accounts, and assets, three themes, and layouts that work from a 360px phone to a 4K trading desk.
-JA: 戻ってきたユーザーはすぐに馴染めます — クラシックなウォレットと同じページ、同じパネル、同じ語彙 — 此同时、残高、オーダーブック、接続状態はそのままライブ更新されます。マーケット、アカウント、アセットを横断して検索でき、3つのテーマと、360px のスマートフォンから4Kの取引デスクまで使えるレイアウトです。
+JA: 戻ってきたユーザーはすぐに馴染めます — クラシックなウォレットと同じページ、同じパネル、同じ語彙 — 同時に、残高、オーダーブック、接続状態はそのままライブ更新されます。マーケット、アカウント、アセットを横断して検索でき、3つのテーマと、360px のスマートフォンから4Kの取引デスクまで使えるレイアウトです。
 
 ### about.s4_title
 EN: Same pages, live updates
@@ -64785,24 +64781,24 @@ EN: Proposal update
 JA: 提案更新
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-JA: Same-T 借入
+EN: Flash loan borrow
+JA: フラッシュローン借入
 
 ### account.op_samet_create
-EN: Same-T fund create
-JA: Same-T 資金作成
+EN: Flash loan fund create
+JA: フラッシュローン資金作成
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-JA: Same-T 資金削除
+EN: Flash loan fund delete
+JA: フラッシュローン資金削除
 
 ### account.op_samet_repay
-EN: Same-T repay
-JA: Same-T 返済
+EN: Flash loan repay
+JA: フラッシュローン返済
 
 ### account.op_samet_update
-EN: Same-T fund update
-JA: Same-T 資金更新
+EN: Flash loan fund update
+JA: フラッシュローン資金更新
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -65194,11 +65190,11 @@ JA: 資金 %(fund)s から %(amount)s を借入しました
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-JA: %(amount)s で Same-T 資金を作成しました
+JA: %(amount)s で フラッシュローン資金を作成しました
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-JA: Same-T 資金 %(fund)s を削除しました
+JA: フラッシュローン資金 %(fund)s を削除しました
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -65206,7 +65202,7 @@ JA: 資金 %(fund)s に %(amount)s を返済しました
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-JA: Same-T 資金 %(fund)s を更新しました
+JA: フラッシュローン資金 %(fund)s を更新しました
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -65242,7 +65238,7 @@ JA: %(account)s をアップグレードしました
 
 ### account.sum_vesting_create
 EN: Vested %(amount)s for %(owner)s
-JA: %(owner)s の代わりに %(amount)s をベスティングしました
+JA: %(owner)s に %(amount)s をベスティングしました
 
 ### account.sum_vesting_withdraw
 EN: Withdrew %(amount)s vested
@@ -68461,8 +68457,8 @@ EN: Unknown offer.
 JA: 不明なオファー。
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-JA: 不明なSame-Tファンド。
+EN: Unknown flash loan fund.
+JA: 不明なフラッシュローン資金。
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -71866,19 +71862,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 JA: # プール資金、同種入出
-Same-Tファンドは多数供給者から1アセットをプールします。借り手はファンドから借入し、金利付きで返済します。チェーンが残高・スケジュールを強制します。
+フラッシュローン資金(Same-T)は多数供給者から1アセットをプールします。借り手はファンドから借入し、金利付きで返済します。チェーンが残高・スケジュールを強制します。
 # 建値の規律
 ファンドは整数単位建て（1M基準）です。同一アセットで作成、借入、返済し、規模投入前にファンド制限に留意してください。
 # 同一トランザクション規則
 対のファンド操作は1トランザクションに属します。分割脚は半端な取引を立ち往生させます。画面は対を一緒に作成します — 一度確認、一度署名。
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-JA: 同一アセットのプールファンド。借入と返済ができます。
+EN: Pooled flash-loan funds with draws and repayments.
+JA: プールされたフラッシュローン資金。借入と返済ができます。
 
 ### help.topic_samet_title
-EN: Same-T Funds
-JA: Same-Tファンド
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -72016,7 +72012,7 @@ JA: このウォレットのすべてのページを、バーガーメニュー�
 - [借入](#/borrow)
 - [バーター](#/barter)
 - [入金 / 出金](#/deposit-withdraw)
-- [Same-T ファンド](#/samet)
+- [フラッシュローン資金](#/samet)
 - [スポットライト](#/spotlight)
 # 運用と保護
 - [クレジットオファー](#/credit-offer)
@@ -74237,8 +74233,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 JA: クラウド、ローカル、ブレインキーの登録方法。
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-JA: 同種アセットのプールファンドと借入。
+EN: Pooled flash-loan funds and draws.
+JA: プールされたフラッシュローン資金と借入。
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -74457,8 +74453,8 @@ EN: Registration
 JA: 登録
 
 ### menu.p_samet
-EN: Same-T Funds
-JA: Same-T ファンド
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### menu.p_settings
 EN: Settings
@@ -77431,8 +77427,8 @@ EN: Create fund
 JA: 資金を作成
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-JA:  下の作成フォームから作成してください — 所有するSame-T資金はここに一覧表示されます。
+EN:  Create one from the create form below — owned flash loan funds list here.
+JA:  下の作成フォームから作成してください — 所有するフラッシュローン資金はここに一覧表示されます。
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -77571,20 +77567,20 @@ EN: Review update
 JA: 更新を確認
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-JA: 同一アセット（Same-T）資金：借入と返済は1つのトランザクションで実行されます［67 借入＋68 返済］ — 単独の借入はチェーンに拒否されます。レートは分母1,000,000に対するパーセントです。
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+JA: フラッシュローン：借入と返済は1つのトランザクションで実行されます［67 借入＋68 返済］ — 単独の借入はチェーンに拒否されます。レートは分母1,000,000に対するパーセントです。
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-JA: Same-Tバックエンドが見つかりません：credit-ui.js の読み込みに失敗しました。
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+JA: フラッシュローン資金は利用できません：credit-ui.js の読み込みに失敗しました。
 
 ### samet.same_t_funds
-EN: Same-T Funds
-JA: Same-T資金
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### samet.title
-EN: Same-T Funds
-JA: Same-T資金
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### samet.unpaid
 EN: Unpaid
@@ -78500,7 +78496,7 @@ JA: このノードの直近200ブロック — ライブサンプルであり�
 
 ### topops.skipped
 EN:  — %(n)s block(s) unreadable, skipped.
-JA:  — %(n)s ブロック読み取り不可、スキップ。
+JA:  - %(n)s ブロック読み取り不可、スキップ。
 
 ### topops.testnet
 EN: Works on testnet and mainnet (unlike the reference index, which is mainnet-only).
@@ -81362,24 +81358,24 @@ EN: Proposal update
 KO: 제안 업데이트
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-KO: Same-T 대출
+EN: Flash loan borrow
+KO: 플래시론 대출
 
 ### account.op_samet_create
-EN: Same-T fund create
-KO: Same-T 펀드 생성
+EN: Flash loan fund create
+KO: 플래시론 펀드 생성
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-KO: Same-T 펀드 삭제
+EN: Flash loan fund delete
+KO: 플래시론 펀드 삭제
 
 ### account.op_samet_repay
-EN: Same-T repay
-KO: Same-T 상환
+EN: Flash loan repay
+KO: 플래시론 상환
 
 ### account.op_samet_update
-EN: Same-T fund update
-KO: Same-T 펀드 업데이트
+EN: Flash loan fund update
+KO: 플래시론 펀드 업데이트
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -81771,11 +81767,11 @@ KO: 펀드 %(fund)s에서 %(amount)s을(를) 빌렸습니다
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-KO: Same-T 펀드를 생성했습니다(%(amount)s)
+KO: 플래시론 펀드를 생성했습니다(%(amount)s)
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-KO: Same-T 펀드 %(fund)s 삭제됨
+KO: 플래시론 펀드 %(fund)s 삭제됨
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -81783,7 +81779,7 @@ KO: 펀드 %(fund)s에 %(amount)s을(를) 상환했습니다
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-KO: Same-T 펀드 %(fund)s 업데이트됨
+KO: 플래시론 펀드 %(fund)s 업데이트됨
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -82551,7 +82547,7 @@ KO: 이 계정에 등록된 메모 키가 없습니다.
 
 ### asset.issue_memo_warning
 EN: Attach a memo — it is stored on-chain in plaintext.
-KO: 메모를 첨조하십시오 — 체인에 평문으로 저장됩니다.
+KO: 메모를 첨부하십시오 — 체인에 평문으로 저장됩니다.
 
 ### asset.issue_op14_title
 EN: Issue to account (op 14)
@@ -82943,7 +82939,7 @@ KO: 백업: 없음 — 새 계정의 브레인키는 생성 시 한 번만 표�
 
 ### auth.back_up_yes_write_down_the_brainkey
 EN: Back up: yes — write down the brainkey
-KO: 백업: 예 — 브레인키를 적어 두었습니다
+KO: 백업: 예 — 브레인키를 적어 두십시오
 
 ### auth.best_security_stays_in_this_browser_move
 EN: Best security — stays in this browser. Move it with the brainkey backup.
@@ -85034,8 +85030,8 @@ EN: Unknown offer.
 KO: 알 수 없는 제안입니다.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-KO: 알 수 없는 Same-T 자금입니다.
+EN: Unknown flash loan fund.
+KO: 알 수 없는 플래시론 펀드입니다.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -86927,7 +86923,7 @@ KO: 외부
 
 ### gateway.send_external_suffix
 EN:  there. This page broadcasts nothing.
-KO: 을(를) 그곳으로 보내십시오. 이 페이지에서는 아무것도 브로드캐스트하지 않습니다.
+KO:  을(를) 그곳으로 보내십시오. 이 페이지에서는 아무것도 브로드캐스트하지 않습니다.
 
 ### gateway.send_to
 EN: Send to address
@@ -88447,19 +88443,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 KO: # 풀 자금, 같은 자산 입출
-Same-T 자금은 많은 공급자로부터 하나의 자산을 모읍니다. 차입자는 자금에서 가져가고 이자 포함 상환하며 체인이 잔액과 일정을 강제합니다.
+플래시론 펀드(Same-T)는 많은 공급자로부터 하나의 자산을 모읍니다. 차입자는 자금에서 가져가고 이자 포함 상환하며 체인이 잔액과 일정을 강제합니다.
 # 액면 규율
 자금은 정수 단위(1M 기준)로 표시됩니다. 같은 자산으로 생성, 출금 및 상환하고 규모를 넣기 전에 자금 한도를 살피십시오.
 # 동일 트랜잭션 규칙
 짝을 이루는 자금 작업은 하나의 트랜잭션에 속합니다. 다리를 나누면 거래 절반이 묶일 수 있습니다. 데스크가 쌍을 함께 만듭니다 — 한 번 검토하고 한 번 서명하십시오.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-KO: 출금과 상환이 있는 동일 자산 풀 자금.
+EN: Pooled flash-loan funds with draws and repayments.
+KO: 출금과 상환이 있는 플래시론 풀 펀드.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-KO: Same-T 자금
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -88597,7 +88593,7 @@ KO: 이 지갑의 모든 페이지를 버거 메뉴와 같은 방식으로 묶�
 - [대출](#/borrow)
 - [물물교환](#/barter)
 - [입금 / 출금](#/deposit-withdraw)
-- [Same-T 펀드](#/samet)
+- [플래시론 펀드](#/samet)
 - [스포트라이트](#/spotlight)
 # 수익 및 보호
 - [신용 제안](#/credit-offer)
@@ -89079,7 +89075,7 @@ KO: 계약
 
 ### htlc.contracts_suffix
 EN:  contracts.
-KO: 건의 계약.
+KO:  건의 계약.
 
 ### htlc.create_failed
 EN: Could not prepare the HTLC.
@@ -89499,7 +89495,7 @@ KO: 헤드 블록 #
 
 ### instant.on_the_book_mid
 EN:  is on the book (
-KO: 이(가) 호가창에 있습니다(
+KO:  이(가) 호가창에 있습니다(
 
 ### instant.open_the_full_desk
 EN: Open the full desk
@@ -90810,8 +90806,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 KO: 클라우드, 로컬 및 브레인키 가입 경로를 제공합니다.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-KO: 동일 자산 풀 펀드와 출금을 제공합니다.
+EN: Pooled flash-loan funds and draws.
+KO: 플래시론 풀 펀드와 출금을 제공합니다.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -91030,8 +91026,8 @@ EN: Registration
 KO: 등록
 
 ### menu.p_samet
-EN: Same-T Funds
-KO: Same-T 펀드
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### menu.p_settings
 EN: Settings
@@ -92899,7 +92895,7 @@ KO: 진행 중 또는 정산됨 필터
 
 ### prediction.org_found_mid
 EN:  assets, found 
-KO: 개 자산 중 
+KO:  개 자산 중 
 
 ### prediction.org_scanned_prefix
 EN: Scanned 
@@ -92907,7 +92903,7 @@ KO: 스캔한
 
 ### prediction.org_unit
 EN:  organization
-KO: 개 조직
+KO:  개 조직
 
 ### prediction.pmo_active
 EN: Active
@@ -93059,7 +93055,7 @@ KO: 예상한 시장이 없습니까? 스캔 범위는 처음
 
 ### prediction.scan_suffix
 EN:  assets — use the lookup box above, or 
-KO: 개 자산입니다 — 위의 조회 상자를 사용하거나, 
+KO:  개 자산입니다 — 위의 조회 상자를 사용하거나, 
 
 ### prediction.scanned_note
 EN: Scanned %(scanned)s assets, found %(found)s prediction markets%(trunc)s.
@@ -94006,8 +94002,8 @@ EN: Create fund
 KO: 펀드 생성
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-KO:  아래 생성 양식에서 새로 만드십시오 — 보유한 Same-T 펀드가 여기에 표시됩니다.
+EN:  Create one from the create form below — owned flash loan funds list here.
+KO:  아래 생성 양식에서 새로 만드십시오 — 보유한 플래시론 펀드가 여기에 표시됩니다.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -94146,20 +94142,20 @@ EN: Review update
 KO: 업데이트 검토
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-KO: 동일 자산(Same-T) 펀드: 대출과 상환은 하나의 트랜잭션[67 대출 + 68 상환]으로 일어납니다 — 단독 대출은 체인이 거부합니다. 이율은 분모 1,000,000 기준 퍼센트입니다.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+KO: 플래시론: 대출과 상환은 하나의 트랜잭션[67 대출 + 68 상환]으로 일어납니다 — 단독 대출은 체인이 거부합니다. 이율은 분모 1,000,000 기준 퍼센트입니다.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-KO: Same-T 백엔드를 사용할 수 없습니다. credit-ui.js를 불러오지 못했습니다.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+KO: 플래시론 펀드를 사용할 수 없습니다. credit-ui.js를 불러오지 못했습니다.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-KO: Same-T 펀드
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### samet.title
-EN: Same-T Funds
-KO: Same-T 펀드
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### samet.unpaid
 EN: Unpaid
@@ -95075,7 +95071,7 @@ KO: 이 노드의 최근 200개 블록 — 체인 전체 순위가 아닌 실시
 
 ### topops.skipped
 EN:  — %(n)s block(s) unreadable, skipped.
-KO:  — %(n)s개 블록을 읽을 수 없어 건너뜀.
+KO:  - %(n)s개 블록을 읽을 수 없어 건너뜀.
 
 ### topops.testnet
 EN: Works on testnet and mainnet (unlike the reference index, which is mainnet-only).
@@ -95615,7 +95611,7 @@ KO: 수신자 %(name)s에게는 메모 키가 없습니다. 메모를 지우고 
 
 ### transfer.no_memo_key_suffix
 EN:  has no memo key; clear the memo to continue.
-KO: 에게는 메모 키가 없습니다. 메모를 지우고 계속하십시오.
+KO:  에게는 메모 키가 없습니다. 메모를 지우고 계속하십시오.
 
 ### transfer.no_scam_list_is_loaded_here_double_che
 EN: No scam list is loaded here — double-check the recipient name before reviewing.
@@ -97286,7 +97282,7 @@ PT: Nenhuma exchange corresponde. Limpe a busca para ver tudo.
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-PT: Nenhuma resposta registrada — o prompt seguinte veio logo depois.
+PT: Nenhuma resposta registrada - o prompt seguinte veio logo depois.
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -97314,7 +97310,7 @@ PT: Arquivo de diálogos da construção indisponível.
 
 ### about.hero_lede
 EN: A wallet for the BitShares blockchain — markets, accounts, governance, and exploration — running as plain web files. No framework, no installer, no account with us. Your keys never leave this browser.
-PT: Uma carteira para a blockchain BitShares — mercados, contas, governança e exploração — rodando como arquivos web simples. Sem framework, sem instalador, sem conta com a gente. Suas chaves nunca saim deste navegador.
+PT: Uma carteira para a blockchain BitShares — mercados, contas, governança e exploração — rodando como arquivos web simples. Sem framework, sem instalador, sem conta com a gente. Suas chaves nunca saem deste navegador.
 
 ### about.hero_title
 EN: BitShares, in your browser. Nothing to install.
@@ -97925,24 +97921,24 @@ EN: Proposal update
 PT: Atualização de proposta
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-PT: Empréstimo Same-T
+EN: Flash loan borrow
+PT: Empréstimo flash
 
 ### account.op_samet_create
-EN: Same-T fund create
-PT: Criação de fundo Same-T
+EN: Flash loan fund create
+PT: Criação de fundo de empréstimo flash
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-PT: Exclusão de fundo Same-T
+EN: Flash loan fund delete
+PT: Exclusão de fundo de empréstimo flash
 
 ### account.op_samet_repay
-EN: Same-T repay
-PT: Pagamento Same-T
+EN: Flash loan repay
+PT: Pagamento de empréstimo flash
 
 ### account.op_samet_update
-EN: Same-T fund update
-PT: Atualização de fundo Same-T
+EN: Flash loan fund update
+PT: Atualização de fundo de empréstimo flash
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -98334,11 +98330,11 @@ PT: %(amount)s emprestados do fundo %(fund)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-PT: Fundo SameT criado com %(amount)s
+PT: Fundo de empréstimo flash criado com %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-PT: Fundo SameT %(fund)s excluído
+PT: Fundo de empréstimo flash %(fund)s excluído
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -98346,7 +98342,7 @@ PT: %(amount)s pagos ao fundo %(fund)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-PT: Fundo SameT %(fund)s atualizado
+PT: Fundo de empréstimo flash %(fund)s atualizado
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -101010,11 +101006,11 @@ PT: 3 dias
 
 ### credit.accept_borrow
 EN: Accept (borrow)
-PT: Aceitar (tomar)
+PT: Aceitar (tomar emprestado)
 
 ### credit.accept_borrow_amt_tpl
 EN: Borrow amount (%(sym)s)
-PT: Valor a tomar (%(sym)s)
+PT: Valor a tomar emprestado (%(sym)s)
 
 ### credit.acceptable_borrowers
 EN: Acceptable borrowers
@@ -101102,7 +101098,7 @@ PT: em branco = conta da carteira
 
 ### credit.borrow
 EN: Borrow
-PT: Tomar
+PT: Tomar emprestado
 
 ### credit.borrower
 EN: Borrower
@@ -101290,11 +101286,11 @@ PT: Falha na busca da taxa.
 
 ### credit.fee_rate
 EN: Fee rate
-PT: Taxa de juros
+PT: Taxa de comissão
 
 ### credit.fee_rate_2
 EN: Fee rate %
-PT: Taxa de juros %
+PT: Taxa de comissão %
 
 ### credit.lend_assets_at_a_fee_rate_a_borrower_accepts
 EN: Lend assets at a fee rate. A borrower accepts an offer and a credit deal appears. Rates are percent at denom 1,000,000 — 0.1% stores 1000 units.
@@ -101326,11 +101322,11 @@ PT: Duração máx.
 
 ### credit.max_fee_rate
 EN: Max fee rate
-PT: Taxa de juros máx.
+PT: Taxa de comissão máx.
 
 ### credit.max_fee_rate_2
 EN: Max fee rate %
-PT: Taxa de juros máx. %
+PT: Taxa de comissão máx. %
 
 ### credit.min_deal
 EN: Min deal
@@ -101362,7 +101358,7 @@ PT: Novo pagamento automático:
 
 ### credit.new_fee_rate
 EN: New fee rate %
-PT: Nova taxa de juros %
+PT: Nova taxa de comissão %
 
 ### credit.no
 EN: no
@@ -101545,8 +101541,8 @@ EN: Unknown offer.
 PT: Oferta desconhecida.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-PT: Fundo Same-T desconhecido.
+EN: Unknown flash loan fund.
+PT: Fundo de empréstimo flash desconhecido.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -104866,19 +104862,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 PT: # Fundos agrupados, mesmo ativo entra e sai
-Fundos Same-T agrupam um ativo de muitos fornecedores. Mutuários sacam contra um fundo e pagam com juros; a chain impõe saldos e cronogramas.
+Fundos de empréstimos flash (Same-T) agrupam um ativo de muitos fornecedores. Mutuários sacam contra um fundo e pagam com juros; a chain impõe saldos e cronogramas.
 # Disciplina de denominação
 Fundos denominam em unidades inteiras (base 1M): crie, saque e pague no mesmo ativo, e observe os limites do fundo antes de comprometer tamanho.
 # Regra da mesma transação
 Operações pareadas de fundo pertencem a uma transação: pernas divididas podem encalhar metade de um acordo. A mesa monta o par junto — revise uma vez, assine uma vez.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-PT: Fundos agrupados do mesmo ativo, com saques e pagamentos.
+EN: Pooled flash-loan funds with draws and repayments.
+PT: Fundos agrupados de empréstimos flash, com saques e pagamentos.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -105016,7 +105012,7 @@ PT: Todas as páginas desta carteira, agrupadas do jeito que o menu agrupa. Tudo
 - [Empréstimo](#/borrow)
 - [Troca](#/barter)
 - [Depósito / Saque](#/deposit-withdraw)
-- [Fundos Same-T](#/samet)
+- [Fundos de empréstimos flash](#/samet)
 - [Spotlight](#/spotlight)
 # Ganhar e Proteger
 - [Oferta de crédito](#/credit-offer)
@@ -107157,8 +107153,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 PT: Caminhos de cadastro em nuvem, local e por brainkey.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-PT: Fundos agrupados do mesmo ativo e sorteios.
+EN: Pooled flash-loan funds and draws.
+PT: Fundos agrupados de empréstimos flash e saques.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -107369,8 +107365,8 @@ EN: Registration
 PT: Registro
 
 ### menu.p_samet
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### menu.p_settings
 EN: Settings
@@ -108512,7 +108508,7 @@ PT: Orientação
 
 ### pool.owned_hint
 EN:  Stake both legs in any pool above — owned pools list here.
-PT:  Aplique ambas as pernas em qualquer pool acima — as pools próprias aparecem aqui.
+PT:  Faça stake em ambos os lados em qualquer pool acima - as pools próprias aparecem aqui.
 
 ### pool.paid_col
 EN: Paid
@@ -110263,8 +110259,8 @@ EN: Create fund
 PT: Criar fundo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-PT:  Crie um no formulário de criação abaixo — fundos Same-T próprios aparecem aqui.
+EN:  Create one from the create form below — owned flash loan funds list here.
+PT:  Crie um no formulário de criação abaixo — fundos de empréstimos flash próprios aparecem aqui.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -110276,7 +110272,7 @@ PT: Excluir
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-PT: Valor do delta (assinado)
+PT: Valor do delta (com sinal)
 
 ### samet.fee
 EN: Fee
@@ -110288,11 +110284,11 @@ PT: Taxa: perna do empréstimo (op 67)
 
 ### samet.fee_rate
 EN: Fee rate
-PT: Taxa de remuneração
+PT: Taxa de comissão
 
 ### samet.fee_rate_2
 EN: Fee rate %
-PT: Taxa de remuneração %
+PT: Taxa de comissão %
 
 ### samet.fee_repay_leg_op_68
 EN: Fee: repay leg (op 68)
@@ -110340,7 +110336,7 @@ PT: Rede
 
 ### samet.new_fee_rate
 EN: New fee rate %
-PT: Nova taxa de remuneração %
+PT: Nova taxa de comissão %
 
 ### samet.no_owned_funds
 EN: No owned funds.
@@ -110399,20 +110395,20 @@ EN: Review update
 PT: Revisar atualização
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-PT: Fundos de mesmo ativo (Same-T): empréstimo e pagamento ocorrem em UMA transação [67 empréstimo + 68 pagamento] — a chain rejeita um empréstimo isolado. As taxas são porcentuais com denominador 1.000.000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+PT: Empréstimos flash: empréstimo e pagamento ocorrem em UMA transação [67 empréstimo + 68 pagamento] — a chain rejeita um empréstimo isolado. As taxas são porcentuais com denominador 1.000.000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-PT: Backend Same-T ausente: falha ao carregar credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+PT: Fundos de empréstimos flash indisponíveis: falha ao carregar credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### samet.title
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -113435,7 +113431,7 @@ RU: Подходящих обменов нет. Очистите поиск, ч�
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-RU: Ответ не записан — следующий запрос шёл сразу же.
+RU: Ответ не записан - следующий запрос шёл сразу же.
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -114074,24 +114070,24 @@ EN: Proposal update
 RU: Обновление предложения
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-RU: Заём Same-T
+EN: Flash loan borrow
+RU: Флеш-займ
 
 ### account.op_samet_create
-EN: Same-T fund create
-RU: Создание фонда Same-T
+EN: Flash loan fund create
+RU: Создание фонда флеш-займа
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-RU: Удаление фонда Same-T
+EN: Flash loan fund delete
+RU: Удаление фонда флеш-займа
 
 ### account.op_samet_repay
-EN: Same-T repay
-RU: Возврат Same-T
+EN: Flash loan repay
+RU: Возврат флеш-займа
 
 ### account.op_samet_update
-EN: Same-T fund update
-RU: Обновление фонда Same-T
+EN: Flash loan fund update
+RU: Обновление фонда флеш-займа
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -114483,11 +114479,11 @@ RU: Занято %(amount)s из фонда %(fund)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-RU: Фонд Same-T создан на %(amount)s
+RU: Фонд флеш-займа создан на %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-RU: Фонд Same-T %(fund)s удалён
+RU: Фонд флеш-займа %(fund)s удалён
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -114495,7 +114491,7 @@ RU: Возвращено %(amount)s в фонд %(fund)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-RU: Фонд Same-T %(fund)s обновлён
+RU: Фонд флеш-займа %(fund)s обновлён
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -117750,8 +117746,8 @@ EN: Unknown offer.
 RU: Неизвестный оффер.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-RU: Неизвестный Same-T фонд.
+EN: Unknown flash loan fund.
+RU: Неизвестный фонд флеш-займа.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -121163,19 +121159,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 RU: # Объединённые фонды, один актив внутрь и наружу
-Same-T фонды собирают один актив от многих поставщиков. Заёмщики занимают против фонда и возвращают с процентами; цепь принуждает балансы и графики.
+Фонды флеш-займов (Same-T) собирают один актив от многих поставщиков. Заёмщики занимают против фонда и возвращают с процентами; цепь принуждает балансы и графики.
 # Дисциплина номинала
 Фонды номинируются в целых единицах (1M base): создавайте, занимайте и возвращайте в том же активе и следите за лимитами фонда до внесения размера.
 # Правило одной транзакции
 Парные операции фонда принадлежат одной транзакции: разделённые плечи могут посадить полсделки на мель. Стол строит пару вместе — проверьте один раз, подпишите один раз.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-RU: Пулированные одноактивные фонды с занятиями и возвратами.
+EN: Pooled flash-loan funds with draws and repayments.
+RU: Пулированные фонды флеш-займов с займами и возвратами.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-RU: Same-T фонды
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -121313,7 +121309,7 @@ RU: Все страницы этого кошелька, сгруппирова�
 - [Займ](#/borrow)
 - [Бартер](#/barter)
 - [Депозит / Вывод](#/deposit-withdraw)
-- [Same-T фонды](#/samet)
+- [Фонды флеш-займов](#/samet)
 - [Спотлайт](#/spotlight)
 # Заработок и защита
 - [Кредитное предложение](#/credit-offer)
@@ -123534,8 +123530,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 RU: Облачная, локальная регистрация и через брейнкей.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-RU: Объединённые фонды одного актива и розыгрыши.
+EN: Pooled flash-loan funds and draws.
+RU: Объединённые фонды флеш-займов и займы.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -123754,8 +123750,8 @@ EN: Registration
 RU: Регистрация
 
 ### menu.p_samet
-EN: Same-T Funds
-RU: Same-T фонды
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### menu.p_settings
 EN: Settings
@@ -124937,7 +124933,7 @@ RU: Ориентация
 
 ### pool.owned_hint
 EN:  Stake both legs in any pool above — owned pools list here.
-RU:  Застейкайте обе стороны в любом пуле выше — собственные пулы перечислены здесь.
+RU:  Застейкайте обе стороны в любом пуле выше - собственные пулы перечислены здесь.
 
 ### pool.paid_col
 EN: Paid
@@ -125997,7 +125993,7 @@ RU: Неверный тип лока — выберите один из пяти
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-RU: Слепые переводы отключены: нужна вендорная криптография commitment/range-proof (только просмотр).
+RU: Слепые переводы отключены: нужна встроенная криптография commitment/range-proof (только просмотр).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -126732,8 +126728,8 @@ EN: Create fund
 RU: Создать фонд
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-RU:  Создайте его в форме создания ниже — собственные фонды Same-T появятся здесь.
+EN:  Create one from the create form below — owned flash loan funds list here.
+RU:  Создайте его в форме создания ниже — собственные фонды флеш-займов появятся здесь.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -126872,20 +126868,20 @@ EN: Review update
 RU: Проверка изменения
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-RU: Фонды одного актива (Same-T): заём и возврат происходят в ОДНОЙ транзакции [67 заём + 68 возврат] — цепочка отклоняет одиночный заём. Ставки — проценты со знаменателем 1 000 000.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+RU: Флеш-займы: заём и возврат происходят в ОДНОЙ транзакции [67 заём + 68 возврат] — цепь отклоняет одиночный заём. Ставки — проценты со знаменателем 1 000 000.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-RU: Бэкенд Same-T отсутствует: не удалось загрузить credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+RU: Фонды флеш-займов недоступны: не удалось загрузить credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-RU: Фонды Same-T
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### samet.title
-EN: Same-T Funds
-RU: Фонды Same-T
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### samet.unpaid
 EN: Unpaid
@@ -128389,7 +128385,7 @@ RU: Предлагающий
 
 ### transfer.proposer_mismatch_prefix
 EN: Proposer must match the unlocked wallet account (fee-payer signs) — got 
-RU: Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — получено 
+RU: Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — фактически 
 
 ### transfer.proposer_mismatch_wallet_mid
 EN: ), wallet is 
@@ -130012,7 +130008,7 @@ TR: Eşleşen borsa yok. Aramayı temizleyip her şeyi görün.
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-TR: Yanıt yok — sonraki istem hemen ardından geldi.
+TR: Yanıt yok - sonraki istem hemen ardından geldi.
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -130060,7 +130056,7 @@ TR: Daha fazlası
 
 ### about.making_body
 EN: What follows is the original build story: every prompt that created this wallet, from "acquire bitshares-ui" on 26 September 2026 to the issue-1 fix on 3 October, with the builders' replies — preserved unedited. It records the decisions this wallet stands on: walking away from another React uplift after issue #3583 and its thousand-hour trap, so this wallet depends on nothing with a release cycle; signing every transaction locally like the old wallet instead of outsourcing it; three themes with the classic look as default; numbers in human terms, never raw chain integers; phone-first layouts from the first slice; and fees read from the live chain, never estimated. Read it as history: this is how the wallet got built.
-TR: Aşağıdaki, cüzdanın özgün yapılış kaydıdır: bu cüzdanı yaratan her istemi, 26 Eylül 2026 tarihindeki "bitshares-ui edin" isteminden 3 Ekim'deki issue-1 düzeltmesine kadar, geliştiricilerin yanıtlarıyla birlikte — hiçbirine dokunulmadan korunmuş olarak. Bu cüzdanın temelini oluşturan kararları da kaydeder: issue #3583 ve onun bin saatlik tuzağından sonra bir React yükseltmesinden daha fazlasından vazgeçmek, böylece cüzdan sürüm döngüsü olan hiçbir şeye bağımlı değil; işlemleri dışarı vermek yerine eski cüzdan gibi yerelde imzalamak; klasik görünümü varsayılan yapan üç tema; sayıları insan terimleriyle, asla çıplak zincir tam sayılarıyla değil; ilk adımdan başlayarak telefona öncelik veren düzenler; ve ücretleri asla tahmin etmeyip canlı zincirden okumak. Bunu bir tarih olarak okuyun: cüzdan böyle yapıldı.
+TR: Aşağıdaki, cüzdanın özgün yapılış kaydıdır: bu cüzdanı yaratan her istemi, 26 Eylül 2026 tarihindeki "bitshares-ui edin" isteminden 3 Ekim'deki issue-1 düzeltmesine kadar, geliştiricilerin yanıtlarıyla birlikte — hiçbirine dokunulmadan korunmuş olarak. Bu cüzdanın temelini oluşturan kararları da kaydeder: issue #3583 ve onun bin saatlik tuzağından sonra başka bir React yükseltmesinden vazgeçmek, böylece cüzdan sürüm döngüsü olan hiçbir şeye bağımlı değil; işlemleri dışarı vermek yerine eski cüzdan gibi yerelde imzalamak; klasik görünümü varsayılan yapan üç tema; sayıları insan terimleriyle, asla çıplak zincir tam sayılarıyla değil; ilk adımdan başlayarak telefona öncelik veren düzenler; ve ücretleri asla tahmin etmeyip canlı zincirden okumak. Bunu bir tarih olarak okuyun: cüzdan böyle yapıldı.
 
 ### about.making_title
 EN: Making of this wallet
@@ -130084,7 +130080,7 @@ TR: Gerçek emir defterinde alım satım
 
 ### about.s3_body
 EN: The wallet it replaces died under a hundred stale packages and a toolchain nobody can reproduce. Built to avoid release-cycle dependencies: no framework, no package manager, no build step — the smallest thing that can still run in a browser a decade from now.
-TR: Yerini alan cüzdan, yüz bayat paketin ve kimsenin yeniden üretemediği bir araç zincirinin altında öldü. Sürüm döngüsü bağımlılıklarından kaçınmak için kuruldu: çerçeve yok, paket yöneticisi yok, derleme adımı yok — on yıl sonra hâlâ bir tarayıcıda çalışabilecek en küçük şey.
+TR: Yerine geçtiği cüzdan, yüz bayat paketin ve kimsenin yeniden üretemediği bir araç zincirinin altında öldü. Sürüm döngüsü bağımlılıklarından kaçınmak için kuruldu: çerçeve yok, paket yöneticisi yok, derleme adımı yok — on yıl sonra hâlâ bir tarayıcıda çalışabilecek en küçük şey.
 
 ### about.s3_title
 EN: Runs for years with no updates
@@ -130647,24 +130643,24 @@ EN: Proposal update
 TR: Öneri güncelleme
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-TR: Same-T borçlanma
+EN: Flash loan borrow
+TR: Flash kredi borçlanma
 
 ### account.op_samet_create
-EN: Same-T fund create
-TR: Same-T fon oluşturma
+EN: Flash loan fund create
+TR: Flash kredi fon oluşturma
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-TR: Same-T fon silme
+EN: Flash loan fund delete
+TR: Flash kredi fon silme
 
 ### account.op_samet_repay
-EN: Same-T repay
-TR: Same-T geri ödeme
+EN: Flash loan repay
+TR: Flash kredi geri ödeme
 
 ### account.op_samet_update
-EN: Same-T fund update
-TR: Same-T fon güncelleme
+EN: Flash loan fund update
+TR: Flash kredi fon güncelleme
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -131056,11 +131052,11 @@ TR: Fon %(fund)s içinden %(amount)s ödünç alındı
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-TR: %(amount)s tutarında Same-T fon oluşturuldu
+TR: %(amount)s tutarında flash kredi fon oluşturuldu
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-TR: Same-T fon %(fund)s silindi
+TR: Flash kredi fon %(fund)s silindi
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -131068,7 +131064,7 @@ TR: Fon %(fund)s içine %(amount)s geri ödendi
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-TR: Same-T fon %(fund)s güncellendi
+TR: Flash kredi fon %(fund)s güncellendi
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -131576,7 +131572,7 @@ TR: Gösterilebilir alan yok.
 
 ### approval.no_reply
 EN: No reply from the signer.
-TR: İmzalamadan yanıt yok.
+TR: İmzalayan kişiden yanıt yok.
 
 ### approval.no_runtime
 EN: Extension runtime missing.
@@ -132900,7 +132896,7 @@ TR: Delta teminat
 
 ### borrow.delta_collateral_signed_collateral_asset
 EN: Delta collateral (signed, collateral asset)
-TR: Delta teminat (imzalı, teminat varlığı)
+TR: Delta teminat (işaretli, teminat varlığı)
 
 ### borrow.delta_debt
 EN: Delta debt
@@ -132908,7 +132904,7 @@ TR: Delta borç
 
 ### borrow.delta_debt_signed_debt_asset
 EN: Delta debt (signed, debt asset)
-TR: Delta borç (imzalı, borç varlığı)
+TR: Delta borç (işaretli, borç varlığı)
 
 ### borrow.e_g_10_0
 EN: e.g. 10.0
@@ -133812,11 +133808,11 @@ TR: Otomatik devre dışı (tarih)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-TR: otomatik devre dışı zamanı gelecekte olmalı.
+TR: Otomatik devre dışı zamanı gelecekte olmalı.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-TR: otomatik devre dışı zamanı ayarlanmalı (geçerlilik).
+TR: Otomatik devre dışı zamanı ayarlanmalı (geçerlilik).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -134307,8 +134303,8 @@ EN: Unknown offer.
 TR: Bilinmeyen teklif.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-TR: Bilinmeyen Same-T fonu.
+EN: Unknown flash loan fund.
+TR: Bilinmeyen flash kredi fonu.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -137700,19 +137696,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 TR: # Havuzlu fonlar, giren çıkan aynı varlık
-Same-T fonları birçok tedarikçiden tek varlığı havuzlar. Ödünç alanlar fona karşı çeker ve faizle geri öder; bakiye ve takvimleri zincir uygular.
+Flash kredi fonları (Same-T) birçok tedarikçiden tek varlığı havuzlar. Ödünç alanlar fona karşı çeker ve faizle geri öder; bakiye ve takvimleri zincir uygular.
 # Birim disiplini
 Fonlar bütün birimle ifade edilir (1M baz): aynı varlıkla oluşturun, çekin ve ödeyin; tutar bağlamadan önce fonun limitlerine dikkat edin.
 # Aynı işlem kuralı
 Eşli fon işlemleri tek işlemde olur: bölünmüş bacaklar anlaşmanın yarısını mahsur bırakabilir. Masa çifti birlikte kurar — bir kez inceleyin, bir kez imzalayın.
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-TR: Çekiş ve geri ödemeli, aynı varlıklı ortak fonlar.
+EN: Pooled flash-loan funds with draws and repayments.
+TR: Çekim ve geri ödemeli havuzlu flash kredi fonları.
 
 ### help.topic_samet_title
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -137850,7 +137846,7 @@ TR: Bu cüzdandaki her sayfa, hamburger menüsünün gruplandığı gibi gruplan
 - [Borç Alma](#/borrow)
 - [Takas Pazarı](#/barter)
 - [Yatır / Çek](#/deposit-withdraw)
-- [Same-T Fonları](#/samet)
+- [Flash kredi fonları](#/samet)
 - [Spotlight](#/spotlight)
 # Kazanç ve Koruma
 - [Kredi Teklifi](#/credit-offer)
@@ -139084,7 +139080,7 @@ TR: Favori
 
 ### market.fills_hint
 EN:  Fills appear once orders match — place one from the Buy/Sell panels.
-TR:  Emirler eşleşince dolumlar görünür — Alış/Satış panellerinden bir emir girin.
+TR:  Emirler eşleşince dolumlar görünür - Alış/Satış panellerinden bir emir girin.
 
 ### market.fills_line_hint
 EN:  Fills draw this line — place an order or try another pair.
@@ -139264,7 +139260,7 @@ TR: Bu piyasada fiyat geçmişi yok.
 
 ### market.no_settle_market
 EN: No bitasset in this market — no settlement orders.
-TR: Bu piyasada bitasset yok — uzlaşma emri yok.
+TR: Bu piyasada bitasset yok - uzlaşma emri yok.
 
 ### market.no_side_suffix
 EN:  yet — place one from the Buy/Sell panels below; resting orders list here.
@@ -140043,8 +140039,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 TR: Bulut, yerel ve beyin anahtarı kayıt yolları.
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-TR: Havuzlu aynı-varlık fonları ve çekimler.
+EN: Pooled flash-loan funds and draws.
+TR: Havuzlu flash kredi fonları ve çekimler.
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -140259,8 +140255,8 @@ EN: Registration
 TR: Kayıt
 
 ### menu.p_samet
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### menu.p_settings
 EN: Settings
@@ -140782,7 +140778,7 @@ TR: Hakediş arka ucu eksik: proposal-ui.js yüklenemedi.
 
 ### misc.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to act as yourself.
-TR: committee-account (1.2.0) olarak görüntüleniyor — kendiniz olarak işlem yapmak için kilidi açın.
+TR: committee-account (1.2.0) olarak görüntüleniyor - kendiniz olarak işlem yapmak için kilidi açın.
 
 ### misc.whitelist
 EN: Whitelist
@@ -142318,7 +142314,7 @@ TR: sıfır maliyetli (işlem yok)
 
 ### proposal.a_touched_account_is_in_your_local_cont
 EN: A touched account is in your local contacts or favourite accounts.
-TR: Dokunulan hesaplardan biri yerel kişilerinizi veya favori hesaplarınızda.
+TR: Dokunulan bir hesap yerel kişilerinizde veya favori hesaplarınızda.
 
 ### proposal.account
 EN: Account
@@ -142474,7 +142470,7 @@ TR: Hatalı kilit türü — beşinden birini seçin.
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-TR: Gizli transferler kapalı: taahhüt/kanıt kriptosu gömülü olmadığı için (yalnızca salt okunur sorgu).
+TR: Gizli transferler kapalı: gömülü taahhüt/aralık-kanıtı kriptosu gerektirir (yalnızca salt okunur sorgu).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -143201,8 +143197,8 @@ EN: Create fund
 TR: Fon oluştur
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-TR:  Aşağıdaki oluşturma formundan oluşturun — sahip olduğunuz Same-T fonları burada listelenir.
+EN:  Create one from the create form below — owned flash loan funds list here.
+TR:  Aşağıdaki oluşturma formundan oluşturun — sahip olduğunuz flash kredi fonları burada listelenir.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -143337,20 +143333,20 @@ EN: Review update
 TR: Güncellemeyi incele
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-TR: Aynı varlık (Same-T) fonları: borçlanma ve ödeme TEK işlemde olur [67 borç + 68 ödeme] — zincir tek başına borcu reddeder. Oranlar paydası 1.000.000 olan yüzdedir.
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+TR: Flash krediler: borçlanma ve geri ödeme TEK işlemde olur [67 borçlanma + 68 geri ödeme] — zincir tek başına borçlanmayı reddeder. Oranlar paydası 1.000.000 olan yüzdedir.
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-TR: Same-T arka ucu eksik: credit-ui.js yüklenemedi.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+TR: Flash kredi fonları kullanılamıyor: credit-ui.js yüklenemedi.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### samet.title
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### samet.unpaid
 EN: Unpaid
@@ -143522,7 +143518,7 @@ TR: İptal
 
 ### settings.discover_cancelled
 EN: Cancelled — partial results kept.
-TR: İptal edildi — kısmi sonuçlar saklandı.
+TR: İptal edildi - kısmi sonuçlar saklandı.
 
 ### settings.discover_checking
 EN: Checking
@@ -144718,7 +144714,7 @@ TR: Öneriyi onayla (op %(op)s)
 
 ### transfer.confirm_settles_the_fee_in
 EN:  — Confirm settles the fee in 
-TR:  — Onay ücreti 
+TR:  — Onay, ücreti şurada kapatır: 
 
 ### transfer.could_not_build_proposal
 EN: Could not build the proposal.
@@ -144862,7 +144858,7 @@ TR: Öneren
 
 ### transfer.proposer_mismatch_prefix
 EN: Proposer must match the unlocked wallet account (fee-payer signs) — got 
-TR: Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — alınan 
+TR: Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — gerçekte 
 
 ### transfer.proposer_mismatch_wallet_mid
 EN: ), wallet is 
@@ -146485,7 +146481,7 @@ ZH: 清除
 
 ### about.dlg_search_ph
 EN: Filter exchanges…
-ZH: 筛选对话…
+ZH: 筛选交易所…
 
 ### about.dlg_showing
 EN: Showing
@@ -147112,24 +147108,24 @@ EN: Proposal update
 ZH: 提案更新
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-ZH: Same-T 借入
+EN: Flash loan borrow
+ZH: 闪电贷借入
 
 ### account.op_samet_create
-EN: Same-T fund create
-ZH: Same-T 资金池创建
+EN: Flash loan fund create
+ZH: 闪电贷资金池创建
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-ZH: Same-T 资金池删除
+EN: Flash loan fund delete
+ZH: 闪电贷资金池删除
 
 ### account.op_samet_repay
-EN: Same-T repay
-ZH: Same-T 还款
+EN: Flash loan repay
+ZH: 闪电贷还款
 
 ### account.op_samet_update
-EN: Same-T fund update
-ZH: Same-T 资金池更新
+EN: Flash loan fund update
+ZH: 闪电贷资金池更新
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -147521,11 +147517,11 @@ ZH: 已从资金池 %(fund)s 借入 %(amount)s
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-ZH: 已创建 Same-T 资金池，规模 %(amount)s
+ZH: 已创建闪电贷资金池，规模 %(amount)s
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-ZH: 已删除 Same-T 资金池 %(fund)s
+ZH: 已删除闪电贷资金池 %(fund)s
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -147533,7 +147529,7 @@ ZH: 已向资金池 %(fund)s 还款 %(amount)s
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-ZH: 已更新 Same-T 资金池 %(fund)s
+ZH: 已更新闪电贷资金池 %(fund)s
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -147997,7 +147993,7 @@ ZH: API 实验室
 
 ### approval.account
 EN: Account: 
-ZH: 账户：
+ZH: 账户： 
 
 ### approval.approve
 EN: Approve
@@ -148009,7 +148005,7 @@ ZH: 已批准并广播。
 
 ### approval.chain
 EN: Chain: 
-ZH: 链：
+ZH: 链： 
 
 ### approval.close
 EN: Close
@@ -148061,7 +148057,7 @@ ZH: 记住此站点所用的账户
 
 ### approval.site_prefix
 EN: Site: 
-ZH: 站点：
+ZH: 站点： 
 
 ### approval.title
 EN: Approve signature
@@ -150792,8 +150788,8 @@ EN: Unknown offer.
 ZH: 未知报价。
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-ZH: 未知 Same-T 资金池。
+EN: Unknown flash loan fund.
+ZH: 未知闪电贷资金池。
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -154213,19 +154209,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 ZH: # 同进同出的汇集资金
-Same-T 资金池汇集多供应商的同一资产。借入方按池支取并还本付息；链上强制余额与计划。
+闪电贷资金池(Same-T)汇集多供应商的同一资产。借入方按池支取并还本付息；链上强制余额与计划。
 # 面额纪律
 资金池以整单位计价（1M 基础）：创建、支取、还款用同一资产，投入前看清池限额。
 # 同笔交易规则
 成对池操作须进同一笔交易：拆开两边可能让半边交易悬空。操作台成对构建——核对一次，签名一次。
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-ZH: 同资产汇集的资金池，支取与还款。
+EN: Pooled flash-loan funds with draws and repayments.
+ZH: 汇集的闪电贷资金池，支取与还款。
 
 ### help.topic_samet_title
-EN: Same-T Funds
-ZH: Same-T 资金池
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -154363,7 +154359,7 @@ ZH: 本钱包的每个页面，按汉堡菜单的分组方式排列。凡带链�
 - [借币](#/borrow)
 - [易货](#/barter)
 - [充值 / 提现](#/deposit-withdraw)
-- [Same-T 基金](#/samet)
+- [闪电贷资金池](#/samet)
 - [Spotlight](#/spotlight)
 # 收益与保障
 - [信用借贷](#/credit-offer)
@@ -155793,7 +155789,7 @@ ZH: 该市场暂无价格历史。
 
 ### market.no_settle_market
 EN: No bitasset in this market — no settlement orders.
-ZH: 该市场无智能币——无结算订单。
+ZH: 该市场无智能币 - 无结算订单。
 
 ### market.no_side_suffix
 EN:  yet — place one from the Buy/Sell panels below; resting orders list here.
@@ -156580,8 +156576,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 ZH: 云端、本地与脑密钥注册路径。
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-ZH: 同资产集合基金与提取。
+EN: Pooled flash-loan funds and draws.
+ZH: 汇集的闪电贷资金池与支取。
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -156800,8 +156796,8 @@ EN: Registration
 ZH: 注册
 
 ### menu.p_samet
-EN: Same-T Funds
-ZH: Same-T 基金
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### menu.p_settings
 EN: Settings
@@ -159778,8 +159774,8 @@ EN: Create fund
 ZH: 创建资金池
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-ZH:  请通过下方的创建表单新建一个 — 您拥有的同资产资金池将列在此处。
+EN:  Create one from the create form below — owned flash loan funds list here.
+ZH:  请通过下方的创建表单新建一个 — 您拥有的闪电贷资金池将列在此处。
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -159918,20 +159914,20 @@ EN: Review update
 ZH: 核对更新
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-ZH: 同资产（Same-T）资金池：借入与还款在同一笔交易中完成 [67 借入 + 68 还款] — 链上拒绝单独的借入操作。费率为分母为 1,000,000 的百分比。
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+ZH: 闪电贷：借入与还款在同一笔交易中完成 [67 借入 + 68 还款] — 链上拒绝单独的借入操作。费率为分母为 1,000,000 的百分比。
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-ZH: Same-T 后端缺失：credit-ui.js 加载失败。
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+ZH: 闪电贷资金池不可用：credit-ui.js 加载失败。
 
 ### samet.same_t_funds
-EN: Same-T Funds
-ZH: 同资产资金池
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### samet.title
-EN: Same-T Funds
-ZH: 同资产资金池
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### samet.unpaid
 EN: Unpaid
@@ -162539,7 +162535,7 @@ ZH: 输入代理账户名或 ID。
 
 ### vote.proxy_none
 EN: Proxy: none — voting directly.
-ZH: 代理：无——直接投票。
+ZH: 代理：无 - 直接投票。
 
 ### vote.proxy_ph
 EN: proxy account name or 1.2.N
@@ -162995,7 +162991,7 @@ ZH: 每个资金池资产都按其最近一次兑换定价，并经资金池图�
 
 ### xrate.load_failed
 EN: Could not load cross rates: 
-ZH: 无法加载交叉汇率：
+ZH: 无法加载交叉汇率： 
 
 ### xrate.loading
 EN: Reading pools…
@@ -163074,7 +163070,7 @@ HI: कोई मेल खाता एक्सचेंज नहीं। �
 
 ### about.dlg_no_reply
 EN: No reply recorded — the next prompt followed immediately.
-HI: कोई उत्तर दर्ज नहीं — अगला प्रॉम्प्ट तुरंत आया।
+HI: कोई उत्तर दर्ज नहीं - अगला प्रॉम्प्ट तुरंत आया।
 
 ### about.dlg_noscript
 EN: This archive needs JavaScript; the same text lives in docs/vanilla-ui-dialog.md in the source repo.
@@ -163713,24 +163709,24 @@ EN: Proposal update
 HI: प्रस्ताव अपडेट
 
 ### account.op_samet_borrow
-EN: Same-T borrow
-HI: Same-T उधार
+EN: Flash loan borrow
+HI: फ्लैश लोन उधार
 
 ### account.op_samet_create
-EN: Same-T fund create
-HI: Same-T फंड निर्माण
+EN: Flash loan fund create
+HI: फ्लैश लोन फंड निर्माण
 
 ### account.op_samet_delete
-EN: Same-T fund delete
-HI: Same-T फंड हटाना
+EN: Flash loan fund delete
+HI: फ्लैश लोन फंड हटाना
 
 ### account.op_samet_repay
-EN: Same-T repay
-HI: Same-T चुकौती
+EN: Flash loan repay
+HI: फ्लैश लोन चुकौती
 
 ### account.op_samet_update
-EN: Same-T fund update
-HI: Same-T फंड अपडेट
+EN: Flash loan fund update
+HI: फ्लैश लोन फंड अपडेट
 
 ### account.op_settle_cancel
 EN: Settle cancel
@@ -164122,11 +164118,11 @@ HI: फंड %(fund)s से %(amount)s उधार लिए गए
 
 ### account.sum_samet_create
 EN: Created SameT fund with %(amount)s
-HI: Same-T फंड %(amount)s के साथ बनाया गया
+HI: फ्लैश लोन फंड %(amount)s के साथ बनाया गया
 
 ### account.sum_samet_delete
 EN: Deleted SameT fund %(fund)s
-HI: Same-T फंड %(fund)s हटाया गया
+HI: फ्लैश लोन फंड %(fund)s हटाया गया
 
 ### account.sum_samet_repay
 EN: Repaid %(amount)s to fund %(fund)s
@@ -164134,7 +164130,7 @@ HI: फंड %(fund)s को %(amount)s चुकाए गए
 
 ### account.sum_samet_update
 EN: Updated SameT fund %(fund)s
-HI: Same-T फंड %(fund)s अपडेट हुआ
+HI: फ्लैश लोन फंड %(fund)s अपडेट हुआ
 
 ### account.sum_settle_cancel
 EN: Cancelled settlement of %(amount)s
@@ -165974,7 +165970,7 @@ HI: डेल्टा कोलैटरल
 
 ### borrow.delta_collateral_signed_collateral_asset
 EN: Delta collateral (signed, collateral asset)
-HI: डेल्टा कोलैटरल (हस्ताक्षरित, कोलैटरल एसेट)
+HI: डेल्टा कोलैटरल (चिह्न सहित, कोलैटरल एसेट)
 
 ### borrow.delta_debt
 EN: Delta debt
@@ -165982,7 +165978,7 @@ HI: डेल्टा कर्ज़
 
 ### borrow.delta_debt_signed_debt_asset
 EN: Delta debt (signed, debt asset)
-HI: डेल्टा कर्ज़ (हस्ताक्षरित, कर्ज़ एसेट)
+HI: डेल्टा कर्ज़ (चिह्न सहित, कर्ज़ एसेट)
 
 ### borrow.e_g_10_0
 EN: e.g. 10.0
@@ -167381,8 +167377,8 @@ EN: Unknown offer.
 HI: अज्ञात प्रस्ताव।
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-HI: अज्ञात Same-T फ़ंड।
+EN: Unknown flash loan fund.
+HI: अज्ञात फ्लैश लोन फ़ंड।
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -168402,7 +168398,7 @@ HI: अगला → (अभी कोई नया ब्लॉक नहीं
 
 ### explorer.no_accounts_found
 EN: No accounts found — check the name prefix, or register a new name at Create Account (#/create-account).
-HI: कोई खाता नहीं मिला — नाम उपसर्ग जाँचें, या खाता बनाएँ (#/create-account) में नया नाम पंजीकृत करें।
+HI: कोई खाता नहीं मिला - नाम उपसर्ग जाँचें, या खाता बनाएँ (#/create-account) में नया नाम पंजीकृत करें।
 
 ### explorer.no_activity
 EN: No recent activity.
@@ -170786,19 +170782,19 @@ Funds denominate in whole units (1M base): create, draw, and repay in the same a
 # Same-transaction rule
 Paired fund operations belong in one transaction: split legs can strand half a deal. The desk builds the pair together — review once, sign once.
 HI: # पूल्ड फ़ंड, अंदर-बाहर वही एसेट
-Same-T फ़ंड अनेक आपूर्तिकर्ताओं से एक एसेट पूल करते हैं। उधारकर्ता फ़ंड पर आहरित करते हैं और ब्याज सहित चुकाते हैं; चेन बैलेंस व अनुसूची प्रवर्तित करती है।
+फ्लैश लोन फ़ंड (Same-T) अनेक आपूर्तिकर्ताओं से एक एसेट पूल करते हैं। उधारकर्ता फ़ंड पर आहरित करते हैं और ब्याज सहित चुकाते हैं; चेन बैलेंस व अनुसूची प्रवर्तित करती है।
 # अंकन अनुशासन
 फ़ंड पूर्ण इकाइयों (1M आधार) में अंकित होते हैं: उसी एसेट में बनाएँ, आहरित करें व चुकाएँ, और आकार देने से पहले फ़ंड की सीमाएँ ध्यान रखें।
 # समान-लेनदेन नियम
 युग्मित फ़ंड ऑपरेशन एक लेनदेन में होने चाहिए: विभाजित चरण आधा सौदा अटका सकते हैं। डेस्क जोड़ी एक साथ बनाता है — एक बार समीक्षा करें, एक बार हस्ताक्षर करें।
 
 ### help.topic_samet_text
-EN: Pooled same-asset funds with draws and repayments.
-HI: आहरण व चुकौती सहित पूल्ड समान-एसेट फ़ंड।
+EN: Pooled flash-loan funds with draws and repayments.
+HI: आहरण व चुकौती सहित पूल्ड फ्लैश लोन फ़ंड।
 
 ### help.topic_samet_title
-EN: Same-T Funds
-HI: Same-T फ़ंड
+EN: Flash loan funds
+HI: फ्लैश लोन फ़ंड
 
 ### help.topic_settings_body
 EN: # Nodes: pick by health, not habit
@@ -170936,7 +170932,7 @@ HI: इस वॉलेट का हर पृष्ठ, उसी तरह �
 - [उधार](#/borrow)
 - [बार्टर](#/barter)
 - [जमा / निकासी](#/deposit-withdraw)
-- [Same-T फंड](#/samet)
+- [फ्लैश लोन फंड](#/samet)
 - [स्पॉटलाइट](#/spotlight)
 # कमाएँ और सुरक्षित करें
 - [क्रेडिट ऑफ़र](#/credit-offer)
@@ -171774,7 +171770,7 @@ HI:  (प्रभावी):
 
 ### instant.effective_suffix_dash
 EN:  (effective): —
-HI:  (प्रभावी): —
+HI:  (प्रभावी): -
 
 ### instant.enter_a_market_like_bts_cny
 EN: Enter a market like BTS_CNY.
@@ -171990,7 +171986,7 @@ HI:  वॉक
 
 ### instant.walkthrough_bids_mid
 EN:  — walkthrough uses bids (selling 
-HI:  — वॉकथ्रू बिड का उपयोग करता है (बेचा जा रहा 
+HI:  - वॉकथ्रू बिड का उपयोग करता है (बेचा जा रहा 
 
 ### instant.walkthrough_paying_mid
 EN:  hits bids paying 
@@ -173145,8 +173141,8 @@ EN: Cloud, local, and brainkey sign-up paths.
 HI: क्लाउड, स्थानीय और ब्रेनकी पंजीकरण पथ।
 
 ### menu.d_samet
-EN: Pooled same-asset funds and draws.
-HI: पूल किए समान-एसेट फंड और निकासी।
+EN: Pooled flash-loan funds and draws.
+HI: पूल किए फ्लैश लोन फंड और निकासी।
 
 ### menu.d_settings
 EN: Nodes, themes, language, and housekeeping.
@@ -173365,8 +173361,8 @@ EN: Registration
 HI: पंजीकरण
 
 ### menu.p_samet
-EN: Same-T Funds
-HI: Same-T फंड
+EN: Flash loan funds
+HI: फ्लैश लोन फंड
 
 ### menu.p_settings
 EN: Settings
@@ -173902,7 +173898,7 @@ HI: वेस्टिंग बैकएंड गायब है: proposal-ui
 
 ### misc.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to act as yourself.
-HI: committee-account (1.2.0) के रूप में देख रहे हैं — स्वयं के रूप में कार्य करने के लिए अनलॉक करें।
+HI: committee-account (1.2.0) के रूप में देख रहे हैं - स्वयं के रूप में कार्य करने के लिए अनलॉक करें।
 
 ### misc.whitelist
 EN: Whitelist
@@ -175606,7 +175602,7 @@ HI: गलत लॉक प्रकार — पाँचों में स�
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-HI: ब्लाइंड ट्रांसफर अक्षम हैं: उन्हें रिपो-में-शामिल कमिटमेंट/रेंज-प्रूफ क्रिप्टो चाहिए (केवल पढ़ने योग्य खोज)।
+HI: ब्लाइंड ट्रांसफर अक्षम हैं: उन्हें एम्बेडेड कमिटमेंट/रेंज-प्रूफ क्रिप्टो चाहिए (केवल पढ़ने योग्य खोज)।
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -176337,8 +176333,8 @@ EN: Create fund
 HI: फ़ंड बनाएँ
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-HI:  नीचे निर्माण फ़ॉर्म से एक बनाएँ — स्वामित्व वाले Same-T फ़ंड यहाँ सूचीबद्ध हैं।
+EN:  Create one from the create form below — owned flash loan funds list here.
+HI:  नीचे निर्माण फ़ॉर्म से एक बनाएँ — स्वामित्व वाले फ्लैश लोन फ़ंड यहाँ सूचीबद्ध हैं।
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -176354,7 +176350,7 @@ HI: डेल्टा
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-HI: डेल्टा राशि (हस्ताक्षरित)
+HI: डेल्टा राशि (चिह्न सहित)
 
 ### samet.fee
 EN: Fee
@@ -176477,20 +176473,20 @@ EN: Review update
 HI: अपडेट की समीक्षा करें
 
 ### samet.same_asset_same_t_funds_borrowing_and_repayin
-EN: Same-asset (Same-T) funds: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
-HI: Same-asset (Same-T) फ़ंड: उधार और चुकौती एक ही लेनदेन में होती है [67 उधार + 68 चुकौती] — चेन अकेला उधार अस्वीकार करती है। दरें 1,000,000 हर पर प्रतिशत हैं।
+EN: Flash loans: borrowing and repaying happen in ONE transaction [67 borrow + 68 repay] — the chain rejects a lone borrow. Rates are percent at denom 1,000,000.
+HI: फ्लैश लोन: उधार और चुकौती एक ही लेनदेन में होती है [67 उधार + 68 चुकौती] — चेन अकेला उधार अस्वीकार करती है। दरें 1,000,000 हर पर प्रतिशत हैं।
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-HI: Same-T बैकएंड गायब है: credit-ui.js लोड नहीं हुआ।
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+HI: फ्लैश लोन फ़ंड अनुपलब्ध है: credit-ui.js लोड नहीं हुआ।
 
 ### samet.same_t_funds
-EN: Same-T Funds
-HI: Same-T फ़ंड
+EN: Flash loan funds
+HI: फ्लैश लोन फ़ंड
 
 ### samet.title
-EN: Same-T Funds
-HI: Same-T फ़ंड
+EN: Flash loan funds
+HI: फ्लैश लोन फ़ंड
 
 ### samet.unpaid
 EN: Unpaid
@@ -177418,7 +177414,7 @@ HI: शीर्ष ऑपरेशन
 
 ### tour.away_note
 EN: On the Exchange desk — open it to see this highlighted.
-HI: यह एक्सचेंज डेस्क पर चिह्नित दिखेगा — इसे खोल लें।
+HI: यह एक्सचेंज डेस्क पर चिह्नित दिखेगा - इसे खोल लें।
 
 ### tour.back
 EN: Back
@@ -179082,7 +179078,7 @@ HI: इस प्रॉक्सी पर कोई वोट सेट नह�
 
 ### vote.proxy_follows
 EN:  — your stake follows this account; the vote slate below is read-only.
-HI:  — आपकी स्टेक इस खाते का अनुसरण करती है; नीचे दी गई वोट स्लेट केवल-पठन है।
+HI:  - आपकी स्टेक इस खाते का अनुसरण करती है; नीचे दी गई वोट स्लेट केवल-पठन है।
 
 ### vote.proxy_needed
 EN: Enter a proxy account name or id.

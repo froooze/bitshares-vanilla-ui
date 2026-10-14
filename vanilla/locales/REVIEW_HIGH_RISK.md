@@ -322,7 +322,7 @@ DE: Gefunden
 
 ### auth.have_a_bin_backup_file_instead_this_wallet_ke
 EN: Have a .bin backup file instead? This wallet keeps one encrypted 
-DE: Haben Sie stattdessen eine .bin-Sicherungsdatei? Diese Wallet speichert eine verschlüsselt 
+DE: Haben Sie stattdessen eine .bin-Sicherungsdatei? Diese Wallet speichert eine verschlüsselte 
 
 ### auth.import_an_existing_account_brainkey
 EN: Import an existing account (brainkey)
@@ -386,7 +386,7 @@ DE: Transaktions-Builder öffnen
 
 ### auth.multisig_step_approve
 EN: Co-owners approve (op 23) on the proposal page, or co-sign via the transaction builder.
-DE: Miteigentümer genehmigen (op 23) auf der Vorschlagsseite oder signieren mit über den Transaktions-Builder.
+DE: Miteigentümer genehmigen (op 23) auf der Vorschlagsseite oder signieren gemeinsam über den Transaktions-Builder.
 
 ### auth.multisig_step_propose
 EN: Propose the operation (Transfer has Send/Propose; assets, barter and borrowing link to proposals).
@@ -670,7 +670,7 @@ DE: Jeder punktgetrennte Teil muss 1–63 Zeichen lang sein.
 
 ### createaccount.each_dot_separated_part_must_start_with_a_let
 EN: Each dot-separated part must start with a letter and end with a letter or digit.
-DE: Jeder punktgetrennte Teil muss mit einem Buchstaben beginnen und mit Buchstabe oder Ziffer enden.
+DE: Jeder punktgetrennte Teil muss mit einem Buchstaben beginnen und mit einem Buchstaben oder einer Ziffer enden.
 
 ### createaccount.enter_an_account_name
 EN: Enter an account name.
@@ -698,7 +698,7 @@ DE: Stattdessen anmelden
 
 ### createaccount.lowercase_letters_only_starting_with_a_letter
 EN: Lowercase letters only, starting with a letter (digits, dots and dashes allowed).
-DE: Nur Kleinbuchstaben, beginnend mit Buchstabe (Ziffern, Punkte und Bindestriche erlaubt).
+DE: Nur Kleinbuchstaben, beginnend mit einem Buchstaben (Ziffern, Punkte und Bindestriche erlaubt).
 
 ### createaccount.memo_key
 EN: Memo key
@@ -778,7 +778,7 @@ DE: Transaktion wird erstellt…
 
 ### createworker.confirm_worker_op_34
 EN: Confirm worker (op %(op)s)
-DE: Worker bestätigen (Op %(op)s)
+DE: Worker bestätigen (op %(op)s)
 
 ### createworker.could_not_preview_the_worker
 EN: Could not preview the worker.
@@ -950,7 +950,7 @@ DE: Worker-Name
 
 ### createworker.worker_preview_op_34
 EN: Worker preview (op %(op)s)
-DE: Worker-Vorschau (Op %(op)s)
+DE: Worker-Vorschau (op %(op)s)
 
 ### credit.0_none
 EN: 0 — none
@@ -1358,7 +1358,7 @@ DE: Angebot aktualisiert.
 
 ### credit.offers_hint
 EN:  Offers appear once anyone creates one — draft yours in the Create offer form on this desk.
-DE:  Angebote erscheinen, sobald jemand eines erstellt — entwerfen Sie Ihres im Formular Angebot erstellen auf diesem Desk.
+DE:  Angebote erscheinen, sobald jemand eines erstellt — entwerfen Sie Ihres im Formular „Angebot erstellen“ auf diesem Desk.
 
 ### credit.omit_chain_default
 EN: omit (chain default)
@@ -1370,7 +1370,7 @@ DE: Offen
 
 ### credit.owned_hint
 EN:  Create one in the Create offer form below — owned offers list here.
-DE:  Erstellen Sie eines im Formular Angebot erstellen unten — eigene Angebote erscheinen hier.
+DE:  Erstellen Sie eines im Formular „Angebot erstellen“ unten — eigene Angebote erscheinen hier.
 
 ### credit.owner
 EN: Owner
@@ -1509,8 +1509,8 @@ EN: Unknown offer.
 DE: Unbekanntes Angebot.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-DE: Unbekannter Same-T-Fonds.
+EN: Unknown flash loan fund.
+DE: Unbekannter Flash-Loan-Fonds.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -1518,7 +1518,7 @@ DE: Entsperrt — drücken Sie Zurück und führen Sie Prüfen erneut aus, damit
 
 ### credit.update_delta_tpl
 EN: Delta amount (%(sym)s, signed)
-DE: Delta-Betrag (%(sym)s, signiert)
+DE: Delta-Betrag (%(sym)s, vorzeichenbehaftet)
 
 ### credit.viewing_as
 EN: Viewing as committee-account (1.2.0) — unlock to act as your account.
@@ -1534,7 +1534,7 @@ DE: ja
 
 ### debit.action_title
 EN: Claim / delete
-DE: Beanspruchen / löschen
+DE: Abheben / löschen
 
 ### debit.auth_field
 EN: Authorized account
@@ -1734,7 +1734,7 @@ DE: Die Leiter konnte nicht in der Vorschau angezeigt werden.
 
 ### debit.preview_ladder
 EN: Preview recurring orders
-DE: Wiederkehrende Orders in der Vorschau
+DE: Wiederkehrende Orders in der Vorschau anzeigen
 
 ### debit.recipient_hint
 EN:  Ask the granter to add one from the Direct Debit form.
@@ -1758,7 +1758,7 @@ DE: Berechtigung prüfen
 
 ### debit.s1
 EN: signing…
-DE: signieren…
+DE: wird signiert…
 
 ### debit.s3
 EN: broadcasting…
@@ -3173,8 +3173,8 @@ EN: Create fund
 DE: Fonds erstellen
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-DE:  Erstellen Sie einen über das Erstellungsformular unten — eigene Same-T-Fonds werden hier aufgelistet.
+EN:  Create one from the create form below — owned flash loan funds list here.
+DE:  Erstellen Sie einen über das Erstellungsformular unten — eigene Flash-Loan-Fonds werden hier aufgelistet.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -3186,7 +3186,7 @@ DE: Löschen
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-DE: Delta-Betrag (signiert)
+DE: Delta-Betrag (mit Vorzeichen)
 
 ### samet.fee
 EN: Fee
@@ -3309,16 +3309,16 @@ EN: Review update
 DE: Update prüfen
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-DE: Same-T-Backend fehlt: credit-ui.js konnte nicht geladen werden.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+DE: Flash-Loan-Fonds nicht verfügbar: credit-ui.js konnte nicht geladen werden.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### samet.title
-EN: Same-T Funds
-DE: Same-T-Fonds
+EN: Flash loan funds
+DE: Flash-Loan-Fonds
 
 ### samet.unpaid
 EN: Unpaid
@@ -3534,7 +3534,7 @@ DE: Ticket aktualisiert und on-chain neu gelesen.
 
 ### ticket.tickets_cannot_be_deleted_no_delete_op_exists
 EN: Tickets cannot be deleted (no delete op exists) — rows above are permanent.
-DE: Tickets können nicht gelöscht werden (keine Lösch-Op existiert) — obige Zeilen sind dauerhaft.
+DE: Tickets können nicht gelöscht werden (kein Lösch-Op existiert) — obige Zeilen sind dauerhaft.
 
 ### ticket.tickets_lock_funds_for_vote_weight_there_is_n
 EN: Tickets lock funds for vote weight. There is no delete operation, so every ticket row is permanent.
@@ -4397,7 +4397,7 @@ Register: informal tú, standard for Spanish wallet UIs.
 
 ### account.no_account_yet
 EN: The wallet is unlocked but its active key controls no on-chain account yet. Register one or import a funded brainkey.
-ES: La billetera está desbloqueada pero su clave activa aún no controla ninguna cuenta en cadena. Registra una o importa una brainkey con fondos.
+ES: La billetera está desbloqueada pero tu clave activa aún no controla ninguna cuenta en cadena. Registra una o importa una brainkey con fondos.
 
 ### account.op_pool_withdraw
 EN: Pool withdraw
@@ -5345,11 +5345,11 @@ ES: Desactivación automática (fecha)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-ES: la hora de desactivación automática debe ser futura.
+ES: La hora de desactivación automática debe ser futura.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-ES: la hora de desactivación automática debe fijarse (validez).
+ES: La hora de desactivación automática debe fijarse (validez).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -5820,8 +5820,8 @@ EN: Unknown offer.
 ES: Oferta desconocida.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-ES: Fondo Same-T desconocido.
+EN: Unknown flash loan fund.
+ES: Fondo de préstamo flash desconocido.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -6237,7 +6237,7 @@ ES: Claves de propietario, activas y de memo, y qué puede firmar cada una.
 
 ### help.topic_accounts-proposed_text
 EN: Multi-signature proposals: review and approve pending actions.
-ES: Propuestas multifirma: revise y apruebe acciones pendientes.
+ES: Propuestas multifirma: revisa y aprueba acciones pendientes.
 
 ### help.topic_authorities_text
 EN: Custom permission sets beyond owner, active and memo.
@@ -6245,7 +6245,7 @@ ES: Conjuntos de permisos personalizados más allá de propietario, activa y mem
 
 ### help.topic_backups_text
 EN: Your brainkey IS the backup — write it down. View it any time in the wallet manager.
-ES: Su brainkey ES el respaldo — anótela. Véala cuando quiera en el gestor de billetera.
+ES: Tu brainkey ES el respaldo — anótala. Consúltala cuando quieras en el gestor de billetera.
 
 ### help.topic_backups_title
 EN: Backups
@@ -6253,15 +6253,15 @@ ES: Respaldos
 
 ### help.topic_bitshares_text
 EN: A delegated-proof-of-stake chain with an on-chain exchange. Start at the market desk.
-ES: Una cadena de prueba de participación delegada con intercambio en la cadena. Empiece en el escritorio de mercado.
+ES: Una cadena de prueba de participación delegada con intercambio en la cadena. Empieza en el escritorio de mercado.
 
 ### help.topic_direct-debit_text
 EN: Authorize recurring withdrawals; claim and manage them.
-ES: Autorice retiros recurrentes; reclámelos y gestiónelos.
+ES: Autoriza retiros recurrentes; reclámalos y gestiónalos.
 
 ### help.topic_gateways_text
 EN: Move coins across chains via gateway bridges (deposit / withdraw desks).
-ES: Mueva monedas entre cadenas vía puentes de pasarela (escritorios de depósito / retiro).
+ES: Mueve monedas entre cadenas vía puentes de pasarela (escritorios de depósito / retiro).
 
 ### help.topic_password_title
 EN: Changing the wallet password
@@ -6273,7 +6273,7 @@ ES: Acciones multifirma pendientes a la espera de aprobación o vencimiento.
 
 ### help.topic_transfer_text
 EN: Send any asset to any account, with optional encrypted memos.
-ES: Envíe cualquier activo a cualquier cuenta, con memos cifrados opcionales.
+ES: Envía cualquier activo a cualquier cuenta, con memos cifrados opcionales.
 
 ### help.topic_transfer_title
 EN: Sending assets
@@ -6281,7 +6281,7 @@ ES: Enviar activos
 
 ### help.topic_txbuilder_text
 EN: Compose several operations into one transaction and sign once.
-ES: Combine varias operaciones en una transacción y firme una vez.
+ES: Combina varias operaciones en una transacción y firma una vez.
 
 ### help.topic_vesting_title
 EN: Vesting balances
@@ -6289,7 +6289,7 @@ ES: Saldos de consolidación
 
 ### help.topic_wallets_text
 EN: A wallet holds your brainkey and derives owner, active and memo keys. Managed under Wallet.
-ES: Una billetera guarda su brainkey y deriva claves de propietario, activas y de memo. Gestionadas en Billetera.
+ES: Una billetera guarda tu brainkey y deriva claves de propietario, activas y de memo. Gestionadas en Billetera.
 
 ### htlc.added_row
 EN: Added time
@@ -6773,7 +6773,7 @@ ES: Desbloquea para firmar
 
 ### proposal.a_touched_account_is_in_your_local_cont
 EN: A touched account is in your local contacts or favourite accounts.
-ES: Una cuenta implicada está en sus contactos locales o cuentas favoritas.
+ES: Una cuenta implicada está en tus contactos locales o cuentas favoritas.
 
 ### proposal.account
 EN: Account
@@ -6853,7 +6853,7 @@ ES: vacío = ninguno
 
 ### proposal.check_the_id_proposals_look_like_1_10_n
 EN: Check the id — proposals look like 1.10.N.
-ES: Compruebe el id — las propuestas tienen el formato 1.10.N.
+ES: Comprueba el id — las propuestas tienen el formato 1.10.N.
 
 ### proposal.confirm_proposal_create_op_22
 EN: Confirm proposal create (op %(op)s)
@@ -6865,7 +6865,7 @@ ES: Confirmar eliminación de propuesta (op %(op)s)
 
 ### proposal.could_not_build_the_proposal_check_accounts_a
 EN: Could not build the proposal (check accounts, assets and amounts).
-ES: No se pudo construir la propuesta (compruebe cuentas, activos y montos).
+ES: No se pudo construir la propuesta (comprueba cuentas, activos y montos).
 
 ### proposal.could_not_join_asset_symbols
 EN: Could not join asset symbols.
@@ -6901,7 +6901,7 @@ ES: vacía
 
 ### proposal.empty_hint
 EN:  The proposal carries nothing to approve — unusual but valid; check the id (proposals look like 1.10.N).
-ES:  La propuesta no contiene nada que aprobar — inusual pero válido; compruebe el id (las propuestas tienen el formato 1.10.N).
+ES:  La propuesta no contiene nada que aprobar — inusual pero válido; comprueba el id (las propuestas tienen el formato 1.10.N).
 
 ### proposal.empty_proposal_no_touched_accounts_to_
 EN: Empty proposal — no touched accounts to check. 
@@ -7001,7 +7001,7 @@ ES: Pagador de la comisión (proponente)
 
 ### proposal.fill_every_required_inner_op_field_first
 EN: Fill every required inner-op field first.
-ES: Rellene primero todos los campos obligatorios de la operación interna.
+ES: Rellena primero todos los campos obligatorios de la operación interna.
 
 ### proposal.flagged_by_the_local_scam_registry_as_a
 EN: Flagged by the local scam registry as a known scammer.
@@ -7013,7 +7013,7 @@ ES: De
 
 ### proposal.inner_memo_needs_both_accounts_to_have_a_memo
 EN: Inner memo needs both accounts to have a memo key; clear the memo to continue.
-ES: El memo interno requiere que ambas cuentas tengan clave de memo; borre el memo para continuar.
+ES: El memo interno requiere que ambas cuentas tengan clave de memo; borra el memo para continuar.
 
 ### proposal.inner_op_prefix
 EN: Inner op: 
@@ -7117,7 +7117,7 @@ ES: tipo de bloqueo %(n)s
 
 ### proposal.locked_sign_note
 EN: Wallet is locked — browsing is public; unlock to sign.
-ES: La billetera está bloqueada — la consulta es pública; desbloquee para firmar.
+ES: La billetera está bloqueada — la consulta es pública; desbloquea para firmar.
 
 ### proposal.n_a
 EN: n/a
@@ -7133,7 +7133,7 @@ ES: No hay operaciones incluidas.
 
 ### proposal.no_touched_account_is_in_your_local_con
 EN: No touched account is in your local contacts or favourite accounts. 
-ES: Ninguna cuenta implicada está en sus contactos locales ni en sus cuentas favoritas. 
+ES: Ninguna cuenta implicada está en tus contactos locales ni en tus cuentas favoritas. 
 
 ### proposal.none
 EN: none
@@ -7508,8 +7508,8 @@ EN: Create fund
 ES: Crear fondo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-ES:  Crea uno desde el formulario de creación de abajo — tus fondos Same-T aparecen aquí.
+EN:  Create one from the create form below — owned flash loan funds list here.
+ES:  Crea uno desde el formulario de creación de abajo — tus fondos de préstamos flash aparecen aquí.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -7644,16 +7644,16 @@ EN: Review update
 ES: Revisar actualización
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-ES: Falta el módulo Same-T: no se pudo cargar credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+ES: Fondos de préstamos flash no disponibles: no se pudo cargar credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### samet.title
-EN: Same-T Funds
-ES: Fondos Same-T
+EN: Flash loan funds
+ES: Fondos de préstamos flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -9716,11 +9716,11 @@ FR: Désactivation auto (date)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-FR: la date de désactivation auto doit être dans le futur.
+FR: La date de désactivation auto doit être dans le futur.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-FR: la date de désactivation auto doit être définie (validité).
+FR: La date de désactivation auto doit être définie (validité).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -10179,8 +10179,8 @@ EN: Unknown offer.
 FR: Offre inconnue.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-FR: Fonds Same-T inconnu.
+EN: Unknown flash loan fund.
+FR: Fonds de prêt flash inconnu.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -10524,7 +10524,7 @@ FR: Dépôt / retrait manuel uniquement (selon l’état propre de la passerelle
 
 ### gateway.intro_a
 EN: Send outside coins to the address shown. This page sends nothing. 
-FR: Envoyez les monnaies externes à l’adresse affichée. Cette page n’envoie rien.
+FR: Envoyez les monnaies externes à l’adresse affichée. Cette page n’envoie rien. 
 
 ### gateway.intro_b
 EN: Withdraws finish in Transfer with a live fee preview.
@@ -11288,7 +11288,7 @@ FR: Type de verrouillage invalide — choisissez l’un des cinq.
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-FR: Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle vendored (consultation en lecture seule uniquement).
+FR: Les transferts confidentiels sont désactivés : ils exigent la crypto d’engagement/preuve d’intervalle intégrée (consultation en lecture seule uniquement).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -11436,7 +11436,7 @@ FR: Compte à lister
 
 ### proposal.inner_whitelist_2
 EN: Listing (white / black)
-FR: Listage (blanche / noire)
+FR: Inscription (blanche / noire)
 
 ### proposal.issuer
 EN: Issuer
@@ -11588,7 +11588,7 @@ FR: mise à jour de compte
 
 ### proposal.op_7
 EN: whitelist
-FR: listage
+FR: liste blanche
 
 ### proposal.op_unknown
 EN: operation type %(n)s
@@ -11871,8 +11871,8 @@ EN: Create fund
 FR: Créer un fonds
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-FR:  Créez-en un depuis le formulaire de création ci-dessous — vos fonds Same-T s'affichent ici.
+EN:  Create one from the create form below — owned flash loan funds list here.
+FR:  Créez-en un depuis le formulaire de création ci-dessous — vos fonds de prêts flash s'affichent ici.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -12007,16 +12007,16 @@ EN: Review update
 FR: Vérifier la mise à jour
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-FR: Backend Same-T manquant : credit-ui.js n'a pas pu être chargé.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+FR: Fonds de prêts flash indisponibles : credit-ui.js n'a pas pu être chargé.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### samet.title
-EN: Same-T Funds
-FR: Fonds Same-T
+EN: Flash loan funds
+FR: Fonds de prêts flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -13171,7 +13171,7 @@ IT: Approvata e trasmessa.
 
 ### approval.close
 EN: Close
-IT: Chiudi
+IT: Chiuda
 
 ### approval.denied
 EN: Denied.
@@ -14019,11 +14019,11 @@ IT: Disabilitazione automatica (data)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-IT: la data di disabilitazione automatica deve essere futura.
+IT: La data di disabilitazione automatica deve essere futura.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-IT: la data di disabilitazione automatica deve essere impostata (validità).
+IT: La data di disabilitazione automatica deve essere impostata (validità).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -14494,8 +14494,8 @@ EN: Unknown offer.
 IT: Offerta sconosciuta.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-IT: Fondo Same-T sconosciuto.
+EN: Unknown flash loan fund.
+IT: Fondo di prestito flash sconosciuto.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -16138,8 +16138,8 @@ EN: Create fund
 IT: Crei fondo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-IT:  Ne crei uno dal modulo crea qui sotto — i fondi Same-T posseduti sono elencati qui.
+EN:  Create one from the create form below — owned flash loan funds list here.
+IT:  Ne crei uno dal modulo crea qui sotto — i fondi di prestiti flash posseduti sono elencati qui.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -16151,7 +16151,7 @@ IT: Elimini
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-IT: Importo delta (firmato)
+IT: Importo delta (con segno)
 
 ### samet.fee
 EN: Fee
@@ -16270,16 +16270,16 @@ EN: Review update
 IT: Verifichi aggiornamento
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-IT: Backend Same-T mancante: credit-ui.js non caricato.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+IT: Fondi di prestiti flash non disponibili: credit-ui.js non caricato.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### samet.title
-EN: Same-T Funds
-IT: Fondi Same-T
+EN: Flash loan funds
+IT: Fondi di prestiti flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -16667,7 +16667,7 @@ IT: La scadenza della proposta è obbligatoria.
 
 ### transfer.proposal_observed_mid
 EN:  observed at head block #
-IT:  osservata al blocco head n.
+IT:  osservata al blocco head #
 
 ### transfer.proposal_observed_prefix
 EN: Proposal 
@@ -17382,7 +17382,7 @@ JA: %(to)s に %(amount)s を送金しました
 
 ### account.sum_vesting_create
 EN: Vested %(amount)s for %(owner)s
-JA: %(owner)s の代わりに %(amount)s をベスティングしました
+JA: %(owner)s に %(amount)s をベスティングしました
 
 ### account.sum_vesting_withdraw
 EN: Withdrew %(amount)s vested
@@ -18801,8 +18801,8 @@ EN: Unknown offer.
 JA: 不明なオファー。
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-JA: 不明なSame-Tファンド。
+EN: Unknown flash loan fund.
+JA: 不明なフラッシュローン資金。
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -20517,8 +20517,8 @@ EN: Create fund
 JA: 資金を作成
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-JA:  下の作成フォームから作成してください — 所有するSame-T資金はここに一覧表示されます。
+EN:  Create one from the create form below — owned flash loan funds list here.
+JA:  下の作成フォームから作成してください — 所有するフラッシュローン資金はここに一覧表示されます。
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -20657,16 +20657,16 @@ EN: Review update
 JA: 更新を確認
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-JA: Same-Tバックエンドが見つかりません：credit-ui.js の読み込みに失敗しました。
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+JA: フラッシュローン資金は利用できません：credit-ui.js の読み込みに失敗しました。
 
 ### samet.same_t_funds
-EN: Same-T Funds
-JA: Same-T資金
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### samet.title
-EN: Same-T Funds
-JA: Same-T資金
+EN: Flash loan funds
+JA: フラッシュローン資金
 
 ### samet.unpaid
 EN: Unpaid
@@ -21945,7 +21945,7 @@ KO: 이 계정에 등록된 메모 키가 없습니다.
 
 ### asset.issue_memo_warning
 EN: Attach a memo — it is stored on-chain in plaintext.
-KO: 메모를 첨조하십시오 — 체인에 평문으로 저장됩니다.
+KO: 메모를 첨부하십시오 — 체인에 평문으로 저장됩니다.
 
 ### asset.locked_prompt
 EN: Wallet is locked. Enter your password.
@@ -21977,7 +21977,7 @@ KO: 백업: 없음 — 새 계정의 브레인키는 생성 시 한 번만 표�
 
 ### auth.back_up_yes_write_down_the_brainkey
 EN: Back up: yes — write down the brainkey
-KO: 백업: 예 — 브레인키를 적어 두었습니다
+KO: 백업: 예 — 브레인키를 적어 두십시오
 
 ### auth.best_security_stays_in_this_browser_move
 EN: Best security — stays in this browser. Move it with the brainkey backup.
@@ -23256,8 +23256,8 @@ EN: Unknown offer.
 KO: 알 수 없는 제안입니다.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-KO: 알 수 없는 Same-T 자금입니다.
+EN: Unknown flash loan fund.
+KO: 알 수 없는 플래시론 펀드입니다.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -23765,7 +23765,7 @@ KO: 계약
 
 ### htlc.contracts_suffix
 EN:  contracts.
-KO: 건의 계약.
+KO:  건의 계약.
 
 ### htlc.create_failed
 EN: Could not prepare the HTLC.
@@ -24964,8 +24964,8 @@ EN: Create fund
 KO: 펀드 생성
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-KO:  아래 생성 양식에서 새로 만드십시오 — 보유한 Same-T 펀드가 여기에 표시됩니다.
+EN:  Create one from the create form below — owned flash loan funds list here.
+KO:  아래 생성 양식에서 새로 만드십시오 — 보유한 플래시론 펀드가 여기에 표시됩니다.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -25104,16 +25104,16 @@ EN: Review update
 KO: 업데이트 검토
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-KO: Same-T 백엔드를 사용할 수 없습니다. credit-ui.js를 불러오지 못했습니다.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+KO: 플래시론 펀드를 사용할 수 없습니다. credit-ui.js를 불러오지 못했습니다.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-KO: Same-T 펀드
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### samet.title
-EN: Same-T Funds
-KO: Same-T 펀드
+EN: Flash loan funds
+KO: 플래시론 펀드
 
 ### samet.unpaid
 EN: Unpaid
@@ -25497,7 +25497,7 @@ KO: 수신자 %(name)s에게는 메모 키가 없습니다. 메모를 지우고 
 
 ### transfer.no_memo_key_suffix
 EN:  has no memo key; clear the memo to continue.
-KO: 에게는 메모 키가 없습니다. 메모를 지우고 계속하십시오.
+KO:  에게는 메모 키가 없습니다. 메모를 지우고 계속하십시오.
 
 ### transfer.no_scam_list_is_loaded_here_double_che
 EN: No scam list is loaded here — double-check the recipient name before reviewing.
@@ -27140,11 +27140,11 @@ PT: 3 dias
 
 ### credit.accept_borrow
 EN: Accept (borrow)
-PT: Aceitar (tomar)
+PT: Aceitar (tomar emprestado)
 
 ### credit.accept_borrow_amt_tpl
 EN: Borrow amount (%(sym)s)
-PT: Valor a tomar (%(sym)s)
+PT: Valor a tomar emprestado (%(sym)s)
 
 ### credit.acceptable_borrowers
 EN: Acceptable borrowers
@@ -27232,7 +27232,7 @@ PT: em branco = conta da carteira
 
 ### credit.borrow
 EN: Borrow
-PT: Tomar
+PT: Tomar emprestado
 
 ### credit.borrower
 EN: Borrower
@@ -27420,11 +27420,11 @@ PT: Falha na busca da taxa.
 
 ### credit.fee_rate
 EN: Fee rate
-PT: Taxa de juros
+PT: Taxa de comissão
 
 ### credit.fee_rate_2
 EN: Fee rate %
-PT: Taxa de juros %
+PT: Taxa de comissão %
 
 ### credit.list_offers
 EN: List offers
@@ -27452,11 +27452,11 @@ PT: Duração máx.
 
 ### credit.max_fee_rate
 EN: Max fee rate
-PT: Taxa de juros máx.
+PT: Taxa de comissão máx.
 
 ### credit.max_fee_rate_2
 EN: Max fee rate %
-PT: Taxa de juros máx. %
+PT: Taxa de comissão máx. %
 
 ### credit.min_deal
 EN: Min deal
@@ -27488,7 +27488,7 @@ PT: Novo pagamento automático:
 
 ### credit.new_fee_rate
 EN: New fee rate %
-PT: Nova taxa de juros %
+PT: Nova taxa de comissão %
 
 ### credit.no
 EN: no
@@ -27671,8 +27671,8 @@ EN: Unknown offer.
 PT: Oferta desconhecida.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-PT: Fundo Same-T desconhecido.
+EN: Unknown flash loan fund.
+PT: Fundo de empréstimo flash desconhecido.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -29351,8 +29351,8 @@ EN: Create fund
 PT: Criar fundo
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-PT:  Crie um no formulário de criação abaixo — fundos Same-T próprios aparecem aqui.
+EN:  Create one from the create form below — owned flash loan funds list here.
+PT:  Crie um no formulário de criação abaixo — fundos de empréstimos flash próprios aparecem aqui.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -29364,7 +29364,7 @@ PT: Excluir
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-PT: Valor do delta (assinado)
+PT: Valor do delta (com sinal)
 
 ### samet.fee
 EN: Fee
@@ -29376,11 +29376,11 @@ PT: Taxa: perna do empréstimo (op 67)
 
 ### samet.fee_rate
 EN: Fee rate
-PT: Taxa de remuneração
+PT: Taxa de comissão
 
 ### samet.fee_rate_2
 EN: Fee rate %
-PT: Taxa de remuneração %
+PT: Taxa de comissão %
 
 ### samet.fee_repay_leg_op_68
 EN: Fee: repay leg (op 68)
@@ -29428,7 +29428,7 @@ PT: Rede
 
 ### samet.new_fee_rate
 EN: New fee rate %
-PT: Nova taxa de remuneração %
+PT: Nova taxa de comissão %
 
 ### samet.no_owned_funds
 EN: No owned funds.
@@ -29487,16 +29487,16 @@ EN: Review update
 PT: Revisar atualização
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-PT: Backend Same-T ausente: falha ao carregar credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+PT: Fundos de empréstimos flash indisponíveis: falha ao carregar credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### samet.title
-EN: Same-T Funds
-PT: Fundos Same-T
+EN: Flash loan funds
+PT: Fundos de empréstimos flash
 
 ### samet.unpaid
 EN: Unpaid
@@ -32050,8 +32050,8 @@ EN: Unknown offer.
 RU: Неизвестный оффер.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-RU: Неизвестный Same-T фонд.
+EN: Unknown flash loan fund.
+RU: Неизвестный фонд флеш-займа.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -33171,7 +33171,7 @@ RU: Неверный тип лока — выберите один из пяти
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-RU: Слепые переводы отключены: нужна вендорная криптография commitment/range-proof (только просмотр).
+RU: Слепые переводы отключены: нужна встроенная криптография commitment/range-proof (только просмотр).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -33766,8 +33766,8 @@ EN: Create fund
 RU: Создать фонд
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-RU:  Создайте его в форме создания ниже — собственные фонды Same-T появятся здесь.
+EN:  Create one from the create form below — owned flash loan funds list here.
+RU:  Создайте его в форме создания ниже — собственные фонды флеш-займов появятся здесь.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -33906,16 +33906,16 @@ EN: Review update
 RU: Проверка изменения
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-RU: Бэкенд Same-T отсутствует: не удалось загрузить credit-ui.js.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+RU: Фонды флеш-займов недоступны: не удалось загрузить credit-ui.js.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-RU: Фонды Same-T
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### samet.title
-EN: Same-T Funds
-RU: Фонды Same-T
+EN: Flash loan funds
+RU: Фонды флеш-займов
 
 ### samet.unpaid
 EN: Unpaid
@@ -34355,7 +34355,7 @@ RU: Предлагающий
 
 ### transfer.proposer_mismatch_prefix
 EN: Proposer must match the unlocked wallet account (fee-payer signs) — got 
-RU: Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — получено 
+RU: Предлагающий должен совпадать с разблокированным аккаунтом кошелька (комиссию платит подписант) — фактически 
 
 ### transfer.proposer_mismatch_wallet_mid
 EN: ), wallet is 
@@ -35154,7 +35154,7 @@ TR: Gösterilebilir alan yok.
 
 ### approval.no_reply
 EN: No reply from the signer.
-TR: İmzalamadan yanıt yok.
+TR: İmzalayan kişiden yanıt yok.
 
 ### approval.no_runtime
 EN: Extension runtime missing.
@@ -35450,11 +35450,11 @@ TR: İmzalamak için kilidi açınız
 
 ### borrow.delta_collateral_signed_collateral_asset
 EN: Delta collateral (signed, collateral asset)
-TR: Delta teminat (imzalı, teminat varlığı)
+TR: Delta teminat (işaretli, teminat varlığı)
 
 ### borrow.delta_debt_signed_debt_asset
 EN: Delta debt (signed, debt asset)
-TR: Delta borç (imzalı, borç varlığı)
+TR: Delta borç (işaretli, borç varlığı)
 
 ### borrow.uc_title
 EN: Unlock to sign
@@ -36006,11 +36006,11 @@ TR: Otomatik devre dışı (tarih)
 
 ### credit.auto_disable_time_must_be_in_the_future
 EN: auto-disable time must be in the future.
-TR: otomatik devre dışı zamanı gelecekte olmalı.
+TR: Otomatik devre dışı zamanı gelecekte olmalı.
 
 ### credit.auto_disable_time_must_be_set_validity
 EN: auto-disable time must be set (validity).
-TR: otomatik devre dışı zamanı ayarlanmalı (geçerlilik).
+TR: Otomatik devre dışı zamanı ayarlanmalı (geçerlilik).
 
 ### credit.auto_repay
 EN: Auto-repay
@@ -36497,8 +36497,8 @@ EN: Unknown offer.
 TR: Bilinmeyen teklif.
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-TR: Bilinmeyen Same-T fonu.
+EN: Unknown flash loan fund.
+TR: Bilinmeyen flash kredi fonu.
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -37450,7 +37450,7 @@ TR: İmzalamak için kilidi açınız
 
 ### proposal.a_touched_account_is_in_your_local_cont
 EN: A touched account is in your local contacts or favourite accounts.
-TR: Dokunulan hesaplardan biri yerel kişilerinizi veya favori hesaplarınızda.
+TR: Dokunulan bir hesap yerel kişilerinizde veya favori hesaplarınızda.
 
 ### proposal.account
 EN: Account
@@ -37606,7 +37606,7 @@ TR: Hatalı kilit türü — beşinden birini seçin.
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-TR: Gizli transferler kapalı: taahhüt/kanıt kriptosu gömülü olmadığı için (yalnızca salt okunur sorgu).
+TR: Gizli transferler kapalı: gömülü taahhüt/aralık-kanıtı kriptosu gerektirir (yalnızca salt okunur sorgu).
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -38193,8 +38193,8 @@ EN: Create fund
 TR: Fon oluştur
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-TR:  Aşağıdaki oluşturma formundan oluşturun — sahip olduğunuz Same-T fonları burada listelenir.
+EN:  Create one from the create form below — owned flash loan funds list here.
+TR:  Aşağıdaki oluşturma formundan oluşturun — sahip olduğunuz flash kredi fonları burada listelenir.
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -38329,16 +38329,16 @@ EN: Review update
 TR: Güncellemeyi incele
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-TR: Same-T arka ucu eksik: credit-ui.js yüklenemedi.
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+TR: Flash kredi fonları kullanılamıyor: credit-ui.js yüklenemedi.
 
 ### samet.same_t_funds
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### samet.title
-EN: Same-T Funds
-TR: Same-T Fonları
+EN: Flash loan funds
+TR: Flash kredi fonları
 
 ### samet.unpaid
 EN: Unpaid
@@ -38638,7 +38638,7 @@ TR: Öneriyi onayla (op %(op)s)
 
 ### transfer.confirm_settles_the_fee_in
 EN:  — Confirm settles the fee in 
-TR:  — Onay ücreti 
+TR:  — Onay, ücreti şurada kapatır: 
 
 ### transfer.could_not_build_proposal
 EN: Could not build the proposal.
@@ -38782,7 +38782,7 @@ TR: Öneren
 
 ### transfer.proposer_mismatch_prefix
 EN: Proposer must match the unlocked wallet account (fee-payer signs) — got 
-TR: Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — alınan 
+TR: Öneren, kilidi açık cüzdan hesabıyla eşleşmelidir (ücret ödeyen imzalar) — gerçekte 
 
 ### transfer.proposer_mismatch_wallet_mid
 EN: ), wallet is 
@@ -39529,7 +39529,7 @@ ZH: 由第三方管理的归属余额。
 
 ### approval.account
 EN: Account: 
-ZH: 账户：
+ZH: 账户： 
 
 ### approval.approve
 EN: Approve
@@ -39541,7 +39541,7 @@ ZH: 已批准并广播。
 
 ### approval.chain
 EN: Chain: 
-ZH: 链：
+ZH: 链： 
 
 ### approval.close
 EN: Close
@@ -39593,7 +39593,7 @@ ZH: 记住此站点所用的账户
 
 ### approval.site_prefix
 EN: Site: 
-ZH: 站点：
+ZH: 站点： 
 
 ### approval.title
 EN: Approve signature
@@ -40928,8 +40928,8 @@ EN: Unknown offer.
 ZH: 未知报价。
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-ZH: 未知 Same-T 资金池。
+EN: Unknown flash loan fund.
+ZH: 未知闪电贷资金池。
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -42644,8 +42644,8 @@ EN: Create fund
 ZH: 创建资金池
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-ZH:  请通过下方的创建表单新建一个 — 您拥有的同资产资金池将列在此处。
+EN:  Create one from the create form below — owned flash loan funds list here.
+ZH:  请通过下方的创建表单新建一个 — 您拥有的闪电贷资金池将列在此处。
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -42784,16 +42784,16 @@ EN: Review update
 ZH: 核对更新
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-ZH: Same-T 后端缺失：credit-ui.js 加载失败。
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+ZH: 闪电贷资金池不可用：credit-ui.js 加载失败。
 
 ### samet.same_t_funds
-EN: Same-T Funds
-ZH: 同资产资金池
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### samet.title
-EN: Same-T Funds
-ZH: 同资产资金池
+EN: Flash loan funds
+ZH: 闪电贷资金池
 
 ### samet.unpaid
 EN: Unpaid
@@ -44336,11 +44336,11 @@ HI: हस्ताक्षर हेतु अनलॉक करें
 
 ### borrow.delta_collateral_signed_collateral_asset
 EN: Delta collateral (signed, collateral asset)
-HI: डेल्टा कोलैटरल (हस्ताक्षरित, कोलैटरल एसेट)
+HI: डेल्टा कोलैटरल (चिह्न सहित, कोलैटरल एसेट)
 
 ### borrow.delta_debt_signed_debt_asset
 EN: Delta debt (signed, debt asset)
-HI: डेल्टा कर्ज़ (हस्ताक्षरित, कर्ज़ एसेट)
+HI: डेल्टा कर्ज़ (चिह्न सहित, कर्ज़ एसेट)
 
 ### borrow.uc_title
 EN: Unlock to sign
@@ -45383,8 +45383,8 @@ EN: Unknown offer.
 HI: अज्ञात प्रस्ताव।
 
 ### credit.unknown_same_t_fund
-EN: Unknown Same-T fund.
-HI: अज्ञात Same-T फ़ंड।
+EN: Unknown flash loan fund.
+HI: अज्ञात फ्लैश लोन फ़ंड।
 
 ### credit.unlocked_rereview_note
 EN: Unlocked — press Back and re-run Review so the transaction uses your account.
@@ -46504,7 +46504,7 @@ HI: गलत लॉक प्रकार — पाँचों में स�
 
 ### proposal.err_blind_disabled
 EN: Blind transfers are disabled: they need vendored commitment/range-proof crypto (read-only lookup only).
-HI: ब्लाइंड ट्रांसफर अक्षम हैं: उन्हें रिपो-में-शामिल कमिटमेंट/रेंज-प्रूफ क्रिप्टो चाहिए (केवल पढ़ने योग्य खोज)।
+HI: ब्लाइंड ट्रांसफर अक्षम हैं: उन्हें एम्बेडेड कमिटमेंट/रेंज-प्रूफ क्रिप्टो चाहिए (केवल पढ़ने योग्य खोज)।
 
 ### proposal.err_downgrade_unproven
 EN: Ticket downgrades are unproven — pick the current lock or a longer one.
@@ -47095,8 +47095,8 @@ EN: Create fund
 HI: फ़ंड बनाएँ
 
 ### samet.create_hint
-EN:  Create one from the create form below — owned Same-T funds list here.
-HI:  नीचे निर्माण फ़ॉर्म से एक बनाएँ — स्वामित्व वाले Same-T फ़ंड यहाँ सूचीबद्ध हैं।
+EN:  Create one from the create form below — owned flash loan funds list here.
+HI:  नीचे निर्माण फ़ॉर्म से एक बनाएँ — स्वामित्व वाले फ्लैश लोन फ़ंड यहाँ सूचीबद्ध हैं।
 
 ### samet.credit_ui_missing_credit_ui_js_first
 EN: credit-ui-missing (credit-ui.js first)
@@ -47112,7 +47112,7 @@ HI: डेल्टा
 
 ### samet.delta_amount_signed
 EN: Delta amount (signed)
-HI: डेल्टा राशि (हस्ताक्षरित)
+HI: डेल्टा राशि (चिह्न सहित)
 
 ### samet.fee
 EN: Fee
@@ -47235,16 +47235,16 @@ EN: Review update
 HI: अपडेट की समीक्षा करें
 
 ### samet.same_t_backend_missing_credit_ui_js_failed_to
-EN: Same-T backend missing: credit-ui.js failed to load.
-HI: Same-T बैकएंड गायब है: credit-ui.js लोड नहीं हुआ।
+EN: Flash loan funds unavailable: credit-ui.js failed to load.
+HI: फ्लैश लोन फ़ंड अनुपलब्ध है: credit-ui.js लोड नहीं हुआ।
 
 ### samet.same_t_funds
-EN: Same-T Funds
-HI: Same-T फ़ंड
+EN: Flash loan funds
+HI: फ्लैश लोन फ़ंड
 
 ### samet.title
-EN: Same-T Funds
-HI: Same-T फ़ंड
+EN: Flash loan funds
+HI: फ्लैश लोन फ़ंड
 
 ### samet.unpaid
 EN: Unpaid
