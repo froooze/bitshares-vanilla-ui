@@ -6759,7 +6759,7 @@
     "s1": "未处理"
   },
   "samet": {
-    "title": "同资产资金池",
+    "title": "同资产（Same-T）资金池",
     "account": "账户",
     "asset": "资产",
     "balance": "余额",
@@ -6817,11 +6817,11 @@
     "review_update": "核对更新",
     "same_asset_same_t_funds_borrowing_and_repayin": "同资产（Same-T）资金池：借入与还款在同一笔交易中完成 [67 借入 + 68 还款] — 链上拒绝单独的借入操作。费率为分母为 1,000,000 的百分比。",
     "same_t_backend_missing_credit_ui_js_failed_to": "Same-T 后端缺失：credit-ui.js 加载失败。",
-    "same_t_funds": "同资产资金池",
+    "same_t_funds": "同资产（Same-T）资金池",
     "unpaid": "未还款",
     "update": "更新",
     "viewing_as": "当前查看身份为 committee-account（1.2.0）。",
-    "create_hint": " 请通过下方的创建表单新建一个 — 您拥有的同资产资金池将列在此处。"
+    "create_hint": " 请通过下方的创建表单新建一个 — 您拥有的同资产（Same-T）资金池将列在此处。"
   },
   "tickets": {
     "title": "票据"
