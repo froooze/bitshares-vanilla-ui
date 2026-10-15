@@ -6192,7 +6192,7 @@
     "addr_prefix": "O gateway informa que o endereço parece ",
     "addr_suffix": " (apenas informativo).",
     "addr_valid": "válido",
-    "asking_deposit_end": "…",
+    "asking_deposit_end": " endereço de depósito…",
     "asking_deposit_mid": " um endereço de depósito de ",
     "asking_prefix": "Solicitando a ",
     "backend_missing": " backend ausente: ",

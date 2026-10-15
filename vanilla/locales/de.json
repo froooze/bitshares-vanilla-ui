@@ -5821,7 +5821,7 @@
     "unknown_credit_offer": "Unbekanntes Kreditangebot.",
     "unknown_offer": "Unbekanntes Angebot.",
     "unknown_same_t_fund": "Unbekannter Flash-Loan-Fonds.",
-    "update_delta_tpl": "Delta-Betrag (%(sym)s, vorzeichenbehaftet)",
+    "update_delta_tpl": "Delta-Betrag (%(sym)s, mit Vorzeichen)",
     "wallet_is_locked_enter_your_password_to_conti": "Wallet ist gesperrt. Geben Sie Ihr Passwort ein, um fortzufahren.",
     "yes": "ja",
     "unlocked_rereview_note": "Entsperrt — drücken Sie Zurück und führen Sie Prüfen erneut aus, damit die Transaktion Ihr Konto nutzt.",

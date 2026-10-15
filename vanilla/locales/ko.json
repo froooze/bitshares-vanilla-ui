@@ -6206,7 +6206,7 @@
     "checking_health": "게이트웨이 상태를 확인하는 중입니다…",
     "coin_fact": "코인",
     "coin_label": "코인 ",
-    "coins_failed_prefix": "",
+    "coins_failed_prefix": "불러올 수 없습니다 ",
     "coins_failed_suffix": " 코인을 불러올 수 없습니다.",
     "coins_right_now": " 현재 사용 가능한 코인.",
     "continue_transfer": "이체로 계속 →",
